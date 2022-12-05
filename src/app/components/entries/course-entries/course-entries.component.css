@@ -1,0 +1,37 @@
+.input-typeahead {
+    font-family: "Barlow";
+    color: #0F4C75;
+}
+
+.input-typeahead {
+    border: none;
+    border-bottom: #0F4C75 solid;
+    background-color: transparent;
+}
+
+.input-typeahead:focus {
+    outline: none;
+}
+
+.input-typeahead::placeholder {
+    color: #0f4c758b;
+}
+
+.vertical-line {
+    border-left: #E14D2A solid;
+    border-width: 1px;
+}
+
+#register-class-btn {
+    color: #0F4C75;
+    border-color: #0F4C75;
+}
+
+#register-class-btn:hover {
+    color: white;
+    background-color: #0F4C75;
+}
+
+.input-typeahead.dropdown .dropdown-item:active {
+    background-color: green !important;
+}

@@ -1,0 +1,7 @@
+{
+    "data": [ 
+        {"id": "17835", "name": "Jesus Manuel Muñoz Larguero", "date": "10-10-2022", "group": "417", "course": "Analisis de Circuitos Electricos I"}, 
+        {"id": "97979", "name": "Claudio Hiram Carmona Jurado", "date": "11-10-2022", "group": "746", "course": "Circuitos Electronicos"},
+        {"id": "17835", "name": "Jesus Manuel Muñoz Larguero", "date": "12-10-2022", "group": "846", "course": "Circuitos Lógicos II"}
+    ]
+}

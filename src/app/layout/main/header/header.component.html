@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg bg-white">
+    <div class="container-fluid p-0 pt-2 pb-2">
+        <div class="d-flex align-items-center justify-content-start">
+            <button class="btn btn-header p-0" (click)="open(drawer)">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+            <a class="navbar-brand fs-4 ms-4" href="#">
+                <img src="assets/images/logbook_logo.png" alt="Logo" width="66" height="65"/>
+                Logbook
+            </a>
+        </div>
+        <div class="d-flex align-items-center justify-content-end">
+            <h5 class="fs-6 m-0 me-3">L-AUTO</h5>
+            <i class="bi bi-person-square fs-4 m-3"></i>
+        </div>
+    </div>
+</nav>
+<ng-template #drawer let-offcanvas>
+	<div class="offcanvas-bg offcanvas-header p-5">
+		<button type="button" class="btn btn-drawer p-0" aria-label="Close" (click)="offcanvas.dismiss('Cross click')">
+            <i class="bi bi-list fs-4 text-white"></i>
+        </button>
+	</div>
+	<div class="offcanvas-bg offcanvas-body p-5 pt-0">
+		<div class="mb-5">
+            <div class="d-flex align-items-top justify-content-between">
+                <h5 class="text-white fs-5 mb-4">Reportes</h5>
+                <i class="bi bi-journal-text fs-5 text-white"></i>
+            </div>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Alumnos</p>
+            </a>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Maestros</p>
+            </a>
+        </div>
+        <div class="mb-5">
+            <div class="d-flex align-items-top justify-content-between">
+                <h5 class="text-white fs-5 mb-4">Registros</h5>
+                <i class="bi bi-box-arrow-in-right fs-5 text-white"></i>
+            </div>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Entradas</p>
+            </a>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Inventario</p>
+            </a>
+        </div>
+        <div class="mb-5">
+            <div class="d-flex align-items-top justify-content-between">
+                <h5 class="text-white fs-5 mb-4">Datos</h5>
+                <i class="bi bi-database-add fs-5 text-white"></i>
+            </div>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Archivos</p>
+            </a>
+            <a href="#">
+                <p class="text-white fs-6 text-border">Usuarios</p>
+            </a>
+        </div>
+	</div>
+</ng-template>

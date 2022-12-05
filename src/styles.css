@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "Barlow";
+    src: local("Barlow"), url(./assets/fonts/Barlow-Regular.ttf) format("truetype");
+}
+
+body {
+    font-family: 'Barlow', sans-serif !important;
+    color: #0F4C75;
+}

@@ -1,0 +1,8 @@
+{
+    "data": [ 
+        {"id": "417", "nombre": "Analisis de Circuitos Electricos I"}, 
+        {"id": "746", "nombre": "Circuitos Electronicos"}, 
+        {"id": "846", "nombre": "Circuitos Logicos II"}, 
+        {"id": "948", "nombre": "Automatizacion Industrial"}
+    ]
+}

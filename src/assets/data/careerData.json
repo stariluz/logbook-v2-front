@@ -1,0 +1,8 @@
+{
+    "data": [ 
+        {"id": "CC", "nombre": "Ingenieria en Ciencias de la Computacion"}, 
+        {"id": "CV", "nombre": "Ingenieria Civil"}, 
+        {"id": "AE", "nombre": "Ingenieria Aero Espacial"}, 
+        {"id": "HW", "nombre": "Ingenieria en Hardware"}
+    ]
+}
