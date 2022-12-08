@@ -19,6 +19,7 @@ import { StudentReportsComponent } from './components/reports/student-reports/st
 import { ProfessorReportsComponent } from './components/reports/professor-reports/professor-reports.component';
 import { CalendarModule } from 'primeng/calendar';
 import { TableModule } from 'primeng/table';
+import { FileUploadModule } from 'primeng/fileupload';
 import { DatabaseComponent } from './components/database/database.component';
 import { FileUploadComponent } from './components/database/file-upload/file-upload.component';
 
@@ -47,7 +48,8 @@ import { FileUploadComponent } from './components/database/file-upload/file-uplo
     FormsModule,
     ZXingScannerModule,
     CalendarModule,
-    TableModule
+    TableModule,
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

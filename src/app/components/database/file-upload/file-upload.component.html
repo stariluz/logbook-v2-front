@@ -1,1 +1,23 @@
-<p>file-upload works!</p>
+<div class="w-100">
+    <h4 class="mb-5">Subida de archivos</h4>
+    <div class="row w-100 gy-4 mt-4">
+        <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
+            <!-- Alerta de error al no ingresar correctamente el campo -->
+            <!-- <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="w-75 mb-4">{{ errorMessage }}</ngb-alert> -->
+            <!-- Botones para cargar, subir y eliminar archivo -->
+            <p-fileUpload name="fileUpload" #fileUpload [customUpload]="true" (uploadHandler)="onUpload($event, fileUpload)" accept=".xls,.xlsx" [maxFileSize]="10000000" [fileLimit]="1">
+                <!-- <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template> -->
+            </p-fileUpload>
+        </div>
+        <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
+            <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
+        </div>
+        <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
+            <img alt="Clases vector" src="assets/images/files_vector.jpg" class="w-75"/>
+        </div>
+    </div>
+</div>

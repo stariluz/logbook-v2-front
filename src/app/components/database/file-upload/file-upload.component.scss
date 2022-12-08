@@ -1,0 +1,13 @@
+:host ::ng-deep {
+    .upload-btn {
+        background-color: #E14D2A;
+        border-color: #0F4C75;
+    }
+    .upload-btn:hover {
+        background-color: #b93e22;
+        border-color: #0F4C75;
+    }
+    .upload-btn:focus {
+        outline-color: #0F4C75;
+    }
+}

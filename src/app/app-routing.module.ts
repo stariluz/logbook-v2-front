@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DatabaseComponent } from './components/database/database.component';
+import { FileUploadComponent } from './components/database/file-upload/file-upload.component';
 import { CourseEntriesComponent } from './components/entries/course-entries/course-entries.component';
 import { EntriesComponent } from './components/entries/entries.component';
 import { StudentEntriesComponent } from './components/entries/student-entries/student-entries.component';
@@ -21,7 +22,7 @@ const routes: Routes = [
       { path: 'professor-reports', component: ProfessorReportsComponent },
     ] },
     { path: 'database', component: DatabaseComponent, children: [
-      { path: 'file-upload', component: StudentReportsComponent },
+      { path: 'file-upload', component: FileUploadComponent },
     ] },
   ]},
 ];
