@@ -16,4 +16,8 @@ export class EntriesService {
   getProfessors(): Observable<any> {
     return this.http.get('assets/data/professorData.json');
   }
+
+  registerStudentEntry(obj: Object): Observable<any> {
+    return this.http.post('', obj);
+  }
 }

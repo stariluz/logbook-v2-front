@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EntriesComponent } from './components/entries/entries.component';
 import { MainComponent } from './layout/main/main.component';
@@ -12,6 +13,14 @@ import { NgbAlertModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { StudentEntriesComponent } from './components/entries/student-entries/student-entries.component';
 import { CourseEntriesComponent } from './components/entries/course-entries/course-entries.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ReportsComponent } from './components/reports/reports.component';
+import { StudentReportsComponent } from './components/reports/student-reports/student-reports.component';
+import { ProfessorReportsComponent } from './components/reports/professor-reports/professor-reports.component';
+import { CalendarModule } from 'primeng/calendar';
+import { TableModule } from 'primeng/table';
+import { DatabaseComponent } from './components/database/database.component';
+import { FileUploadComponent } from './components/database/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +29,25 @@ import { CourseEntriesComponent } from './components/entries/course-entries/cour
     MainComponent,
     HeaderComponent,
     StudentEntriesComponent,
-    CourseEntriesComponent
+    CourseEntriesComponent,
+    ReportsComponent,
+    StudentReportsComponent,
+    ProfessorReportsComponent,
+    DatabaseComponent,
+    FileUploadComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     AutoCompleteModule,
     NgbTypeaheadModule,
     NgbAlertModule,
-    FormsModule
+    FormsModule,
+    ZXingScannerModule,
+    CalendarModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

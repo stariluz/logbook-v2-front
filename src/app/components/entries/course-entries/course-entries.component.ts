@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
+import { EntriesComponent } from '../entries.component';
 
-type Course = { id: string; name: string};
-type Professor = { id: string; name: string};
+// Tipado de objetos para la busqueda en el elemento dropdown
+type Professor = { id: string; name: string }
+type Course = { id: string; name: string; professor: Professor};
 
 @Component({
   selector: 'app-course-entries',
@@ -14,65 +17,53 @@ type Professor = { id: string; name: string};
 
 export class CourseEntriesComponent {
   
-  courseFormatter = (course: Course) => course.name;
-  professorFormatter = (professor: Professor) => professor.name;
+  // Formato del texto que se presenta al seleccionar un elemento del dropdown
+  courseFormatter = (course: Course) => `${course.name}  -  ${course.id}`;
 
   public selectedCourse?: Course;
-  public selectedProfessor?: Professor;
-  private _courses: Course[] = [];
-  private _professors: Professor[] = [];
+  private courses: Course[] = [];
 
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
 
-  constructor(private entriesService: EntriesService) { }
+  constructor(private router: Router, private entriesService: EntriesService) { }
 
   ngOnInit(): void {
+    // Obtiene los cursos/clases por medio de una petición
     this.entriesService.getCourses().subscribe(
       (res) => {
-        this._courses = res.data;
+        this.courses = res.data;
       },
       (err) => {
         console.log(err);
       }
     );
-    this.entriesService.getProfessors().subscribe(
-      (res) => {
-        this._professors = res.data;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
-
+    // Tiempo de duración y mensaje de la alerta
 		this._message.subscribe((message) => (this.errorMessage = message));
-		this._message.pipe(debounceTime(5000)).subscribe(() => {
+		this._message.pipe(debounceTime(4000)).subscribe(() => {
 			if (this.selfClosingAlert) {
 				this.selfClosingAlert.close();
 			}
 		});
   }
 
-  searchCourses: OperatorFunction<string, readonly { id: string; name: string }[]> = (text$: Observable<string>) =>
+  // Busqueda de los cursos/clases dentro del objeto recibido despues de realizar la petición
+  searchCourses: OperatorFunction<string, readonly { id: string; name: string, professor: Professor }[]> = (text$: Observable<string>) =>
 		text$.pipe(
 			debounceTime(200),
 			distinctUntilChanged(),
 			filter((term) => term.length >= 1),
-			map((term) => this._courses.filter((course) => new RegExp(term, 'mi').test(course.name)).slice(0, 10)),
+			map((term) => this.courses.filter((course) => new RegExp(term, 'mi').test(course.name)).slice(0, 10)),
 		);
   
-  searchProfessors: OperatorFunction<string, readonly { id: string; name: string }[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			filter((term) => term.length >= 1),
-			map((term) => this._professors.filter((professor) => new RegExp(term, 'mi').test(professor.name)).slice(0, 10)),
-		);
-
+  // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {
-    if(!this.selectedCourse && !this.selectedProfessor) {
-      this._message.next(`- Message successfully changed.`);
+    if(!this.selectedCourse) {
+      this._message.next(`Porfavor seleccione una clase`);
+    } else {
+      localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
+      this.router.navigateByUrl('/entries/student-entries');
     }
   }
 }

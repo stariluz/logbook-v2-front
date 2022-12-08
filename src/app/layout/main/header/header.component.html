@@ -4,20 +4,20 @@
             <button class="btn btn-header p-0" (click)="open(drawer)">
                 <i class="bi bi-list fs-4"></i>
             </button>
-            <a class="navbar-brand fs-4 ms-4" href="#">
-                <img src="assets/images/logbook_logo.png" alt="Logo" width="66" height="65"/>
+            <div class="navbar-brand fs-4 ms-3">
+                <img src="assets/images/logbook_logo.png" alt="Logo" style="width: 3rem;"/>
                 Logbook
-            </a>
+            </div>
         </div>
         <div class="d-flex align-items-center justify-content-end">
-            <h5 class="fs-6 m-0 me-3">L-AUTO</h5>
+            <h5 class="fs-6 m-0">L-AUTO</h5>
             <i class="bi bi-person-square fs-4 m-3"></i>
         </div>
     </div>
 </nav>
 <ng-template #drawer let-offcanvas>
 	<div class="offcanvas-bg offcanvas-header p-5">
-		<button type="button" class="btn btn-drawer p-0" aria-label="Close" (click)="offcanvas.dismiss('Cross click')">
+		<button type="button" class="btn btn-drawer p-0" aria-label="Close" (click)="offcanvas.dismiss('Cross click');">
             <i class="bi bi-list fs-4 text-white"></i>
         </button>
 	</div>
@@ -27,10 +27,10 @@
                 <h5 class="text-white fs-5 mb-4">Reportes</h5>
                 <i class="bi bi-journal-text fs-5 text-white"></i>
             </div>
-            <a href="#">
+            <a href="/reports/student-reports">
                 <p class="text-white fs-6 text-border">Alumnos</p>
             </a>
-            <a href="#">
+            <a href="/reports/professor-reports">
                 <p class="text-white fs-6 text-border">Maestros</p>
             </a>
         </div>
@@ -39,7 +39,7 @@
                 <h5 class="text-white fs-5 mb-4">Registros</h5>
                 <i class="bi bi-box-arrow-in-right fs-5 text-white"></i>
             </div>
-            <a href="#">
+            <a href="{{entriesRouter}}">
                 <p class="text-white fs-6 text-border">Entradas</p>
             </a>
             <a href="#">
@@ -51,7 +51,7 @@
                 <h5 class="text-white fs-5 mb-4">Datos</h5>
                 <i class="bi bi-database-add fs-5 text-white"></i>
             </div>
-            <a href="#">
+            <a href="/database/file-upload">
                 <p class="text-white fs-6 text-border">Archivos</p>
             </a>
             <a href="#">

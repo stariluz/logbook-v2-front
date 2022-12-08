@@ -1,6 +1,10 @@
-a {
+a, .navbar-brand, .btn-header {
     font-family: 'Barlow';
     color: #0F4C75;
+}
+
+.btn-header:active {
+    border-color: white;
 }
 
 .offcanvas-bg {
@@ -21,4 +25,8 @@ a {
     height: 0.1rem;
     width: 0;
     transition: 0.5s;
+}
+
+.text-border:hover::after {
+    width: 100%;
 }

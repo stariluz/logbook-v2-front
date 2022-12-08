@@ -1,0 +1,36 @@
+:host ::ng-deep {
+    .custom-calendar.p-calendar {
+        width: 100%;
+        .p-inputtext {
+            font-family: "Barlow";
+            color: #0F4C75;
+            border-radius: 0;
+            border: none;
+            border-bottom: #E14D2A solid;
+            background-color: transparent;
+            font-size: 1.25rem;
+            font-weight: normal;
+            padding: 1px 2px;
+        }
+        .p-inputtext::placeholder {
+            color: #0f4c7557;
+        }
+        .p-button {
+            background-color: transparent;
+            color: #0F4C75;
+            border-radius: 0;
+            border: none;
+            border-bottom: #E14D2A solid;
+            padding: 1px 2px;
+        }
+    }
+    .table-header {
+        tr th {
+            font-family: "Barlow";
+            color: #0F4C75;
+            p-sorticon .p-sortable-column-icon {
+                color: #0F4C75;
+            }
+        }
+    }
+}

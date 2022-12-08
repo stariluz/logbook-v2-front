@@ -1,11 +1,11 @@
-<div class="row w-100">
-    <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
-        <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="success" (closed)="errorMessage = ''">{{ errorMessage }}</ngb-alert>
-        <form name="professor-form" class="w-75" novalidate>
+<div class="row w-100 gy-4 mt-4">
+    <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
+        <!-- Alerta de error al no ingresar correctamente el campo -->
+        <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="w-75 mb-4">{{ errorMessage }}</ngb-alert>
+        <!-- Campo para ingresar la clase -->
+        <form name="course-form" class="w-75" novalidate>
             <p class="fs-5 mb-1">Clase</p>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese el nombre de la clase" name="course" [(ngModel)]="selectedCourse" [ngbTypeahead]="searchCourses" [inputFormatter]="courseFormatter" [resultFormatter]="courseFormatter" [editable]="false"/>
-            <p class="fs-5 mb-1">Docente</p>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese el nombre del profesor" name="professor" [(ngModel)]="selectedProfessor" [ngbTypeahead]="searchProfessors" [inputFormatter]="professorFormatter" [resultFormatter]="professorFormatter" [editable]="false"/>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese el nombre de la clase" name="course" [(ngModel)]="selectedCourse" [ngbTypeahead]="searchCourses" [inputFormatter]="courseFormatter" [resultTemplate]="rt" [editable]="false"/>
             <button id="register-class-btn" class="btn btn-outline-dark" type="button" (click)="registerClassEntry()">Registrar</button>
         </form>
     </div>
@@ -13,6 +13,13 @@
         <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
     </div>
     <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
-        <img alt="Clases vector" src="assets/images/clases_vector.jpg" width="500rem"/>
+        <img alt="Clases vector" src="assets/images/clases_vector.jpg" class="w-75"/>
     </div>
 </div>
+<!-- Template sobre la lista de sugerencias para la selección de la clase -->
+<ng-template #rt let-r="result" let-t="term">
+    <div class="d-flex flex-column align-items-start justify-content-center">
+        <ngb-highlight [result]="r.name" [term]="t" class="fs-6"></ngb-highlight>
+        <ngb-highlight [result]="r.professor.name" [term]="t" class="professor-dropdown fs-6"></ngb-highlight>
+    </div>
+</ng-template>

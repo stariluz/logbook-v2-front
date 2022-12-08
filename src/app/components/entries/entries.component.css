@@ -3,6 +3,10 @@
 }
 
 #course-btn, #student-btn {
+    pointer-events: none;
+}
+
+#course-btn, #student-btn {
     background-color: white;
     color: #0F4C75;
     border-color: #0F4C75;
@@ -21,5 +25,15 @@
 }
 
 #student-btn, #student-btn-label {
-    right: 66.66%;
+    left: 66.66%;
+}
+
+#new-course-btn {
+    color: #0F4C75;
+    border-color: #0F4C75;
+}
+
+#new-course-btn:hover {
+    color: white;
+    background-color: #E14D2A;
 }

@@ -1,8 +1,8 @@
 {
     "data": [ 
-        {"id": "LAUTO", "nombre": "Laboratorio de Automatica"}, 
-        {"id": "LC5", "nombre": "Laboratorio de Computo 5"}, 
-        {"id": "LC4", "nombre": "Laboratorio de Computo 4"}, 
-        {"id": "LC3", "nombre": "Laboratorio de Computo 3"}
+        {"id": "LAUTO", "name": "Laboratorio de Automatica"}, 
+        {"id": "LC5", "name": "Laboratorio de Computo 5"}, 
+        {"id": "LC4", "name": "Laboratorio de Computo 4"}, 
+        {"id": "LC3", "name": "Laboratorio de Computo 3"}
     ]
 }

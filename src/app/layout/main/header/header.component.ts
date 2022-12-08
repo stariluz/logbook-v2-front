@@ -8,16 +8,17 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HeaderComponent {
 
+	entriesRouter: String = '';
+
   constructor(private offcanvasService: NgbOffcanvas) {}
-
+  
   open(content: any) {
-		this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' }).result.then(
-			(result) => {
-
-			},
-			(reason) => {
-
-			},
-		);
+	let currentCourse = localStorage.getItem('currentCourse');
+	if(currentCourse) {
+		this.entriesRouter = 'entries/student-entries';
+	} else {
+		this.entriesRouter = 'entries/course-entries';
+	}
+		this.offcanvasService.open(content);
 	}
 }

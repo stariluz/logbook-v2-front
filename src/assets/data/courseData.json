@@ -1,8 +1,16 @@
 {
     "data": [ 
-        {"id": "417", "nombre": "Analisis de Circuitos Electricos I"}, 
-        {"id": "746", "nombre": "Circuitos Electronicos"}, 
-        {"id": "846", "nombre": "Circuitos Logicos II"}, 
-        {"id": "948", "nombre": "Automatizacion Industrial"}
+        {"id": "417", "name": "Analisis de Circuitos Electricos I", "professor": {
+            "id": "17835", "name": "Jesus Manuel Muñoz Larguero"
+        }}, 
+        {"id": "746", "name": "Circuitos Electronicos", "professor": {
+            "id": "91919", "name": "Claudio Hiram Carmona Jurado"
+        }}, 
+        {"id": "846", "name": "Circuitos Logicos II", "professor": {
+            "id": "09148", "name": "Maria Cristina Maldonado Orozco"
+        }}, 
+        {"id": "948", "name": "Automatizacion Industrial", "professor": {
+            "id": "91919", "name": "Claudio Hiram Carmona Jurado"
+        }}
     ]
 }
