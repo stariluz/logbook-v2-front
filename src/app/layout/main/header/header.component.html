@@ -10,8 +10,18 @@
             </div>
         </div>
         <div class="d-flex align-items-center justify-content-end">
-            <h5 class="fs-6 m-0">L-AUTO</h5>
-            <i class="bi bi-person-square fs-4 m-3"></i>
+            <span class="fs-6 m-0 me-2">L-AUTO</span>
+            <button type="button" class="btn" (click)="userSettings.toggle($event)">
+                <i class="bi bi-person-square fs-4"></i>
+            </button>
+            <p-overlayPanel #userSettings>
+                <ng-template pTemplate>
+                    <button type="button" class="btn" (click)="userSettings.toggle($event); logout()">
+                        <i class="bi bi-box-arrow-left fs-6 me-2"></i>
+                        <span>Cerrar sesión</span>
+                    </button>
+                </ng-template>
+            </p-overlayPanel>
         </div>
     </div>
 </nav>
@@ -24,7 +34,7 @@
 	<div class="offcanvas-bg offcanvas-body p-5 pt-0">
 		<div class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
-                <h5 class="text-white fs-5 mb-4">Reportes</h5>
+                <span class="text-white fs-5 mb-4">Reportes</span>
                 <i class="bi bi-journal-text fs-5 text-white"></i>
             </div>
             <a href="/reports/student-reports">
@@ -36,7 +46,7 @@
         </div>
         <div class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
-                <h5 class="text-white fs-5 mb-4">Registros</h5>
+                <span class="text-white fs-5 mb-4">Registros</span>
                 <i class="bi bi-box-arrow-in-right fs-5 text-white"></i>
             </div>
             <a href="{{entriesRouter}}">
@@ -48,13 +58,13 @@
         </div>
         <div class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
-                <h5 class="text-white fs-5 mb-4">Datos</h5>
+                <span class="text-white fs-5 mb-4">Datos</span>
                 <i class="bi bi-database-add fs-5 text-white"></i>
             </div>
             <a href="/database/file-upload">
                 <p class="text-white fs-6 text-border">Archivos</p>
             </a>
-            <a href="#">
+            <a href="/database/users">
                 <p class="text-white fs-6 text-border">Usuarios</p>
             </a>
         </div>

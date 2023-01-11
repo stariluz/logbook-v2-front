@@ -22,6 +22,9 @@ import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DatabaseComponent } from './components/database/database.component';
 import { FileUploadComponent } from './components/database/file-upload/file-upload.component';
+import { UsersComponent } from './components/database/users/users.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { FileUploadComponent } from './components/database/file-upload/file-uplo
     StudentReportsComponent,
     ProfessorReportsComponent,
     DatabaseComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    UsersComponent,
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -49,7 +54,8 @@ import { FileUploadComponent } from './components/database/file-upload/file-uplo
     ZXingScannerModule,
     CalendarModule,
     TableModule,
-    FileUploadModule
+    FileUploadModule,
+    OverlayPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,35 @@
 <div class="w-100">
-    <h4 class="mb-5">Subida de archivos</h4>
+    <span class="fs-4 mb-5">Subir archivos</span>
     <div class="row w-100 gy-4 mt-4">
         <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <!-- Alerta de error al no ingresar correctamente el campo -->
-            <!-- <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="w-75 mb-4">{{ errorMessage }}</ngb-alert> -->
+            <!-- Alerta al tratar de actualizar la base de datos -->
+            <ngb-alert #selfClosingAlert *ngIf="message" type="{{messageType}}" (closed)="message = ''" class="w-75 mb-4">{{ message }}</ngb-alert>
             <!-- Botones para cargar, subir y eliminar archivo -->
-            <p-fileUpload name="fileUpload" #fileUpload [customUpload]="true" (uploadHandler)="onUpload($event, fileUpload)" accept=".xls,.xlsx" [maxFileSize]="10000000" [fileLimit]="1">
-                <!-- <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-                    </ul>
-                </ng-template> -->
+            <p-fileUpload name="fileUpload" styleClass="file-upload" #fileUpload accept=".xls,.xlsx"
+                [customUpload]="true"
+                [maxFileSize]="10000000"
+                [fileLimit]="1"
+                (onSelect)="getUploadedFile($event)" 
+                (uploadHandler)="onUpload(fileUpload)">
+                <!-- Template personalizado para que se muestre la información del archivo -->
+                <ng-template let-file pTemplate="file" class="file-template">
+                    <div class="row row-cols-4 text-center">
+                        <div class="col d-flex align-items-center justify-content-center">
+                            <i class="bi bi-filetype-xlsx fs-4"></i>
+                        </div>
+                        <div class="col d-flex align-items-center justify-content-center fs-6">
+                            {{ file.name }}
+                        </div>
+                        <div class="col d-flex align-items-center justify-content-center fs-6">
+                            {{ (file.size / 1000000).toFixed(2) }} MB
+                        </div>
+                        <div class="col d-flex align-items-center justify-content-center">
+                            <button type="button" class="btn btn-outline-dark cancel-file-btn" (click)="fileUpload.clear()">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-template>
             </p-fileUpload>
         </div>
         <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">

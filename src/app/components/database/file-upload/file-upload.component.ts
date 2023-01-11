@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime, finalize, Subject } from 'rxjs';
 import { DatabaseService } from 'src/app/services/database.service';
 import * as XLSX from 'xlsx';
 
@@ -9,34 +11,71 @@ import * as XLSX from 'xlsx';
 })
 export class FileUploadComponent {
 
+  // Atributos en relación al archivo cargado
+  file: any;
   uploadedFile: any;
   workbook: any;
   binaryData: any;
+
   studentsSheetName: String = 'Alumnos';
   schedulesSheetName: String = 'Horarios';
 
+  @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
+  private _message = new Subject<string>();
+  message: string = '';
+  messageType: string = '';
+
   constructor(private databaseService: DatabaseService) { }
 
-  onUpload(event: any, fileUpload: any) {
+  ngOnInit(): void {
+    // Tiempo de duración y mensaje de la alerta
+		this._message.subscribe((message) => (this.message = message));
+		this._message.pipe(debounceTime(4000)).subscribe(() => {
+			if (this.selfClosingAlert) {
+				this.selfClosingAlert.close();
+			}
+		});
+  }
+
+  // Al seleccionar un archivo se llama la función
+  getUploadedFile(event: any) {
+    // Tomamos los valores del archivo para mostrar su información al usuario
+    this.file = event.files[0];
+  }
+
+  // Al presionar el botón para subir el archivo se llama la función
+  onUpload(fileUpload: any) {
     const fileReader = new FileReader();
-    this.uploadedFile = event.files[0];
+    this.uploadedFile = this.file;
     fileReader.readAsBinaryString(this.uploadedFile);
-    
+    let updateSuccess = 0;
+    let requestNo = 0;
+
     fileReader.onload = (event: any) => {
       this.binaryData = event.target.result;
       this.workbook = XLSX.read(this.binaryData, {type: 'binary'});
 
+      // Por cada hoja realizamos una petición diferente
       this.workbook.SheetNames.forEach((sheet: any) => {
         const data = XLSX.utils.sheet_to_json(this.workbook.Sheets[sheet]);
-        // Mandamos un diferente formato para el objeto JSON dependiendo de la hoja
-        this.databaseService.uploadFile(data, sheet)
-            .subscribe((res) => {
-              if(res.status == 200) {
-                // TODO: Check if return status correct
-              } else {
-                // ...
-              }
-            });
+        this.databaseService.uploadFile(data, sheet).pipe(finalize(() => {
+          requestNo++;
+          if(requestNo == 2) {
+            if(updateSuccess == 2) {
+              this.messageType = 'success';
+              this._message.next(`Base de datos actualizada con éxito.`);
+            } else {
+              this.messageType = 'danger';
+              this._message.next(`No se ha podido actualizar la base de datos.`);
+            }
+          }
+        })).subscribe(
+          (data) => {
+            updateSuccess++;
+          },
+          (err) => {
+            console.log(err);
+          });
       });
     };
     fileUpload.clear();

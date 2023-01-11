@@ -1,0 +1,13 @@
+:host ::ng-deep {
+    .table-header {
+        margin-top: 3rem;
+        tr {
+            th, td {
+                color: #0F4C75;
+                p-sorticon .p-sortable-column-icon {
+                    color: #0F4C75;
+                }
+            }
+        }
+    }
+}

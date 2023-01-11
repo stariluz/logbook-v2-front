@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
-import { EntriesComponent } from '../entries.component';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
@@ -12,17 +11,16 @@ type Course = { id: string; name: string; professor: Professor};
 @Component({
   selector: 'app-course-entries',
   templateUrl: './course-entries.component.html',
-  styleUrls: ['./course-entries.component.css']
+  styleUrls: ['./course-entries.component.css', './course-entries.component.scss']
 })
 
 export class CourseEntriesComponent {
-  
-  // Formato del texto que se presenta al seleccionar un elemento del dropdown
-  courseFormatter = (course: Course) => `${course.name}  -  ${course.id}`;
 
   public selectedCourse?: Course;
   private courses: Course[] = [];
+  public filteredCourses: Course[] = [];
 
+  // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
@@ -48,14 +46,20 @@ export class CourseEntriesComponent {
 		});
   }
 
-  // Busqueda de los cursos/clases dentro del objeto recibido despues de realizar la petición
-  searchCourses: OperatorFunction<string, readonly { id: string; name: string, professor: Professor }[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			filter((term) => term.length >= 1),
-			map((term) => this.courses.filter((course) => new RegExp(term, 'mi').test(course.name)).slice(0, 10)),
-		);
+  // Filtra los cursos según lo ingresado por el usuario
+  filterCourse(event: any) {
+    let filtered : any[] = [];
+    let query = event.query;
+
+    for(let i = 0; i < this.courses.length; i++) {
+      let course = this.courses[i];
+      if (course.name.toLowerCase().includes(query.toLowerCase())) {
+        filtered.push(course);
+      }
+    }
+
+    this.filteredCourses = filtered;
+  }
   
   // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {

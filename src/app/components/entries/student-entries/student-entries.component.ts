@@ -5,17 +5,18 @@ import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { courseId: string; studentId: string }
+type RegisteredStudent = { studentId: string; name: string; course: string; date: String }
+type AlertMessage = { message: string; type: string }
 
 @Component({
   selector: 'app-student-entries',
   templateUrl: './student-entries.component.html',
-  styleUrls: ['./student-entries.component.css']
+  styleUrls: ['./student-entries.component.css', './student-entries.component.scss']
 })
 export class StudentEntriesComponent {
 
   public studentId?: string;
-  public registeredIds: Array<RegisteredStudent> = [];
+  public registeredStudents: Array<RegisteredStudent> = [];
   public currentCourse: any;
 
   // Atributos relacionados con la cámara
@@ -25,7 +26,10 @@ export class StudentEntriesComponent {
 
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
-  errorMessage: string = '';
+  alertMessage: AlertMessage = {
+    message: '',
+    type: ''
+  };
 
   constructor(private router: Router, private entriesService: EntriesService) { }
 
@@ -34,13 +38,13 @@ export class StudentEntriesComponent {
     this.currentCourse = localStorage.getItem('currentCourse');
     this.currentCourse = JSON.parse(this.currentCourse);
     // Almacenamos los alumnos que ya se han registrado al curso
-    let registered: any = localStorage.getItem('registeredIds');
+    let registered: any = localStorage.getItem('registeredStudents');
     registered = JSON.parse(registered);
     if(registered) {
-      this.registeredIds = registered;
+      this.registeredStudents = registered;
     }
     // Tiempo de duración y mensaje de la alerta
-		this._message.subscribe((message) => (this.errorMessage = message));
+		this._message.subscribe((message) => (this.alertMessage.message = message));
 		this._message.pipe(debounceTime(4000)).subscribe(() => {
 			if (this.selfClosingAlert) {
 				this.selfClosingAlert.close();
@@ -78,18 +82,20 @@ export class StudentEntriesComponent {
   registerStudentEntry() {
     if(!this.studentId) {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
+      this.alertMessage.type = 'danger';
       return;
     } 
     let registered = false;
-    this.registeredIds.forEach((element: RegisteredStudent) => {
+    this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {
-        if(element.courseId == this.currentCourse.id) {
+        if(element.course == this.currentCourse.name) {
           registered = true;
         }
       }
     });
     if(registered) {
       this._message.next(`Este alumno ya ha sido registrado`);
+      this.alertMessage.type = 'danger';
     } else {
       this.entriesService.registerStudentEntry({}).subscribe(
         (res) => {
@@ -99,11 +105,15 @@ export class StudentEntriesComponent {
           console.log(err);
         }
       );
-      this.registeredIds.push({
-        courseId: this.currentCourse.id,
-        studentId: this.studentId
-      });
-      localStorage.setItem('registeredIds', JSON.stringify(this.registeredIds));
+      this._message.next(`Alumno registrado correctamente`);
+      this.alertMessage.type = 'success';
+      this.registeredStudents = [...this.registeredStudents, {
+        studentId: this.studentId,
+        name: 'Mario Alberto Terán Acosta',
+        course: this.currentCourse.name,
+        date: new Date().toLocaleString()
+      }];
+      localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
       this.studentId = '';
     }
   }

@@ -1,5 +1,5 @@
 :host ::ng-deep {
-    .custom-calendar.p-calendar {
+    .custom-calendar.p-calendar, .input-autocomplete {
         width: 100%;
         .p-inputtext {
             font-family: "Barlow";
@@ -22,6 +22,23 @@
             border: none;
             border-bottom: #E14D2A solid;
             padding: 1px 2px;
+            width: 2rem;
+        }
+        .p-button:focus, .p-inputtext:focus {
+            box-shadow: none;
+        }
+    }
+    .input-autocomplete {
+        .p-autocomplete-panel {
+            border-radius: 0;
+            ul li {
+                font-family: "Barlow";
+                color: #0F4C75;
+            }
+            ul .p-highlight {
+                color: #E14D2A;
+                background-color: #0f4c750c;
+            }
         }
     }
     .table-header {

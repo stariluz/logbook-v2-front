@@ -6,22 +6,22 @@
         <!-- Campo para ingresar el laboratorio deseado -->
         <div class="col">
             <h5 class="fs-5 mb-3 w-100">Laboratorio</h5>
-            <input class="input-typeahead fs-5 w-100" type="text" placeholder="Ingrese el nombre del laboratorio" name="lab" [(ngModel)]="selectedLab" [ngbTypeahead]="searchLabs" [inputFormatter]="labFormatter" [resultFormatter]="labFormatter" [editable]="false"/>
+            <p-autoComplete styleClass="input-autocomplete" [(ngModel)]="selectedLab" [suggestions]="filteredLabs" (completeMethod)="filterLab($event)" field="name" [dropdown]="true" placeholder="Nombre del laboratorio" [forceSelection]="true"></p-autoComplete>
         </div>
-        <!-- Campo para ingresar la carrera deseada -->
+        <!-- Campo para ingresar el profesor deseado -->
         <div class="col">
-            <h5 class="fs-5 mb-3 w-100">Carrera</h5>
-            <input class="input-typeahead fs-5 w-100" type="text" placeholder="Ingrese el nombre de la carrera" name="lab" [(ngModel)]="selectedLab" [ngbTypeahead]="searchLabs" [inputFormatter]="labFormatter" [resultFormatter]="labFormatter" [editable]="false"/>
+            <h5 class="fs-5 mb-3 w-100">Profesor</h5>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="ID del profesor" name="student" [(ngModel)]="studentId"/>
         </div>
         <!-- Campo para seleccionar la clase desada -->
         <div class="col">
             <h5 class="fs-5 mb-3 w-100">Clase</h5>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese el nombre de la clase" name="course" [(ngModel)]="selectedCourse" [ngbTypeahead]="searchCourses" [inputFormatter]="courseFormatter" [resultTemplate]="rt" [editable]="false"/>
+            <p-autoComplete styleClass="input-autocomplete" [(ngModel)]="selectedCourse" [suggestions]="filteredCourses" (completeMethod)="filterCourse($event)" field="name" [dropdown]="true" placeholder="Nombre de la clase" [forceSelection]="true"></p-autoComplete>
         </div>
         <!-- Campo para seleccionar el rango de fechas -->
         <div class="col">
             <h5 class="fs-5 mb-3 w-100">Rango de fechas</h5>
-            <p-calendar styleClass="custom-calendar" placeholder="Seleccione un rango de fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range" [showIcon]="true" [numberOfMonths]="2" appendTo="body"></p-calendar>
+            <p-calendar styleClass="custom-calendar" placeholder="Rango de fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range" [showIcon]="true" [numberOfMonths]="2" appendTo="body"></p-calendar>
         </div>
     </div>
     <div class="w-100 d-flex align-items-center justify-content-end mt-4 mb-5">

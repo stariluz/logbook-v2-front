@@ -17,17 +17,17 @@ type ProfessorRegistry = { id: string; name: string; date: Date; course: string;
 })
 export class ProfessorReportsComponent {
 
-  // Formato del texto que se presenta al seleccionar un elemento del dropdown
-  labFormatter = (lab: Lab) => lab.name;
-  courseFormatter = (course: Course) => `${course.name}  -  ${course.id}`;
-
   public selectedLab?: Lab;
   public selectedCourse?: Course;
+  public studentId?: string;
   private labs: Lab[] = [];
   private courses: Course[] = [];
+  public filteredLabs: Lab[] = [];
+  public filteredCourses: Course[] = [];
   public rangeDates: Date[] = [];
   public professorReports: ProfessorRegistry[] = [];
 
+  // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
@@ -62,27 +62,39 @@ export class ProfessorReportsComponent {
 		});
   }
 
-  // Busqueda de los laboratorios dentro del objeto recibido despues de realizar la petición
-  searchLabs: OperatorFunction<string, readonly { id: string; name: string }[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			filter((term) => term.length >= 1),
-			map((term) => this.labs.filter((lab) => new RegExp(term, 'mi').test(lab.name)).slice(0, 10)),
-		);
+  // Filtra los laboratorios según lo ingresado por el usuario
+  filterLab(event: any) {
+    let filtered : any[] = [];
+    let query = event.query;
 
-  // Busqueda de los cursos/clases dentro del objeto recibido despues de realizar la petición
-  searchCourses: OperatorFunction<string, readonly { id: string; name: string, professor: Professor }[]> = (text$: Observable<string>) =>
-		text$.pipe(
-			debounceTime(200),
-			distinctUntilChanged(),
-			filter((term) => term.length >= 1),
-			map((term) => this.courses.filter((course) => new RegExp(term, 'mi').test(course.name)).slice(0, 10)),
-		);
+    for(let i = 0; i < this.labs.length; i++) {
+      let lab = this.labs[i];
+      if (lab.name.toLowerCase().includes(query.toLowerCase())) {
+        filtered.push(lab);
+      }
+    }
+
+    this.filteredLabs = filtered;
+  }
+
+  // Filtra los cursos según lo ingresado por el usuario
+  filterCourse(event: any) {
+    let filtered : any[] = [];
+    let query = event.query;
+
+    for(let i = 0; i < this.courses.length; i++) {
+      let course = this.courses[i];
+      if (course.name.toLowerCase().includes(query.toLowerCase())) {
+        filtered.push(course);
+      }
+    }
+
+    this.filteredCourses = filtered;
+  }
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getProfessorReports() {
-    if(!this.selectedLab && !this.selectedCourse) {
+    if(!this.selectedLab && !this.selectedCourse && !this.studentId) {
       this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
     } else if(this.rangeDates.length == 0) {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);

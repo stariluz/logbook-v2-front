@@ -2,11 +2,11 @@
     <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
         <!-- Alerta de error al no ingresar correctamente el campo -->
         <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="w-75 mb-4">{{ errorMessage }}</ngb-alert>
-        <!-- Campo para ingresar la clase -->
+        <!-- Campo para seleccionar la clase desada -->
         <form name="course-form" class="w-75" novalidate>
-            <p class="fs-5 mb-1">Clase</p>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese el nombre de la clase" name="course" [(ngModel)]="selectedCourse" [ngbTypeahead]="searchCourses" [inputFormatter]="courseFormatter" [resultTemplate]="rt" [editable]="false"/>
-            <button id="register-class-btn" class="btn btn-outline-dark" type="button" (click)="registerClassEntry()">Registrar</button>
+            <h5 class="fs-5 mb-3">Clase</h5>
+            <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse" [suggestions]="filteredCourses" (completeMethod)="filterCourse($event)" field="name" [dropdown]="true" placeholder="Nombre de la clase" [forceSelection]="true"></p-autoComplete>
+            <button class="btn btn-outline-dark register-class-btn" type="button" (click)="registerClassEntry()">Siguiente</button>
         </form>
     </div>
     <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
