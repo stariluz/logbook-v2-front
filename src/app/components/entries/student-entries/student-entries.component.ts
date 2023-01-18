@@ -18,6 +18,7 @@ export class StudentEntriesComponent {
   public studentId?: string;
   public registeredStudents: Array<RegisteredStudent> = [];
   public currentCourse: any;
+  private user: any;
 
   // Atributos relacionados con la cámara
   cameras: MediaDeviceInfo[]=[];
@@ -42,6 +43,11 @@ export class StudentEntriesComponent {
     registered = JSON.parse(registered);
     if(registered) {
       this.registeredStudents = registered;
+    }
+    // Tomamos el usuario actual
+    this.user = localStorage.getItem('user');
+    if (this.user) {
+      this.user = JSON.parse(this.user);
     }
     // Tiempo de duración y mensaje de la alerta
 		this._message.subscribe((message) => (this.alertMessage.message = message));
@@ -97,24 +103,44 @@ export class StudentEntriesComponent {
       this._message.next(`Este alumno ya ha sido registrado`);
       this.alertMessage.type = 'danger';
     } else {
-      this.entriesService.registerStudentEntry({}).subscribe(
+      this.entriesService.getCourse(this.currentCourse._id).subscribe(
         (res) => {
-          // TODO: Check if correct status
+          // Creamos el objeto de la entrada
+          const entry = {
+            date: new Date(),
+            course: res,
+            student: this.studentId,
+            lab: this.user.user.lab
+          }
+          // Registramos la nueva entrada
+          this.entriesService.registerStudentEntry(entry).subscribe(
+            (res) => {
+              // Revisamos si existe alumno en la base de datos con dicha matrícula
+              if(res.status == 400) {
+                this._message.next(`No se tiene alumno registrado con esta matrícula`);
+                this.alertMessage.type = 'danger';
+              } else {
+                this._message.next(`Alumno registrado correctamente`);
+                this.alertMessage.type = 'success';
+                this.registeredStudents = [...this.registeredStudents, {
+                  studentId: res.student._id,
+                  name: res.student.name,
+                  course: this.currentCourse.name,
+                  date: new Date(res.date).toLocaleString()
+                }];
+                localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
+                this.studentId = '';
+              }
+            },
+            (err) => {
+              console.log(err);
+            }
+          );
         },
         (err) => {
           console.log(err);
         }
       );
-      this._message.next(`Alumno registrado correctamente`);
-      this.alertMessage.type = 'success';
-      this.registeredStudents = [...this.registeredStudents, {
-        studentId: this.studentId,
-        name: 'Mario Alberto Terán Acosta',
-        course: this.currentCourse.name,
-        date: new Date().toLocaleString()
-      }];
-      localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
-      this.studentId = '';
     }
   }
 }

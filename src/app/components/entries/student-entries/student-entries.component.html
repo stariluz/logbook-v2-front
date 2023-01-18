@@ -2,11 +2,11 @@
     <div class="row w-100 gy-4 mt-4">
         <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
             <!-- Alerta de confirmación o error al registrar alumno -->
-            <ngb-alert #selfClosingAlert *ngIf="alertMessage.message" type="{{ alertMessage.type }}" (closed)="alertMessage.message= ''" class="w-75 mb-4">{{ alertMessage.message }}</ngb-alert>
+            <ngb-alert #selfClosingAlert *ngIf="alertMessage.message" class="alert-message" type="{{ alertMessage.type }}" (closed)="alertMessage.message= ''" class="w-75 mb-4">{{ alertMessage.message }}</ngb-alert>
             <!-- Clase actual -->
             <div class="w-75">
-                <h4 class="fs-4">{{ currentCourse.name }}</h4>
-                <h5 class="mb-4 fs-5">{{ currentCourse.professor.name }}</h5>
+                <h4 class="fs-5">{{ currentCourse.name }}</h4>
+                <h5 *ngIf="currentCourse.professor" class="mb-4 fs-5">{{ currentCourse.professor.name }}</h5>
             </div>
             <!-- Campo para ingresar la matricula del alumno -->
             <form name="professor-form" class="w-75" novalidate>
@@ -36,7 +36,7 @@
         </div>
     </div>
     <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
-    <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" styleClass="table-header">
+    <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id">Matricula <p-sortIcon field="id"></p-sortIcon></th>

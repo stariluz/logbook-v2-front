@@ -1,25 +1,28 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
-type Course = { id: string; name: string; professor: Professor};
+type Course = { code: string; name: string; group: string; professor: Professor};
 
 @Component({
-  selector: 'app-course-entries',
-  templateUrl: './course-entries.component.html',
-  styleUrls: ['./course-entries.component.css', './course-entries.component.scss']
+  selector: 'app-custom-course-entries',
+  templateUrl: './custom-course-entries.component.html',
+  styleUrls: ['./custom-course-entries.component.css', './custom-course-entries.component.scss']
 })
-
-export class CourseEntriesComponent {
-
+export class CustomCourseEntriesComponent {
   public selectedCourse?: Course;
   private courses: Course[] = [];
   public filteredCourses: Course[] = [];
   private user: any;
+
+  public displayAddCourse: boolean = false;
+
+  public courseName?: string;
+  public courseCode?: string;
 
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
@@ -35,7 +38,7 @@ export class CourseEntriesComponent {
       this.user = JSON.parse(this.user);
     }
     // Obtiene los cursos/clases por medio de una petición
-    this.entriesService.getCoursesByLab(this.user.user.lab).subscribe(
+    this.entriesService.getCourses().subscribe(
       (res) => {
         this.courses = res;
       },
@@ -66,6 +69,10 @@ export class CourseEntriesComponent {
 
     this.filteredCourses = filtered;
   }
+
+  showAddCourse() {
+    this.displayAddCourse = true;
+  }
   
   // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {
@@ -74,6 +81,37 @@ export class CourseEntriesComponent {
     } else {
       localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
       this.router.navigateByUrl('/entries/student-entries');
+    }
+  }
+
+  // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
+  registerGuestClassEntry() {
+    this.selectedCourse = this.courses.find(({code}) => code === 'GUEST');
+    localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
+    this.router.navigateByUrl('/entries/student-entries');
+  }
+
+  // Realiza una petición para agregar un nuevo curso
+  addCourse() {
+    if(this.courseName && this.courseCode) {
+      const course = {
+        code: this.courseCode,
+        name: this.courseName,
+        group: this.courseCode,
+        labs: [],
+        professor: null
+      };
+      this.entriesService.addCourse(course).subscribe(
+        (res) => {
+          window.location.reload();
+        },
+        (err) => {
+          this._message.next(`No se pudo crear el curso debido a un error en el servidor`);
+          console.log(err);
+        }
+      );
+    } else {
+      this._message.next(`Porfavor llene todos los campos solicitados`);
     }
   }
 }

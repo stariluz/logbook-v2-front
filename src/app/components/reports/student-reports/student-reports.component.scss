@@ -41,12 +41,23 @@
             }
         }
     }
-    .table-header {
-        tr th {
-            font-family: "Barlow";
-            color: #0F4C75;
-            p-sorticon .p-sortable-column-icon {
+    .report-table {
+        .p-datatable-thead {
+            border-bottom: #E14D2A solid;
+            tr th {
+                background-color: white;
                 color: #0F4C75;
+                i {
+                    color: #0F4C75;
+                }
+            }
+        }
+        .p-datatable-tbody {
+            tr {
+                border-bottom: #0F4C7550 solid;
+                td {
+                    color: #0F4C75;
+                }
             }
         }
     }

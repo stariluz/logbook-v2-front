@@ -5,8 +5,18 @@
         <!-- Campo para seleccionar la clase desada -->
         <form name="course-form" class="w-75" novalidate>
             <h5 class="fs-5 mb-3">Clase</h5>
-            <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse" [suggestions]="filteredCourses" (completeMethod)="filterCourse($event)" field="name" [dropdown]="true" placeholder="Nombre de la clase" [forceSelection]="true"></p-autoComplete>
-            <button class="btn btn-outline-dark register-class-btn" type="button" (click)="registerClassEntry()">Siguiente</button>
+            <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse" [suggestions]="filteredCourses" (completeMethod)="filterCourse($event)" field="name" [dropdown]="true" placeholder="Nombre de la clase" [forceSelection]="true">
+                <ng-template let-course pTemplate="item">
+                    <div class="d-flex flex-column">
+                        <span>{{ course.name }}</span>
+                        <span style="color: #E14D2A;">{{ course.professor.name }}</span>
+                    </div>
+                </ng-template>
+            </p-autoComplete>
+            <div class="d-flex align-items-center justify-content-between">
+                <button class="btn btn-outline-dark register-class-btn" type="button" (click)="registerClassEntry()">Siguiente</button>
+                <a class="custom-ref" href="/entries/custom-course-entries">Seleccionar otro curso</a>
+            </div>
         </form>
     </div>
     <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
@@ -16,10 +26,3 @@
         <img alt="Clases vector" src="assets/images/clases_vector.jpg" class="w-75"/>
     </div>
 </div>
-<!-- Template sobre la lista de sugerencias para la selección de la clase -->
-<ng-template #rt let-r="result" let-t="term">
-    <div class="d-flex flex-column align-items-start justify-content-center">
-        <ngb-highlight [result]="r.name" [term]="t" class="fs-6"></ngb-highlight>
-        <ngb-highlight [result]="r.professor.name" [term]="t" class="professor-dropdown fs-6"></ngb-highlight>
-    </div>
-</ng-template>

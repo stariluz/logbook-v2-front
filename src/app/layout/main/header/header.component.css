@@ -1,3 +1,12 @@
+.navbar {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: white;
+}
+
 a, .navbar-brand, .btn-header, .btn {
     font-family: 'Barlow';
     color: #0F4C75;
@@ -29,4 +38,12 @@ a, .navbar-brand, .btn-header, .btn {
 
 .text-border:hover::after {
     width: 100%;
+}
+
+.overlay-btn {
+    padding: 0;
+}
+
+.overlay-btn:active {
+    border: none;
 }

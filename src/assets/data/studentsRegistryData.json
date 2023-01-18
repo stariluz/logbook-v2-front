@@ -1,8 +1,0 @@
-{
-    "data": [ 
-        {"id": "338710", "name": "Mario Alberto Teran Acosta", "date": "10-10-2022", "lab": "Laboratorio de Automatica", "course": "Analisis de Circuitos Electricos I"}, 
-        {"id": "331122", "name": "Panchito Perez Teran Acosta", "date": "11-10-2022", "lab": "Laboratorio de Automatica", "course": "Circuitos Electronicos"}, 
-        {"id": "313131", "name": "Cristiano Ronaldo Teran Acosta", "date": "12-10-2022", "lab": "Laboratorio de Automatica", "course": "Circuitos Logicos II"}, 
-        {"id": "290606", "name": "El Bicho Siuuu Acosta", "date": "13-10-2022", "lab": "Laboratorio de Automatica", "course": "Automatizacion Industrial"}
-    ]
-}

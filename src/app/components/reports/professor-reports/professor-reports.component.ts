@@ -3,11 +3,12 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 import { ReportsService } from 'src/app/services/reports.service';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
-type Lab = { id: string; name: string }
 type Professor = { id: string; name: string }
-type Course = { id: string; name: string; professor: Professor};
+type Course = { code: string; name: string; group: string; professor: Professor};
 type ProfessorRegistry = { id: string; name: string; date: Date; course: string; lab: string }
 
 @Component({
@@ -17,15 +18,16 @@ type ProfessorRegistry = { id: string; name: string; date: Date; course: string;
 })
 export class ProfessorReportsComponent {
 
-  public selectedLab?: Lab;
+  public selectedLab?: string;
   public selectedCourse?: Course;
-  public studentId?: string;
-  private labs: Lab[] = [];
+  public professorId?: string;
+  private labs: string[] = [];
   private courses: Course[] = [];
-  public filteredLabs: Lab[] = [];
+  public filteredLabs: string[] = [];
   public filteredCourses: Course[] = [];
   public rangeDates: Date[] = [];
   public professorReports: ProfessorRegistry[] = [];
+  private user: any;
 
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
@@ -35,10 +37,19 @@ export class ProfessorReportsComponent {
   constructor(private reportsService: ReportsService, private entriesService: EntriesService) { }
 
   ngOnInit(): void {
+    // Tomamos el usuario actual
+    this.user = localStorage.getItem('user');
+    if (this.user) {
+      this.user = JSON.parse(this.user);
+    }
     // Obtiene los laboratorios por medio de una petición
     this.reportsService.getLabs().subscribe(
       (res) => {
-        this.labs = res.data;
+        res.forEach((element: any) => {
+          if (element.name) {
+            this.labs.push(String(element.name));
+          }
+        });
       },
       (err) => {
         console.log(err);
@@ -47,7 +58,7 @@ export class ProfessorReportsComponent {
     // Obtiene los cursos/clases por medio de una petición
     this.entriesService.getCourses().subscribe(
       (res) => {
-        this.courses = res.data;
+        this.courses = res;
       },
       (err) => {
         console.log(err);
@@ -69,7 +80,7 @@ export class ProfessorReportsComponent {
 
     for(let i = 0; i < this.labs.length; i++) {
       let lab = this.labs[i];
-      if (lab.name.toLowerCase().includes(query.toLowerCase())) {
+      if (lab.toLowerCase().includes(query.toLowerCase())) {
         filtered.push(lab);
       }
     }
@@ -94,19 +105,48 @@ export class ProfessorReportsComponent {
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getProfessorReports() {
-    if(!this.selectedLab && !this.selectedCourse && !this.studentId) {
+    if(!this.selectedLab && !this.selectedCourse && !this.professorId) {
       this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
     } else if(this.rangeDates.length == 0) {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
     } else {
-      this.reportsService.getProfessorReport({}).subscribe(
+      const parameters = {
+        lab: this.selectedLab,
+        professor: this.professorId,
+        courseCode: this.selectedCourse?.code,
+        courseGroup: this.selectedCourse?.group,
+        startDate: this.rangeDates[0].toISOString(),
+        endDate: this.rangeDates[1].toISOString()
+      };
+      this.reportsService.getProfessorReport(parameters).subscribe(
         (res) => {
-          this.professorReports = res.data;
+          this.professorReports = res;
+          console.log(res);
         },
         (err) => {
           console.log(err);
         }
       );
     }
+  }
+
+  // Genera el PDF del reporte obtenido
+  exportAsPDF() {
+    let DATA: any = document.getElementById('reportTable');
+    html2canvas(DATA).then((canvas) => {
+      // Foto de la tabla
+      let fileWidth = 190;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jspdf.jsPDF('p', 'mm', 'a4');
+      let position = 28;
+      PDF.addImage(FILEURI, 'PNG', 10, position, fileWidth, fileHeight);
+      // Titulo de la tabla
+      PDF.text("Reporte de entradas de maestros", 11, 15, { align: 'left' });
+      // Fecha de generación del reporte
+      PDF.setFontSize(9);
+      PDF.text(`Fecha de creación: ${new Date().toLocaleString()}`, 11, 20, { align: 'left' });
+      PDF.save('reporte-maestros.pdf');
+    });
   }
 }

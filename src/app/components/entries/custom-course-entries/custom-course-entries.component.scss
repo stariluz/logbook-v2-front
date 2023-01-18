@@ -1,6 +1,7 @@
 :host ::ng-deep {
-    .custom-calendar.p-calendar, .input-autocomplete {
+    .input-autocomplete {
         width: 100%;
+        margin-bottom: 1.25rem;
         .p-inputtext {
             font-family: "Barlow";
             color: #0F4C75;
@@ -27,8 +28,6 @@
         .p-button:focus, .p-inputtext:focus {
             box-shadow: none;
         }
-    }
-    .input-autocomplete {
         .p-autocomplete-panel {
             border-radius: 0;
             ul li {
@@ -41,24 +40,12 @@
             }
         }
     }
-    .report-table {
-        .p-datatable-thead {
-            border-bottom: #E14D2A solid;
-            tr th {
-                background-color: white;
-                color: #0F4C75;
-                i {
-                    color: #0F4C75;
-                }
-            }
-        }
-        .p-datatable-tbody {
-            tr {
-                border-bottom: #0F4C7550 solid;
-                td {
-                    color: #0F4C75;
-                }
-            }
+    .courses-dialog {
+        width: 400px;
+        max-width: 90vw;
+        background-color: white;
+        .p-dialog-header, .p-dialog-content {
+            color: #0F4C75;
         }
     }
 }

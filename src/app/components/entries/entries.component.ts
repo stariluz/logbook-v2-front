@@ -14,8 +14,8 @@ export class EntriesComponent {
   courseBtnLabel: any;
   studentBtnLabel: any;
   onCourse: boolean = false;
+  onCustomCourse: boolean = false;
   onStudent: boolean = false;
-
 
   constructor(private router: Router) { }
 
@@ -29,8 +29,9 @@ export class EntriesComponent {
   // Cambia el estado de los pasos dependiedo de la ruta actual
   currentStep() {
     this.onCourse = this.router.url == '/entries/course-entries';
+    this.onCustomCourse = this.router.url == '/entries/custom-course-entries';
     this.onStudent = this.router.url == '/entries/student-entries';
-    if(this.onCourse) {
+    if(this.onCourse || this.onCustomCourse) {
       this.enableStep(this.courseBtn, this.courseBtnLabel);
       this.disableStep(this.studentBtn, this.studentBtnLabel);
     } else if(this.onStudent) {
@@ -57,7 +58,8 @@ export class EntriesComponent {
 
   // Regresa a la ruta de la selección del curso y borra del almacenamiento local el curso actual
   returnToCourse() {
-    localStorage.clear();
+    localStorage.removeItem('currentCourse');
+    localStorage.removeItem('registeredStudents');
     this.router.navigateByUrl('/entries/course-entries');
   }
 }

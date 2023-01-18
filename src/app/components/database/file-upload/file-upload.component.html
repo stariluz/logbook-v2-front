@@ -2,8 +2,8 @@
     <span class="fs-4 mb-5">Subir archivos</span>
     <div class="row w-100 gy-4 mt-4">
         <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <!-- Alerta al tratar de actualizar la base de datos -->
-            <ngb-alert #selfClosingAlert *ngIf="message" type="{{messageType}}" (closed)="message = ''" class="w-75 mb-4">{{ message }}</ngb-alert>
+             <!-- Alerta al tratar de actualizar la base de datos -->
+            <p-messages></p-messages>
             <!-- Botones para cargar, subir y eliminar archivo -->
             <p-fileUpload name="fileUpload" styleClass="file-upload" #fileUpload accept=".xls,.xlsx"
                 [customUpload]="true"

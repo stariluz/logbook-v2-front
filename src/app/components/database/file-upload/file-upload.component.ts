@@ -48,8 +48,6 @@ export class FileUploadComponent {
     const fileReader = new FileReader();
     this.uploadedFile = this.file;
     fileReader.readAsBinaryString(this.uploadedFile);
-    let updateSuccess = 0;
-    let requestNo = 0;
 
     fileReader.onload = (event: any) => {
       this.binaryData = event.target.result;
@@ -58,24 +56,7 @@ export class FileUploadComponent {
       // Por cada hoja realizamos una petición diferente
       this.workbook.SheetNames.forEach((sheet: any) => {
         const data = XLSX.utils.sheet_to_json(this.workbook.Sheets[sheet]);
-        this.databaseService.uploadFile(data, sheet).pipe(finalize(() => {
-          requestNo++;
-          if(requestNo == 2) {
-            if(updateSuccess == 2) {
-              this.messageType = 'success';
-              this._message.next(`Base de datos actualizada con éxito.`);
-            } else {
-              this.messageType = 'danger';
-              this._message.next(`No se ha podido actualizar la base de datos.`);
-            }
-          }
-        })).subscribe(
-          (data) => {
-            updateSuccess++;
-          },
-          (err) => {
-            console.log(err);
-          });
+        this.databaseService.uploadFile(data, sheet);
       });
     };
     fileUpload.clear();

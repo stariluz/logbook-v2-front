@@ -1,7 +1,0 @@
-{
-    "data": [ 
-        {"id": "17835", "name": "Jesus Manuel Muñoz Larguero", "date": "10-10-2022", "lab": "Laboratorio de Automática", "course": "Analisis de Circuitos Electricos I"}, 
-        {"id": "97979", "name": "Claudio Hiram Carmona Jurado", "date": "11-10-2022", "lab": "Laboratorio de Automática", "course": "Circuitos Electronicos"},
-        {"id": "17835", "name": "Jesus Manuel Muñoz Larguero", "date": "12-10-2022", "lab": "Laboratorio de Automática", "course": "Circuitos Lógicos II"}
-    ]
-}
