@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 10.20.15.213 --ssl --ssl-key ./cert/key.pem --ssl-cert ./cert/cert.pem",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -26,6 +26,7 @@
     "bootstrap-icons": "^1.10.2",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
+    "pdfmake": "^0.2.7",
     "primeicons": "^6.0.1",
     "primeng": "^15.0.0-rc.1",
     "rxjs": "~7.5.0",
@@ -38,6 +39,7 @@
     "@angular/cli": "~15.0.2",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "@types/pdfmake": "^0.2.2",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

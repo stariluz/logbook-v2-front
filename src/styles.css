@@ -14,7 +14,7 @@ body, body .p-component {
 }
 
 body {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .offcanvas {

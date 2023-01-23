@@ -11,7 +11,7 @@ export class ReportsService {
   constructor(private http: HttpClient) { }
 
   getLabs(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/courses/labs/list`);
+    return this.http.get<any>(`${environment.apiUrl}/courses/current-labs/list`);
   }
 
   getStudentReport(reportParams: any): Observable<any> {

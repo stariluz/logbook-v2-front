@@ -27,7 +27,7 @@ export class UsersComponent {
   public selectedRole?: string;
   public filteredLabs: string[] = [];
   private labs: string[] = [];
-  public roles: string[] = ['Admin', 'Lab'];    // Roles existentes
+  public roles: string[] = ['Admin', 'Auxiliar'];    // Roles existentes
 
   public selectedUserId: string = '';
   public selectedUserName: string = '';

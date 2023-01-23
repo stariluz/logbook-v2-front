@@ -88,7 +88,6 @@ export class CustomCourseEntriesComponent {
   registerGuestClassEntry() {
     this.selectedCourse = this.courses.find(({code}) => code === 'GUEST');
     localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
-    this.router.navigateByUrl('/entries/student-entries');
   }
 
   // Realiza una petición para agregar un nuevo curso

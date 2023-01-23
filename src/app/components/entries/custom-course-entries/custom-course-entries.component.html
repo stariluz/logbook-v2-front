@@ -13,14 +13,16 @@
                     </div>
                 </ng-template>
             </p-autoComplete>
-            <button class="btn btn-outline-dark action-btn" type="button" (click)="registerClassEntry()">Siguiente</button>
+            <div class="d-flex align-items-center justify-content-between">
+                <button class="btn btn-outline-dark action-btn" type="button" (click)="registerClassEntry()">Siguiente</button>
+                <a class="custom-ref text-end" href="/entries/student-entries" (click)="registerGuestClassEntry()">Invitados</a>
+            </div>
         </form>
     </div>
     <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
         <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
     </div>
     <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
-        <button class="btn btn-outline-dark dark-blue-btn me-3" type="button" (click)="registerGuestClassEntry()">Invitados</button>
         <button class="btn btn-outline-dark action-btn" type="button" (click)="showAddCourse()">+ Agregar curso</button>
     </div>
 </div>

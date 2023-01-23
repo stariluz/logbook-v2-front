@@ -3,13 +3,16 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 import { ReportsService } from 'src/app/services/reports.service';
-import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { AssetsService } from 'src/app/services/assets.service';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
 type ProfessorRegistry = { id: string; name: string; date: Date; course: string; lab: string }
+
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-professor-reports',
@@ -27,14 +30,29 @@ export class ProfessorReportsComponent {
   public filteredCourses: Course[] = [];
   public rangeDates: Date[] = [];
   public professorReports: ProfessorRegistry[] = [];
+  private reports: any[] = [];
   private user: any;
+
+  // Blob de las imagenes para los reportes
+  private uachLogoBlob: any;
+  private fingLogoBlob: any;
 
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
 
-  constructor(private reportsService: ReportsService, private entriesService: EntriesService) { }
+  constructor(private assetsService: AssetsService, private reportsService: ReportsService, private entriesService: EntriesService) {
+    (pdfMake as any).fonts = {
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      }
+    };
+    this.loadImages();
+  }
 
   ngOnInit(): void {
     // Tomamos el usuario actual
@@ -121,7 +139,10 @@ export class ProfessorReportsComponent {
       this.reportsService.getProfessorReport(parameters).subscribe(
         (res) => {
           this.professorReports = res;
-          console.log(res);
+          this.reports = [];
+          this.professorReports.forEach((element: any) => {
+            this.reports.push([element.professor._id, element.professor.name, element.lab, element.course.name, element.date]);
+          });
         },
         (err) => {
           console.log(err);
@@ -130,23 +151,86 @@ export class ProfessorReportsComponent {
     }
   }
 
-  // Genera el PDF del reporte obtenido
-  exportAsPDF() {
-    let DATA: any = document.getElementById('reportTable');
-    html2canvas(DATA).then((canvas) => {
-      // Foto de la tabla
-      let fileWidth = 190;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jspdf.jsPDF('p', 'mm', 'a4');
-      let position = 28;
-      PDF.addImage(FILEURI, 'PNG', 10, position, fileWidth, fileHeight);
-      // Titulo de la tabla
-      PDF.text("Reporte de entradas de maestros", 11, 15, { align: 'left' });
-      // Fecha de generación del reporte
-      PDF.setFontSize(9);
-      PDF.text(`Fecha de creación: ${new Date().toLocaleString()}`, 11, 20, { align: 'left' });
-      PDF.save('reporte-maestros.pdf');
-    });
+  // Genera el PDF con la información del reporte
+  generatePdfReport() {
+    // Configuración del documento
+    const docDefinition: any = {
+      background: (currentPage: number, pageSize: any) => {
+        return currentPage === 1 ? [
+          {
+            margin: [30, 30, 0, 0],
+            image: this.uachLogoBlob,
+            height: 100,
+            width: 90,
+          },
+          {
+            margin: [0, -90, 20, 0],
+            image: this.fingLogoBlob,
+            alignment: 'right',
+            height: 90,
+            width: 90,
+          }
+        ] : '';
+      },
+      content: [
+        { text: 'Universidad Autónoma de Chihuahua', style: 'header' },
+        { text: 'Facultad de Ingeniería', style: 'header' },
+        { text: `Laboratorio: ${this.user.user.lab}`, style: 'header' },
+        { text: 'Bitácora de Asistencia de Profesores', style: 'header' },
+        { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'header' },
+        {
+          columns: [
+            { width: '*', text: '' },
+            {
+              width: '60%',
+              alignment: 'center',
+              margin: [0, 20, 0, 0],
+              table: {
+                headerRows: 0,
+                widths: ['*'],
+                body: [
+                  [{ text: this.selectedLab || 'Todos los laboratorios' }],
+                  [{ text: this.selectedCourse?.name || 'Todos los cursos' }],
+                  [{ text: this.professorId || 'Todos los profesores' }],
+                  [{ text: `${this.rangeDates[0].toLocaleString()} - ${this.rangeDates[1].toLocaleString()}` }],
+                ]
+              }
+            },
+            { width: '*', text: '' },
+          ],
+        },
+        {
+          margin: [0, 20, 0, 0],
+          table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
+            body: [
+              [{ text: 'Matrícula', style: 'tableHead' }, { text: 'Nombre', style: 'tableHead' }, { text: 'Laboratorio', style: 'tableHead' }, { text: 'Clase', style: 'tableHead' }, { text: 'Fecha', style: 'tableHead' }],
+              ...this.reports
+            ]
+          }
+        }
+      ],
+      styles: {
+        header: {
+          fontSize: 14,
+          bold: true,
+          alignment: 'center',
+        },
+        tableHead: {
+          fontSize: 12,
+          alignment: 'center',
+        }
+      },
+    };
+    // Creamos el PDF
+    const pdf = pdfMake.createPdf(docDefinition);
+    pdf.open();
+  }
+
+  // Convertimos las imagenes que utilizaremos en blobs
+  async loadImages() {
+    this.uachLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/uach_logo.png');
+    this.fingLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/fing_logo.png');
   }
 }

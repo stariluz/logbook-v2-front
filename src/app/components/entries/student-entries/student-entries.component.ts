@@ -67,10 +67,10 @@ export class StudentEntriesComponent {
   // En el caso que se haya escaneado un codigo exitosamente, ...
   scanSuccessHandler(event: any){
     this.studentId = event.substr(1, 6);
-    document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 rounded border-success");
+    document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
     setTimeout(function() {
-      document.getElementById("qr-scanner")?.setAttribute("class", "border rounded");
+      document.getElementById("qr-scanner")?.setAttribute("class", "border rounded w-75");
     }, 1000);
   }
 
@@ -90,7 +90,9 @@ export class StudentEntriesComponent {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
       this.alertMessage.type = 'danger';
       return;
-    } 
+    }
+    // Eliminamos los números 4400 de la matrícula escaneada
+    this.studentId = this.studentId.substr(1, 6);
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {

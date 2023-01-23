@@ -1,10 +1,10 @@
-<nav class="navbar p-5 pt-4 pb-4">
+<nav class="navbar p-4">
     <div class="d-flex align-items-center justify-content-start">
         <button class="btn btn-header p-0" (click)="open(drawer)">
             <i class="bi bi-list fs-4"></i>
         </button>
         <div class="navbar-brand ms-3 d-flex align-items-center justify-content-center">
-            <img src="assets/images/fing_logo.png" alt="Logo" style="width: 2rem;"/>
+            <img src="assets/images/fing_logo.png" alt="Logo" style="width: 2.5rem;"/>
             <span *ngIf="windowWidth >= 576" class="fs-5 ms-3">FING Labs</span>
         </div>
     </div>
@@ -50,7 +50,7 @@
             <a href="{{entriesRouter}}">
                 <p class="text-white fs-6 text-border">Entradas</p>
             </a>
-            <a *ngIf="userRole == 'admin'" href="#">
+            <a *ngIf="userRole == 'admin'" href="/inventory">
                 <p class="text-white fs-6 text-border">Inventario</p>
             </a>
         </div>

@@ -34,6 +34,7 @@ import { TokenInterceptor } from './services/token.interceptor';
 import { RoleGuard } from './services/role.guard';
 import { MessageService } from 'primeng/api';
 import { CustomCourseEntriesComponent } from './components/entries/custom-course-entries/custom-course-entries.component';
+import { InventoryComponent } from './components/inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CustomCourseEntriesComponent } from './components/entries/custom-course
     UsersComponent,
     LoginComponent,
     CustomCourseEntriesComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserAnimationsModule,

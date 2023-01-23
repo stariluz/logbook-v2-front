@@ -121,7 +121,7 @@ export class DatabaseService {
   }
 
   getLabs(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/courses/labs/list`);
+    return this.http.get<any>(`${environment.apiUrl}/courses/current-labs/list`);
   }
 
   addUser(user: any): Observable<any> {

@@ -11,7 +11,7 @@
             <!-- Campo para ingresar la matricula del alumno -->
             <form name="professor-form" class="w-75" novalidate>
                 <p class="fs-5 mb-1">Alumno</p>
-                <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="Ingrese la matricula del alumno" name="student" [(ngModel)]="studentId" (keyup.enter)="registerStudentEntry()"/>
+                <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese la matricula del alumno" name="student" [(ngModel)]="studentId" (keyup.enter)="registerStudentEntry()"/>
                 <button id="register-class-btn" class="btn btn-outline-dark" type="button" (click)="registerStudentEntry()">Registrar</button>
             </form>
         </div>
@@ -54,4 +54,5 @@
             </tr>
         </ng-template>
     </p-table>
+    <div style="height: 3rem; width: 100%; clear: both;"></div>
 </div>
