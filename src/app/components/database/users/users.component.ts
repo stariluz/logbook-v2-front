@@ -5,7 +5,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objetos para los usuarios
-type User = { name: string; permission: string};
+type User = { name: string; email: string; role: string; lab: string};
 
 @Component({
   selector: 'app-users',
@@ -21,6 +21,7 @@ export class UsersComponent {
   public displayEraseUser: boolean = false;
 
   public userName?: string;
+  public email?: string;
   public password?: string;
   public confirmedPassword?: string;
   public selectedLab?: string;
@@ -102,10 +103,11 @@ export class UsersComponent {
   }
 
   addUser() {
-    if(this.userName && this.password && this.confirmedPassword && this.selectedLab && this.selectedRole) {
+    if(this.userName && this.email && this.password && this.confirmedPassword && this.selectedLab && this.selectedRole) {
       if(this.password == this.confirmedPassword) {
         const user = {
           name: this.userName,
+          email: this.email,
           password: this.password,
           role: this.selectedRole,
           lab: this.selectedLab
@@ -137,6 +139,7 @@ export class UsersComponent {
       }
       const user = {
         name: this.userName,
+        email: this.email,
         password: this.password,
         role: this.selectedRole,
         lab: this.selectedLab

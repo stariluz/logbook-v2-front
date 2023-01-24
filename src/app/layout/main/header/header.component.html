@@ -30,7 +30,7 @@
         </button>
 	</div>
 	<div class="offcanvas-bg offcanvas-body p-5 pt-0">
-		<div class="mb-5">
+		<div *ngIf="userRole == 'admin'" class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
                 <span class="text-white fs-5 mb-4">Reportes</span>
                 <i class="bi bi-journal-text fs-5 text-white"></i>

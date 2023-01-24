@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  public userName: string = '';
+  public email: string = '';
   public password: string = '';
 
   // Referencia a la alerta
@@ -32,7 +32,7 @@ export class LoginComponent {
 
   login() {
     const user = {
-      name: this.userName,
+      email: this.email,
       password: this.password
     };
     this.authService.login(user).subscribe(
@@ -44,7 +44,7 @@ export class LoginComponent {
       },
       (err) => {
         if(err.status == 404) {
-          this._message.next(`El usuario no es válido`);
+          this._message.next(`El correo electtrónico no es válido`);
         } else if (err.status == 403) {
           this._message.next(`Contraseña incorrecta`);
         }

@@ -11,8 +11,8 @@
                 FING Labs
             </div>
             <form class="d-flex flex-column align-content-center justify-content-start w-100">
-                <span>Usuario</span>
-                <input class="input-login w-100 text-black" type="text" name="userName" (keyup.enter)="login()" [(ngModel)]="userName"/>
+                <span>Correo electrónico</span>
+                <input class="input-login w-100 text-black" type="email" name="email" (keyup.enter)="login()" [(ngModel)]="email"/>
                 <span class="mt-3">Contraseña</span>
                 <input class="input-login w-100 text-black" type="password" name="password" (keyup.enter)="login()" [(ngModel)]="password"/>
                 <button class="btn btn-outline-dark login-btn mt-4" type="button" (click)="login()">Iniciar sesión</button>
