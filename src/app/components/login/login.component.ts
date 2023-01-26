@@ -39,7 +39,7 @@ export class LoginComponent {
       (res) => {
         localStorage.setItem('user', JSON.stringify(res));
         this.router.navigateByUrl(`/entries/course-entries`).then(() => {
-			
+          //
         });
       },
       (err) => {

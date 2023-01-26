@@ -74,7 +74,8 @@
               "browserTarget": "logbook:build:production"
             },
             "development": {
-              "browserTarget": "logbook:build:development"
+              "browserTarget": "logbook:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

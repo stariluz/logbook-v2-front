@@ -1,15 +1,13 @@
-# Stage 1: build
-FROM node:18 AS development
-
-WORKDIR /frontend/src/app
-
+# Nodejs Base image
+FROM node AS development
+WORKDIR /logbook/frontend/src/app
+# install and app dependencies
 COPY package*.json ./
-
 RUN npm install
-RUN npm install -g @angular/cli@12.0.0
-
+RUN npm install -g @angular/cli
+# add app
 COPY . .
-
+# build app
 RUN npm run build
-
+# expose port
 EXPOSE 4200
