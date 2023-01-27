@@ -65,6 +65,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "logbook:build",
+            "port": 443,
             "ssl": true,
             "sslKey": "cert/key.pem",
             "sslCert": "cert/cert.pem"
