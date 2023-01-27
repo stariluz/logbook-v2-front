@@ -1,5 +1,5 @@
 # Nodejs Base image
-FROM node AS development
+FROM node:18-slim AS development
 WORKDIR /logbook/frontend/src/app
 # install and app dependencies
 COPY package*.json ./

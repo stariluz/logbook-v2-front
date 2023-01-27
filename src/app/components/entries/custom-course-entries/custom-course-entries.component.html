@@ -23,7 +23,8 @@
         <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
     </div>
     <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
-        <button class="btn btn-outline-dark action-btn" type="button" (click)="showAddCourse()">+ Agregar curso</button>
+        <button *ngIf="userRole == 'superuser'" class="btn btn-outline-dark action-btn" type="button" (click)="showAddCourse()">+ Agregar curso</button>
+        <img *ngIf="userRole != 'superuser'" alt="Clases vector" src="assets/images/clases_vector.jpg" class="w-75"/>
     </div>
 </div>
 <!-- Overlay para agregar un nuevo curso -->

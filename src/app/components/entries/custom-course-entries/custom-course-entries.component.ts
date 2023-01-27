@@ -18,6 +18,7 @@ export class CustomCourseEntriesComponent {
   private courses: Course[] = [];
   public filteredCourses: Course[] = [];
   private user: any;
+  public userRole: string = '';
 
   public displayAddCourse: boolean = false;
 
@@ -36,6 +37,7 @@ export class CustomCourseEntriesComponent {
     this.user = localStorage.getItem('user');
     if (this.user) {
       this.user = JSON.parse(this.user);
+      this.userRole = String(this.user.user.role).toLowerCase();
     }
     // Obtiene los cursos/clases por medio de una petición
     this.entriesService.getCourses().subscribe(
