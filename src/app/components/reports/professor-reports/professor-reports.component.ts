@@ -205,7 +205,7 @@ export class ProfessorReportsComponent {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
-              [{ text: 'Matrícula', style: 'tableHead' }, { text: 'Nombre', style: 'tableHead' }, { text: 'Laboratorio', style: 'tableHead' }, { text: 'Clase', style: 'tableHead' }, { text: 'Fecha', style: 'tableHead' }],
+              [{ text: 'No. Empleado', style: 'tableHead' }, { text: 'Nombre', style: 'tableHead' }, { text: 'Laboratorio', style: 'tableHead' }, { text: 'Clase', style: 'tableHead' }, { text: 'Fecha', style: 'tableHead' }],
               ...this.reports
             ]
           }

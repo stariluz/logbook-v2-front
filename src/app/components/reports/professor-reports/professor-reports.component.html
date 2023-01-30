@@ -11,7 +11,7 @@
         <!-- Campo para ingresar el profesor deseado -->
         <div class="col">
             <h5 class="fs-5 mb-3 w-100">Profesor</h5>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="ID del profesor" name="professor" [(ngModel)]="professorId"/>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="Número de empleado" name="professor" [(ngModel)]="professorId"/>
         </div>
         <!-- Campo para seleccionar la clase desada -->
         <div class="col">
@@ -39,7 +39,7 @@
     <p-table id="reportTable" *ngIf="professorReports.length > 0" [value]="professorReports" styleClass="report-table">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id">Matrícula <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="id">No. Empleado <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="group">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
                 <th pSortableColumn="course">Clase <p-sortIcon field="course"></p-sortIcon></th>
