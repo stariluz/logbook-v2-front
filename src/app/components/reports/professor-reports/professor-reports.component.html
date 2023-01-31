@@ -39,10 +39,10 @@
     <p-table id="reportTable" *ngIf="professorReports.length > 0" [value]="professorReports" styleClass="report-table">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id">No. Empleado <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="group">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
-                <th pSortableColumn="course">Clase <p-sortIcon field="course"></p-sortIcon></th>
+                <th pSortableColumn="professor._id">No. Empleado <p-sortIcon field="professor._id"></p-sortIcon></th>
+                <th pSortableColumn="professor.name">Nombre <p-sortIcon field="professor.name"></p-sortIcon></th>
+                <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
+                <th pSortableColumn="course.name">Clase <p-sortIcon field="course.name"></p-sortIcon></th>
                 <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
             </tr>
         </ng-template>
@@ -52,7 +52,7 @@
                 <td>{{entry.professor.name}}</td>
                 <td>{{entry.lab}}</td>
                 <td>{{entry.course.name}}</td>
-                <td>{{entry.date}}</td>
+                <td>{{entry.date | date: 'mediumDate' : 'UTC -6'}}</td>
             </tr>
         </ng-template>
     </p-table>

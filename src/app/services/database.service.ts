@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +26,10 @@ export class DatabaseService {
       };
 
       // Limpiamos la colección de estudiantes
-      this.http.delete(`${environment.apiUrl}/students`).subscribe(
+      this.http.delete('api/students').subscribe(
         (res) => {
           // Agregamos los nuevos estudiantes
-          this.http.post(`${environment.apiUrl}/students/file-upload`, finalStudentsData).subscribe(
+          this.http.post('api/students/file-upload', finalStudentsData).subscribe(
             (res) => {
               this.messageService.add({severity:'success', summary:'Estudiantes agregados exitosamente'});
             },
@@ -78,10 +77,10 @@ export class DatabaseService {
       };
       
       // Limpiamos la colección de profesores
-      this.http.delete(`${environment.apiUrl}/professors`).subscribe(
+      this.http.delete('api/professors').subscribe(
         (res) => {
           // Agregamos los nuevos profesores
-          this.http.post(`${environment.apiUrl}/professors/file-upload`, finalProfessorsData).subscribe(
+          this.http.post('api/professors/file-upload', finalProfessorsData).subscribe(
             (res) => {
               this.messageService.add({severity:'success', summary:'Profesores agregados exitosamente'});
             },
@@ -97,10 +96,10 @@ export class DatabaseService {
       );
       
       // Limpiamos la colección de los cursos
-      this.http.delete(`${environment.apiUrl}/courses`).subscribe(
+      this.http.delete('api/courses').subscribe(
         (res) => {
           // Agregamos los nuevos cursos
-          this.http.post(`${environment.apiUrl}/courses/file-upload`, finalCoursesData).subscribe(
+          this.http.post('api/courses/file-upload', finalCoursesData).subscribe(
             (res) => {
               this.messageService.add({severity:'success', summary:'Cursos agregados exitosamente'});
             },
@@ -117,22 +116,22 @@ export class DatabaseService {
   }
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + '/users');
+    return this.http.get<any>('api/users');
   }
 
   getLabs(): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/courses/current-labs/list`);
+    return this.http.get<any>('api/courses/current-labs/list');
   }
 
   addUser(user: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/auth/register`, user);
+    return this.http.post('api/auth/register', user);
   }
 
   updateUser(id: string, user: any): Observable<any> {
-    return this.http.patch(`${environment.apiUrl}/users/${id}`, user);
+    return this.http.patch(`api/users/${id}`, user);
   }
 
   deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${environment.apiUrl}/users/${id}`);
+    return this.http.delete(`api/users/${id}`);
   }
 }

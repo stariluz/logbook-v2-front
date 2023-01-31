@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, LOCALE_ID, ViewChild } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
@@ -6,6 +6,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AssetsService } from 'src/app/services/assets.service';
+import { formatDate } from '@angular/common';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
@@ -42,7 +43,7 @@ export class ProfessorReportsComponent {
   private _message = new Subject<string>();
   errorMessage: string = '';
 
-  constructor(private assetsService: AssetsService, private reportsService: ReportsService, private entriesService: EntriesService) {
+  constructor(@Inject(LOCALE_ID) private locale: string, private assetsService: AssetsService, private reportsService: ReportsService, private entriesService: EntriesService) {
     (pdfMake as any).fonts = {
       Roboto: {
         normal: 'Roboto-Regular.ttf',
@@ -141,7 +142,7 @@ export class ProfessorReportsComponent {
           this.professorReports = res;
           this.reports = [];
           this.professorReports.forEach((element: any) => {
-            this.reports.push([element.professor._id, element.professor.name, element.lab, element.course.name, element.date]);
+            this.reports.push([element.professor._id, element.professor.name, element.lab, element.course.name, formatDate(element.date, 'mediumDate', this.locale, 'UTC -6')]);
           });
         },
         (err) => {

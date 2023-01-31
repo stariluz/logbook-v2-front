@@ -50,7 +50,7 @@
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
                 <td>{{student.course}}</td>
-                <td>{{student.date}}</td>
+                <td>{{student.date | date: 'medium' : 'UTC -6'}}</td>
             </tr>
         </ng-template>
     </p-table>

@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
@@ -32,7 +31,7 @@ export class StudentEntriesComponent {
     type: ''
   };
 
-  constructor(private router: Router, private entriesService: EntriesService) { }
+  constructor(private entriesService: EntriesService) { }
 
   ngOnInit(): void {
     // Tomamos el objeto del curso actual
@@ -130,7 +129,7 @@ export class StudentEntriesComponent {
                   studentId: res.student._id,
                   name: res.student.name,
                   course: this.currentCourse.name,
-                  date: new Date(res.date).toLocaleString()
+                  date: res.date
                 }];
                 localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
                 this.studentId = '';
