@@ -105,6 +105,7 @@ export class StudentEntriesComponent {
     if(registered) {
       this._message.next(`Este alumno ya ha sido registrado`);
       this.alertMessage.type = 'danger';
+      this.studentId = '';
     } else {
       this.entriesService.getCourse(this.currentCourse._id).subscribe(
         (res) => {

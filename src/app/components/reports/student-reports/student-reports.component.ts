@@ -37,6 +37,7 @@ export class StudentReportsComponent {
   // Blob de las imagenes para los reportes
   private uachLogoBlob: any;
   private fingLogoBlob: any;
+  private reportSheetBlob: any;
 
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
@@ -233,6 +234,7 @@ export class StudentReportsComponent {
   async loadImages() {
     this.uachLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/uach_logo.png');
     this.fingLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/fing_logo.png');
+    this.reportSheetBlob = await this.assetsService.getAssetAsBlob('assets/images/report_sheet.jpeg');
   }
 
 }

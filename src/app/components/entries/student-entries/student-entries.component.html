@@ -23,6 +23,7 @@
                 <zxing-scanner
                     [enable]="scannerEnabled"
                     [device]="myDevice"
+                    [timeBetweenScans]="2000"
                     (camerasFound)="camerasFoundHandler($event)"
                     (scanSuccess)="scanSuccessHandler($event)"
                 ></zxing-scanner>
