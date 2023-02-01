@@ -38,6 +38,7 @@ export class CourseEntriesComponent {
     this.entriesService.getCoursesByLab(this.user.user.lab).subscribe(
       (res) => {
         this.courses = res;
+        console.log(res[0])
       },
       (err) => {
         console.log(err);
