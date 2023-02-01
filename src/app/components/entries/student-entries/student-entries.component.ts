@@ -15,6 +15,7 @@ type AlertMessage = { message: string; type: string }
 export class StudentEntriesComponent {
 
   public studentId?: string;
+  public previousStudentId?: string;
   public registeredStudents: Array<RegisteredStudent> = [];
   public currentCourse: any;
   private user: any;
@@ -94,6 +95,14 @@ export class StudentEntriesComponent {
     if(this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
       this.studentId = this.studentId.substr(1, 6);
     }
+    // Revisamos que la matricula ingresada no sea la misma que la anterior
+    if(this.studentId == this.previousStudentId) {
+      this._message.next(`Porfavor ingrese una matrícula diferente`);
+      this.alertMessage.type = 'danger';
+      return;
+    }
+    this.previousStudentId = this.studentId;
+    // Revisamos si el alumno ya se ha registrado en la base de datos
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {
