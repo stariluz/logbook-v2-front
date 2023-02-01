@@ -99,10 +99,10 @@ export class StudentEntriesComponent {
     if(this.studentId == this.previousStudentId) {
       this._message.next(`Porfavor ingrese una matrícula diferente`);
       this.alertMessage.type = 'danger';
+      this.studentId = '';
       return;
     }
     this.previousStudentId = this.studentId;
-    // Revisamos si el alumno ya se ha registrado en la base de datos
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {
@@ -115,45 +115,45 @@ export class StudentEntriesComponent {
       this._message.next(`Este alumno ya ha sido registrado`);
       this.alertMessage.type = 'danger';
       this.studentId = '';
-    } else {
-      this.entriesService.getCourse(this.currentCourse._id).subscribe(
-        (res) => {
-          // Creamos el objeto de la entrada
-          const entry = {
-            date: new Date(),
-            course: res,
-            student: this.studentId,
-            lab: this.user.user.lab
-          }
-          // Registramos la nueva entrada
-          this.entriesService.registerStudentEntry(entry).subscribe(
-            (res) => {
-              // Revisamos si existe alumno en la base de datos con dicha matrícula
-              if(res.status == 400) {
-                this._message.next(`No se tiene alumno registrado con esta matrícula`);
-                this.alertMessage.type = 'danger';
-              } else {
-                this._message.next(`Alumno registrado correctamente`);
-                this.alertMessage.type = 'success';
-                this.registeredStudents = [...this.registeredStudents, {
-                  studentId: res.student._id,
-                  name: res.student.name,
-                  course: this.currentCourse.name,
-                  date: res.date
-                }];
-                localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
-                this.studentId = '';
-              }
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      return;
     }
+    this.entriesService.getCourse(this.currentCourse._id).subscribe(
+      (res) => {
+        // Creamos el objeto de la entrada
+        const entry = {
+          date: new Date(),
+          course: res,
+          student: this.studentId,
+          lab: this.user.user.lab
+        }
+        // Registramos la nueva entrada
+        this.entriesService.registerStudentEntry(entry).subscribe(
+          (res) => {
+            // Revisamos si existe alumno en la base de datos con dicha matrícula
+            if(res.status == 400) {
+              this._message.next(`No se tiene alumno registrado con esta matrícula`);
+              this.alertMessage.type = 'danger';
+            } else {
+              this._message.next(`Alumno registrado correctamente`);
+              this.alertMessage.type = 'success';
+              this.registeredStudents = [...this.registeredStudents, {
+                studentId: res.student._id,
+                name: res.student.name,
+                course: this.currentCourse.name,
+                date: res.date
+              }];
+              localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
+              this.studentId = '';
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
