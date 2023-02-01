@@ -133,6 +133,7 @@ export class StudentEntriesComponent {
             if(res.status == 400) {
               this._message.next(`No se tiene alumno registrado con esta matrícula`);
               this.alertMessage.type = 'danger';
+              this.studentId = '';
             } else {
               this._message.next(`Alumno registrado correctamente`);
               this.alertMessage.type = 'success';
