@@ -6,7 +6,7 @@ import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
-type Course = { id: string; name: string; professor: Professor};
+type Course = { id: string; name: string; group: string; professor: Professor};
 
 @Component({
   selector: 'app-course-entries',
