@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environment/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({

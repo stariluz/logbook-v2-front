@@ -44,7 +44,7 @@ export class LoginComponent {
       },
       (err) => {
         if(err.status == 404) {
-          this._message.next(`El correo electtrónico no es válido`);
+          this._message.next(`El correo electrónico no es válido`);
         } else if (err.status == 403) {
           this._message.next(`Contraseña incorrecta`);
         }
