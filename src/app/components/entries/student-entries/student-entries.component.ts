@@ -66,7 +66,7 @@ export class StudentEntriesComponent {
 
   // En el caso que se haya escaneado un codigo exitosamente, ...
   scanSuccessHandler(event: any){
-    this.studentId = event;
+    this.studentId = event.substr(1, 6);
     document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
     setTimeout(function() {
