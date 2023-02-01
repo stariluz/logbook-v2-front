@@ -15,7 +15,7 @@ type AlertMessage = { message: string; type: string }
 export class StudentEntriesComponent {
 
   public studentId?: string;
-  public previousStudentId?: string;
+  private ended: boolean = true;
   public registeredStudents: Array<RegisteredStudent> = [];
   public currentCourse: any;
   private user: any;
@@ -66,7 +66,7 @@ export class StudentEntriesComponent {
 
   // En el caso que se haya escaneado un codigo exitosamente, ...
   scanSuccessHandler(event: any){
-    this.studentId = event.substr(1, 6);
+    this.studentId = event;
     document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
     setTimeout(function() {
@@ -86,6 +86,9 @@ export class StudentEntriesComponent {
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
   registerStudentEntry() {
+    // No ejecutamos la función si el escaneo anterior no ha terminado
+    if(!this.ended) return;
+    this.ended = false;
     if(!this.studentId) {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
       this.alertMessage.type = 'danger';
@@ -95,14 +98,7 @@ export class StudentEntriesComponent {
     if(this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
       this.studentId = this.studentId.substr(1, 6);
     }
-    // Revisamos que la matricula ingresada no sea la misma que la anterior
-    if(this.studentId == this.previousStudentId) {
-      this._message.next(`Porfavor ingrese una matrícula diferente`);
-      this.alertMessage.type = 'danger';
-      this.studentId = '';
-      return;
-    }
-    this.previousStudentId = this.studentId;
+    // Revisa si el alumno ya se ha registrado
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {
@@ -129,6 +125,8 @@ export class StudentEntriesComponent {
         // Registramos la nueva entrada
         this.entriesService.registerStudentEntry(entry).subscribe(
           (res) => {
+            // Indicamos que el escaneo anterior ha terminado
+            this.ended = true;
             // Revisamos si existe alumno en la base de datos con dicha matrícula
             if(res.status == 400) {
               this._message.next(`No se tiene alumno registrado con esta matrícula`);
