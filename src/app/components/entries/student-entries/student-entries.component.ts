@@ -92,6 +92,8 @@ export class StudentEntriesComponent {
     if(!this.studentId) {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
       this.alertMessage.type = 'danger';
+      // Indicamos que el escaneo anterior ha terminado
+      this.ended = true;
       return;
     }
     // Eliminamos los números 4400 de la matrícula escaneada
@@ -111,6 +113,8 @@ export class StudentEntriesComponent {
       this._message.next(`Este alumno ya ha sido registrado`);
       this.alertMessage.type = 'danger';
       this.studentId = '';
+      // Indicamos que el escaneo anterior ha terminado
+      this.ended = true;
       return;
     }
     this.entriesService.getCourse(this.currentCourse._id).subscribe(
