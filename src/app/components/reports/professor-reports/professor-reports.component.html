@@ -20,7 +20,7 @@
                 <ng-template let-course pTemplate="item">
                     <div class="d-flex flex-column">
                         <span>{{ course.name }}</span>
-                        <span *ngIf="course.professor" style="color: #E14D2A;">{{ course.professor.name }}</span>
+                        <span *ngIf="course.professor" style="color: #E14D2A;">{{ course.professor.name }} - {{course.group}}</span>
                     </div>
                 </ng-template>
             </p-autoComplete>
