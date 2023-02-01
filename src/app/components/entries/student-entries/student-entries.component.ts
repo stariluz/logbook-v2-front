@@ -86,6 +86,7 @@ export class StudentEntriesComponent {
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
   registerStudentEntry() {
+    console.log(this.ended)
     // No ejecutamos la función si el escaneo anterior no ha terminado
     if(!this.ended) return;
     this.ended = false;
@@ -146,11 +147,15 @@ export class StudentEntriesComponent {
             }
           },
           (err) => {
+            // Indicamos que el escaneo anterior ha terminado
+            this.ended = true;
             console.log(err);
           }
         );
       },
       (err) => {
+        // Indicamos que el escaneo anterior ha terminado
+        this.ended = true;
         console.log(err);
       }
     );
