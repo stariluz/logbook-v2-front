@@ -66,6 +66,9 @@ export class StudentEntriesComponent {
 
   // En el caso que se haya escaneado un codigo exitosamente, ...
   scanSuccessHandler(event: any){
+    // No ejecutamos la función si el escaneo anterior no ha terminado
+    if(!this.ended) return;
+    this.ended = false;
     this.studentId = event.substr(1, 6);
     document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
@@ -86,10 +89,6 @@ export class StudentEntriesComponent {
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
   registerStudentEntry() {
-    console.log(this.ended)
-    // No ejecutamos la función si el escaneo anterior no ha terminado
-    if(!this.ended) return;
-    this.ended = false;
     if(!this.studentId) {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
       this.alertMessage.type = 'danger';
