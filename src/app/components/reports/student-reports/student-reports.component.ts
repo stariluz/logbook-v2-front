@@ -167,20 +167,19 @@ export class StudentReportsComponent {
             width: pageSize.width,
           },
           { text: 'Bitácora de Asistencia de Alumnos', style: 'header', absolutePosition: { x: 160, y: 47 } },
-          { text: `Laboratorio: ${this.user.user.lab}`, style: 'text', absolutePosition: { x: 160, y: 62 } },
-          { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'text', absolutePosition: { x: 160, y: 75 } },
+          { text: `Laboratorio: ${this.user.user.lab}`, absolutePosition: { x: 160, y: 62 } },
+          { text: `Jefe de Laboratorio: ${this.user.user.name}`, absolutePosition: { x: 160, y: 75 } },
           // // { text: 'Parámetros', bold: true,, margin: [120, 2, 0, 0] },
-          { text: this.selectedLab || 'Todos los laboratorios', style: 'text', absolutePosition: { x: 160, y: 88 } },
-          { text: this.selectedCourse?.name || 'Todos los cursos', style: 'text', absolutePosition: { x: 160, y: 101 } },
-          { text: this.studentId || 'Todos los alumnos', style: 'text', absolutePosition: { x: 160, y: 114 } },
-          { text: `Del ${formatDate(this.rangeDates[0], 'shortDate', this.locale, 'UTC -6')} al ${formatDate(this.rangeDates[1], 'shortDate', this.locale, 'UTC -6')}`, style: 'text', absolutePosition: { x: 160, y: 127 } },
-          // {
-          //   margin: [0, -90, 20, 0],
-          //   image: this.fingLogoBlob,
-          //   alignment: 'right',
-          //   height: 90,
-          //   width: 90,
-          // }
+          { text: this.selectedLab || 'Todos los laboratorios', absolutePosition: { x: 160, y: 88 } },
+          { text: this.selectedCourse?.name || 'Todos los cursos', absolutePosition: { x: 160, y: 101 } },
+          { text: this.studentId || 'Todos los alumnos', absolutePosition: { x: 160, y: 114 } },
+          { text: `Del ${formatDate(this.rangeDates[0], 'shortDate', this.locale, 'UTC -6')} al ${formatDate(this.rangeDates[1], 'shortDate', this.locale, 'UTC -6')}`, absolutePosition: { x: 160, y: 127 } },
+          {
+            image: this.fingLogoBlob,
+            height: 90,
+            width: 90,
+            absolutePosition: { x: 240, y: 88 },
+          }
         ];
       },
       content: [
@@ -210,9 +209,6 @@ export class StudentReportsComponent {
         tableHeader: {
           color: 'black',
         },
-        text: {
-          color: '#555555',
-        }
       },
     };
     // Creamos el PDF
