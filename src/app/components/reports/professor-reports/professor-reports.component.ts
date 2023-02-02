@@ -130,13 +130,15 @@ export class ProfessorReportsComponent {
     } else if(this.rangeDates.length == 0) {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
     } else {
+      // Sumo un dia a la fecha final para que incluya el ultimo dia
+      const endDate = new Date(this.rangeDates[1].getDate() + 1);
       const parameters = {
         lab: this.selectedLab,
         professor: this.professorId,
         courseCode: this.selectedCourse?.code,
         courseGroup: this.selectedCourse?.group,
         startDate: this.rangeDates[0].toISOString(),
-        endDate: this.rangeDates[1].toISOString()
+        endDate: endDate.toISOString()
       };
       this.reportsService.getProfessorReport(parameters).subscribe(
         (res) => {
