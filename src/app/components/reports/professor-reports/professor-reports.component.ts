@@ -131,7 +131,7 @@ export class ProfessorReportsComponent {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
     } else {
       // Sumo un dia a la fecha final para que incluya el ultimo dia
-      const endDate = new Date(this.rangeDates[1].getDate() + 1);
+      const endDate = this.rangeDates[1].getDate() + 1;
       console.log(endDate)
       const parameters = {
         lab: this.selectedLab,
