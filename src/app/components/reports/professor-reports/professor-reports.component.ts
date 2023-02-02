@@ -139,7 +139,7 @@ export class ProfessorReportsComponent {
         courseCode: this.selectedCourse?.code,
         courseGroup: this.selectedCourse?.group,
         startDate: this.rangeDates[0].toISOString(),
-        endDate: endDate.toISOString()
+        endDate: endDate
       };
       this.reportsService.getProfessorReport(parameters).subscribe(
         (res) => {
