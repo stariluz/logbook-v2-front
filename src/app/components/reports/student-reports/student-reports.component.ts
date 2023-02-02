@@ -131,15 +131,17 @@ export class StudentReportsComponent {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
     } else {
       // Sumo un dia a la fecha final para que incluya el ultimo dia
-      const endDate = new Date(this.rangeDates[1].getDate() + 1);
+      this.rangeDates[1].setDate(this.rangeDates[1].getDate() + 1);
       const parameters = {
         lab: this.selectedLab,
         student: this.studentId,
         courseCode: this.selectedCourse?.code,
         courseGroup: this.selectedCourse?.group,
         startDate: this.rangeDates[0].toISOString(),
-        endDate: endDate.toISOString()
+        endDate: this.rangeDates[1].toISOString()
       };
+      // Resto un dia a la fecha final para que no afecte a la siguiente consulta
+      this.rangeDates[1].setDate(this.rangeDates[1].getDate() - 1);
       this.reportsService.getStudentReport(parameters).subscribe(
         (res) => {
           this.studentReports = res;
