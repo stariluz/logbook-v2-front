@@ -157,71 +157,61 @@ export class StudentReportsComponent {
   generatePdfReport() {
     // Configuración del documento
     const docDefinition: any = {
+      pageSize: 'LETTER',
+      pageMargins: [40, 170, 40, 80],
       background: (currentPage: number, pageSize: any) => {
-        return currentPage === 1 ? [
+        return [
           {
-            margin: [30, 30, 0, 0],
-            image: this.uachLogoBlob,
-            height: 100,
-            width: 90,
+            image: this.reportSheetBlob,
+            height: pageSize.height,
+            width: pageSize.width,
           },
-          {
-            margin: [0, -90, 20, 0],
-            image: this.fingLogoBlob,
-            alignment: 'right',
-            height: 90,
-            width: 90,
-          }
-        ] : '';
+          { text: 'Bitácora de Asistencia de Alumnos', style: 'header', absolutePosition: { x: 160, y: 47 } },
+          { text: `Laboratorio: ${this.user.user.lab}`, style: 'text', absolutePosition: { x: 160, y: 62 } },
+          { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'text', absolutePosition: { x: 160, y: 75 } },
+          // // { text: 'Parámetros', bold: true,, margin: [120, 2, 0, 0] },
+          { text: this.selectedLab || 'Todos los laboratorios', style: 'text', absolutePosition: { x: 160, y: 88 } },
+          { text: this.selectedCourse?.name || 'Todos los cursos', style: 'text', absolutePosition: { x: 160, y: 101 } },
+          { text: this.studentId || 'Todos los alumnos', style: 'text', absolutePosition: { x: 160, y: 114 } },
+          { text: `Del ${formatDate(this.rangeDates[0], 'shortDate', this.locale, 'UTC -6')} al ${formatDate(this.rangeDates[1], 'shortDate', this.locale, 'UTC -6')}`, style: 'text', absolutePosition: { x: 160, y: 127 } },
+          // {
+          //   margin: [0, -90, 20, 0],
+          //   image: this.fingLogoBlob,
+          //   alignment: 'right',
+          //   height: 90,
+          //   width: 90,
+          // }
+        ];
       },
       content: [
-        { text: 'Universidad Autónoma de Chihuahua', style: 'header' },
-        { text: 'Facultad de Ingeniería', style: 'header' },
-        { text: `Laboratorio: ${this.user.user.lab}`, style: 'header' },
-        { text: 'Bitácora de Asistencia de Alumnos', style: 'header' },
-        { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'header' },
         {
-          columns: [
-            { width: '*', text: '' },
-            {
-              width: '60%',
-              alignment: 'center',
-              margin: [0, 20, 0, 0],
-              table: {
-                headerRows: 0,
-                widths: ['*'],
-                body: [
-                  [{ text: this.selectedLab || 'Todos los laboratorios' }],
-                  [{ text: this.selectedCourse?.name || 'Todos los cursos' }],
-                  [{ text: this.studentId || 'Todos los alumnos' }],
-                  [{ text: `${this.rangeDates[0].toLocaleString()} - ${this.rangeDates[1].toLocaleString()}` }],
-                ]
-              }
-            },
-            { width: '*', text: '' },
-          ],
-        },
-        {
-          margin: [0, 20, 0, 0],
+          layout: 'lightHorizontalLines',
           table: {
             headerRows: 1,
             widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
-              [{ text: 'Matrícula', style: 'tableHead' }, { text: 'Nombre', style: 'tableHead' }, { text: 'Laboratorio', style: 'tableHead' }, { text: 'Clase', style: 'tableHead' }, { text: 'Fecha', style: 'tableHead' }],
+              [{ text: 'Matrícula', style: 'tableHeader' }, { text: 'Nombre', style: 'tableHeader' }, { text: 'Laboratorio', style: 'tableHeader' }, { text: 'Clase', style: 'tableHeader' }, { text: 'Fecha', style: 'tableHeader' }],
               ...this.reports
             ]
           }
         }
       ],
+      defaultStyle: {
+        fontSize: 11,
+        alignment: 'start',
+        color: '#444444',
+      },
       styles: {
         header: {
-          fontSize: 14,
           bold: true,
-          alignment: 'center',
-        },
-        tableHead: {
           fontSize: 12,
-          alignment: 'center',
+          color: 'black',
+        },
+        tableHeader: {
+          color: 'black',
+        },
+        text: {
+          color: '#555555',
         }
       },
     };
@@ -234,7 +224,7 @@ export class StudentReportsComponent {
   async loadImages() {
     this.uachLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/uach_logo.png');
     this.fingLogoBlob = await this.assetsService.getAssetAsBlob('assets/images/fing_logo.png');
-    this.reportSheetBlob = await this.assetsService.getAssetAsBlob('assets/images/report_sheet.jpeg');
+    this.reportSheetBlob = await this.assetsService.getAssetAsBlob('assets/images/report_sheet.png');
   }
 
 }
