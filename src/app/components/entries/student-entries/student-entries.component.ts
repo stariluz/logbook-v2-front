@@ -69,7 +69,8 @@ export class StudentEntriesComponent {
     // No ejecutamos la función si el escaneo anterior no ha terminado
     if(!this.ended) return;
     this.ended = false;
-    this.studentId = event.substr(1, 6);
+    // this.studentId = event.substr(1, 6);
+    this.studentId = event;
     document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
     setTimeout(function() {
