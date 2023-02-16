@@ -28,4 +28,8 @@ export class EntriesService {
   registerStudentEntry(obj: any): Observable<any> {
     return this.http.post<any>('api/entries', obj);
   }
+
+  deleteStudentEntry(id: string): Observable<any> {
+    return this.http.delete<any>(`api/entries/${id}`);
+  }
 }

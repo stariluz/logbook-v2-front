@@ -4,7 +4,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { studentId: string; name: string; course: string; date: String }
+type RegisteredStudent = { registryId: string; studentId: string; name: string; course: string; date: String }
 type AlertMessage = { message: string; type: string }
 
 @Component({
@@ -141,6 +141,7 @@ export class StudentEntriesComponent {
               this._message.next(`Alumno registrado correctamente`);
               this.alertMessage.type = 'success';
               this.registeredStudents = [...this.registeredStudents, {
+                registryId: res._id,
                 studentId: res.student._id,
                 name: res.student.name,
                 course: this.currentCourse.name,
@@ -163,5 +164,25 @@ export class StudentEntriesComponent {
         console.log(err);
       }
     );
+  }
+
+  deleteRegistry(registryId: string) {
+    // Elimiamos el registro de la base de datos
+    this.entriesService.deleteStudentEntry(registryId).subscribe(
+      (res) => {
+        this._message.next(`Registro eliminado correctamente`);
+        this.alertMessage.type = 'info';
+        // Obtenemos el indice del elemento eliminado con el id del estudiante
+        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.studentId == res.student);
+        // Eliminamos el elemento del arreglo
+        this.registeredStudents.splice(index, 1);
+        this.registeredStudents = [...this.registeredStudents];
+        localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
+      },
+      (err) => {
+        this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);
+        console.log(err);
+      }
+    )
   }
 }
