@@ -15,7 +15,7 @@ type AlertMessage = { message: string; type: string }
 export class StudentEntriesComponent {
 
   public studentId?: string;
-  private ended: boolean = true;
+  private requestInProgress: boolean = false;
   public registeredStudents: Array<RegisteredStudent> = [];
   public currentCourse: any;
   private user: any;
@@ -66,10 +66,6 @@ export class StudentEntriesComponent {
 
   // En el caso que se haya escaneado un codigo exitosamente, ...
   scanSuccessHandler(event: any){
-    // No ejecutamos la función si el escaneo anterior no ha terminado
-    if(!this.ended) return;
-    this.ended = false;
-    // this.studentId = event.substr(1, 6);
     this.studentId = event;
     document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
     this.registerStudentEntry();
@@ -90,17 +86,18 @@ export class StudentEntriesComponent {
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
   registerStudentEntry() {
+    // Revisamos que se haya ingresado una matrícula
     if(!this.studentId) {
       this._message.next(`Porfavor ingrese la matrícula del alumno`);
       this.alertMessage.type = 'danger';
-      // Indicamos que el escaneo anterior ha terminado
-      this.ended = true;
       return;
     }
+
     // Eliminamos los números 4400 de la matrícula escaneada
     if(this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
       this.studentId = this.studentId.substr(1, 6);
     }
+
     // Revisa si el alumno ya se ha registrado
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
@@ -114,10 +111,18 @@ export class StudentEntriesComponent {
       this._message.next(`Este alumno ya ha sido registrado`);
       this.alertMessage.type = 'danger';
       this.studentId = '';
-      // Indicamos que el escaneo anterior ha terminado
-      this.ended = true;
       return;
     }
+
+    // Revisa si existe una petición en curso
+    if(this.requestInProgress) {
+      this._message.next(`Porfavor espere a que termine de ser registrada la entrada anterior`);
+      this.alertMessage.type = 'warning';
+      return;
+    }
+
+    // Indicamos que se ha iniciado una petición
+    this.requestInProgress = true;
     this.entriesService.getCourse(this.currentCourse._id).subscribe(
       (res) => {
         // Creamos el objeto de la entrada
@@ -130,8 +135,6 @@ export class StudentEntriesComponent {
         // Registramos la nueva entrada
         this.entriesService.registerStudentEntry(entry).subscribe(
           (res) => {
-            // Indicamos que el escaneo anterior ha terminado
-            this.ended = true;
             // Revisamos si existe alumno en la base de datos con dicha matrícula
             if(res.status == 400) {
               this._message.next(`No se tiene alumno registrado con esta matrícula`);
@@ -150,17 +153,19 @@ export class StudentEntriesComponent {
               localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
               this.studentId = '';
             }
+            // Indicamos que ha terminado la petición
+            this.requestInProgress = false;
           },
           (err) => {
-            // Indicamos que el escaneo anterior ha terminado
-            this.ended = true;
+            // Indicamos que ha terminado la petición
+            this.requestInProgress = false;
             console.log(err);
           }
         );
       },
       (err) => {
-        // Indicamos que el escaneo anterior ha terminado
-        this.ended = true;
+        // Indicamos que ha terminado la petición
+        this.requestInProgress = false;
         console.log(err);
       }
     );
