@@ -5,9 +5,13 @@ WORKDIR /logbook/frontend/src/app
 COPY package*.json ./
 RUN npm install
 RUN npm install -g @angular/cli
-RUN npm run build
+
+# RUN npm run build
+
 # expose port
 EXPOSE 443
+
+CMD [ "npm", "run", "build" ]
 
 # Production
 FROM node:18-slim AS production
