@@ -35,8 +35,7 @@ import { RoleGuard } from './services/role.guard';
 import { MessageService } from 'primeng/api';
 import { CustomCourseEntriesComponent } from './components/entries/custom-course-entries/custom-course-entries.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
-import { SocialServiceComponent } from './components/social-service/social-service.component';
-import { SocialServiceLocationComponent } from './components/social-service/social-service-location/social-service-location.component';
+import { SocialServiceModule } from './components/social-service/social-service.module';
 
 @NgModule({
   declarations: [
@@ -55,8 +54,6 @@ import { SocialServiceLocationComponent } from './components/social-service/soci
     LoginComponent,
     CustomCourseEntriesComponent,
     InventoryComponent,
-    SocialServiceComponent,
-    SocialServiceLocationComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -76,6 +73,7 @@ import { SocialServiceLocationComponent } from './components/social-service/soci
     DropdownModule,
     MessagesModule,
     MessageModule,
+    SocialServiceModule,
   ],
   providers: [
     AuthGuard,

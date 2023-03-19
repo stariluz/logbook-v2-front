@@ -1,10 +1,10 @@
 <div class="h-100 w-100 p-4">
     <div class="d-flex align-items-center justify-content-between mb-5">
-        <h4>Registro de entradas</h4>
-        <button id="new-course-btn" class="btn btn-outline-dark" *ngIf="onStudent" (click)="returnToCourse()">
+        <h4>Registro de entradas del Servicio Social</h4>
+        <!-- <button id="new-course-btn" class="btn btn-outline-dark" *ngIf="onStudent" (click)="returnToCourse()">
             <i class="bi bi-arrow-clockwise p-0 me-1"></i>
             Nueva clase
-        </button>
+        </button> -->
     </div>
     <div class="position-relative mt-5 mb-5 pt-3 pb-3">
         <!-- Indica el punto en el que estamos durante el registro de entradas -->
@@ -16,6 +16,23 @@
             <p id="student-btn-label" class="position-absolute fs-6">Registro</p>
         </div>
     </div>
-    <!-- Ruta hacia los componentes de registro -->
-    <router-outlet (activate)="currentStep()"></router-outlet>
+    <div class="row w-100 gy-4 mt-4">
+        <div class="col-1"></div>
+        <div class="col-lg-4 col-md-12 d-flex flex-column align-items-left justify-content-center">
+            <!-- Indica el punto en el que estamos durante el registro de entradas -->
+            <h4>Sitio</h4>
+            <p>{{ user.user.lab }}</p>
+            <h4>Encargado</h4>
+            <p>{{ user.user.name }}</p>
+        </div>
+        <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
+            <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
+        </div>
+        <div class="col-lg-4 col-md-12 d-flex flex-column align-items-left justify-content-center">
+            <h4>Alumno</h4>
+
+        </div>
+        <div class="col-1"></div>
+    </div>
 </div>
+
