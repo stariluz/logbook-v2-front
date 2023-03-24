@@ -1,29 +1,24 @@
 <div class="h-100 w-100 p-4">
     <div class="d-flex align-items-center justify-content-between mb-5">
         <h4>Registro de entradas del Servicio Social</h4>
-        <!-- <button id="new-course-btn" class="btn btn-outline-dark" *ngIf="onStudent" (click)="returnToCourse()">
-            <i class="bi bi-arrow-clockwise p-0 me-1"></i>
-            Nueva clase
-        </button> -->
     </div>
     <div class="position-relative mt-5 mb-5 pt-3 pb-3">
-        <!-- Indica el punto en el que estamos durante el registro de entradas -->
         <div class="progress" style="height: 1px;">
             <div class="progressbar" aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar" style="width: 100%;"></div>
-            <button id="course-btn" type="button" id="course-btn" class="position-absolute btn btn-sm rounded-pill" style="width: 2rem; height: 2rem;">1</button>
-            <p id="course-btn-label" class="position-absolute fs-6">Lugar del Servicio</p>
-            <button id="student-btn" type="button" id="student-btn" class="position-absolute btn btn-sm rounded-pill" style="width: 2rem; height: 2rem;">2</button>
-            <p id="student-btn-label" class="position-absolute fs-6">Registro</p>
         </div>
     </div>
-    <div class="row w-100 gy-4 mt-4">
+    <div class="w-100 gy-4 mt-4">
+
+        <app-ss-entries></app-ss-entries>
+        
+    </div>
+    <!-- <div class="row w-100 gy-4 mt-4">
         <div class="col-1"></div>
         <div class="col-lg-4 col-md-12 d-flex flex-column align-items-left justify-content-center">
-            <!-- Indica el punto en el que estamos durante el registro de entradas -->
             <h4>Sitio</h4>
-            <p>{{ user.user.lab }}</p>
+            <p class="uppercase">{{ user.user.lab }}</p>
             <h4>Encargado</h4>
-            <p>{{ user.user.name }}</p>
+            <p class="uppercase">{{ user.user.name }}</p>
         </div>
         <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
             <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
@@ -33,6 +28,6 @@
 
         </div>
         <div class="col-1"></div>
-    </div>
+    </div> -->
 </div>
 

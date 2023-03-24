@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DatabaseService } from 'src/app/services/database.service';
 
 // Tipado de objetos para los usuarios
 type User = { name: string; email: string; role: string; lab: string};
@@ -11,13 +10,14 @@ type User = { name: string; email: string; role: string; lab: string};
 })
 export class MainPageComponent {
 
-  public user: any;
+  // public c_User: any;
 
-  ngOnInit(): void {
-    this.user = localStorage.getItem('user');
-    if (this.user) {
-      this.user = JSON.parse(this.user);
-    }
-    console.log(this.user.user); // Imprimir la variable user en la consola
-  }
+  // ngOnInit(): void {
+  //   this.c_User = localStorage.getItem('user');
+  //   if (this.user) {
+  //     this.c_User = JSON.parse(this.c_User);
+  //   }
+  //   console.log(this.c_User); // Imprimir la variable user en la consola
+  //   console.log(this.c_User.user); // Imprimir la variable user en la consola
+  // }
 }

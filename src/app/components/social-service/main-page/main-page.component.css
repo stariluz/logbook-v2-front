@@ -1,6 +1,9 @@
 .progress-bar {
     background-color: #E14D2A;
 }
+.uppercase {
+    text-transform: uppercase;
+}
 
 #course-btn, #student-btn {
     pointer-events: none;
