@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; name: string; course: string; date: String }
+type RegisteredStudent = { registryId: string; studentId: string; name: string; date: string; time: string; }
 type AlertMessage = { message: string; type: string }
-type User = { name: string; email: string; role: string; lab: string};
+
 
 @Component({
   selector: 'app-ss-entries',
@@ -21,9 +21,6 @@ export class SsEntriesComponent {
   private user: any;
   public c_User: any;
 
-  // Atributos relacionados con la cámara
-  scannerEnabled = false;
-
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   alertMessage: AlertMessage = {
@@ -34,20 +31,31 @@ export class SsEntriesComponent {
   constructor(private entriesService: EntriesService) { }
 
   ngOnInit(): void {
-      this.c_User = localStorage.getItem('user');
-      if (this.c_User) {
-        this.c_User = JSON.parse(this.c_User);
-      }
-  }
-
-  // En el caso que se haya escaneado un codigo exitosamente, ...
-  scanSuccessHandler(event: any){
-    this.studentId = event;
-    document.getElementById("qr-scanner")?.setAttribute("class", "border border-4 w-75 rounded border-success");
-    this.registerStudentEntry();
-    setTimeout(function() {
-      document.getElementById("qr-scanner")?.setAttribute("class", "border rounded w-75");
-    }, 1000);
+    this.c_User = localStorage.getItem('user');
+    if (this.c_User) {
+      this.c_User = JSON.parse(this.c_User);
+    }
+    // Tomamos el objeto del curso actual
+    this.currentCourse = localStorage.getItem('currentCourse');
+    this.currentCourse = JSON.parse(this.currentCourse);
+    // Almacenamos los alumnos que ya se han registrado al curso
+    let registered: any = localStorage.getItem('SS-register');
+    registered = JSON.parse(registered);
+    if(registered) {
+      this.registeredStudents = registered;
+    }
+    // Tomamos el usuario actual
+    this.user = localStorage.getItem('user');
+    if (this.user) {
+      this.user = JSON.parse(this.user);
+    }
+    // Tiempo de duración y mensaje de la alerta
+		this._message.subscribe((message) => (this.alertMessage.message = message));
+		this._message.pipe(debounceTime(4000)).subscribe(() => {
+			if (this.selfClosingAlert) {
+				this.selfClosingAlert.close();
+			}
+		});
   }
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
@@ -68,9 +76,7 @@ export class SsEntriesComponent {
     let registered = false;
     this.registeredStudents.forEach((element: RegisteredStudent) => {
       if(element.studentId == this.studentId) {
-        if(element.course == this.currentCourse.name) {
-          registered = true;
-        }
+        registered = true;
       }
     });
     if(registered) {
@@ -92,14 +98,29 @@ export class SsEntriesComponent {
     this.entriesService.getCourse(this.currentCourse._id).subscribe(
       (res) => {
         // Creamos el objeto de la entrada
+        const date = new Date();
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear().toString();
+        const actualdate = `${year}-${month}-${day}`;
+
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const actualtime = `${hour}:${minute}`;
+
+        console.log(actualdate)
+        console.log(actualtime)
+
         const entry = {
-          date: new Date(),
+          date: actualdate,
+          time: actualtime,
           course: res,
           student: this.studentId,
           lab: this.user.user.lab
         }
+        
         // Registramos la nueva entrada
-        this.entriesService.registerStudentEntry(entry).subscribe(
+        this.entriesService.registerSSEntry(entry).subscribe(
           (res) => {
             // Revisamos si existe alumno en la base de datos con dicha matrícula
             if(res.status == 400) {
@@ -113,10 +134,10 @@ export class SsEntriesComponent {
                 registryId: res._id,
                 studentId: res.student._id,
                 name: res.student.name,
-                course: this.currentCourse.name,
-                date: res.date
+                date: res.date,
+                time: res.time
               }];
-              localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
+              localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
               this.studentId = '';
             }
             // Indicamos que ha terminado la petición
@@ -148,7 +169,7 @@ export class SsEntriesComponent {
         // Eliminamos el elemento del arreglo
         this.registeredStudents.splice(index, 1);
         this.registeredStudents = [...this.registeredStudents];
-        localStorage.setItem('registeredStudents', JSON.stringify(this.registeredStudents));
+        localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },
       (err) => {
         this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);

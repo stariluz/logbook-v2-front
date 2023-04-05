@@ -27,20 +27,24 @@
     <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
         <ng-template pTemplate="header">
             <tr>
+                <th pSortableColumn="cosa">COSA <p-sortIcon field="cosa"></p-sortIcon></th>
                 <th pSortableColumn="id">Matricula <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="course">Clase <p-sortIcon field="course"></p-sortIcon></th>
-                <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+                <th pSortableColumn="startTime">Hora Entrada <p-sortIcon field="startTime"></p-sortIcon></th>
+                <th pSortableColumn="endTime">Hora Salida <p-sortIcon field="endTime"></p-sortIcon></th>
                 <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student>
             <tr>
+                <td>{{student}}</td>
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
-                <td>{{student.course}}</td>
-                <td>{{student.date | date: 'medium' : 'UTC -6'}}</td>
+                <td>{{student.date}}</td>
+                <td>{{student.time}}</td>
+                <td></td>
                 <td>
                     <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteRegistry(student.registryId)">
                         <i class="bi bi-trash fs-6"></i>
