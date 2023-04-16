@@ -29,15 +29,19 @@ export class EntriesService {
     return this.http.post<any>('api/entries', obj);
   }
 
-  registerSSEntry(obj: any): Observable<any> {
-    return this.http.post<any>('api/entries', obj);
-  }
-
   deleteStudentEntry(id: string): Observable<any> {
     return this.http.delete<any>(`api/entries/${id}`);
   }
 
-  updateStudentEntry(id: string, student: any): Observable<any> {
-    return this.http.patch<any>(`api/entries/${id}`, student);
+  registerSSEntry(obj: any): Observable<any> {
+    return this.http.post<any>('api/ssRegister', obj);
+  }
+
+  deleteSSEntry(id: string): Observable<any> {
+    return this.http.delete<any>(`api/ssRegister/${id}`);
+  }
+
+  updateSSEntry(id: string, student: any): Observable<any> {
+    return this.http.patch<any>(`api/ssRegister/${id}`, student);
   }
 }

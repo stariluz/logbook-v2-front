@@ -158,7 +158,7 @@ export class SsEntriesComponent {
 
   deleteRegistry(registryId: string) {
     // Elimiamos el registro de la base de datos
-    this.entriesService.deleteStudentEntry(registryId).subscribe(
+    this.entriesService.deleteSSEntry(registryId).subscribe(
       (res) => {
         this._message.next(`Registro eliminado correctamente`);
         this.alertMessage.type = 'info';
@@ -178,7 +178,7 @@ export class SsEntriesComponent {
 
   checkEndTime(student: RegisteredStudent) {
     // Elimiamos el registro de la base de datos
-    this.entriesService.updateStudentEntry(student.registryId, student).subscribe(
+    this.entriesService.updateSSEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
