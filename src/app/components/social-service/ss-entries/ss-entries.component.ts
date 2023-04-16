@@ -4,7 +4,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; name: string; date: string; time: string; }
+type RegisteredStudent = { registryId: string; studentId: string; name: string; date: String; end_time: String; }
 type AlertMessage = { message: string; type: string }
 
 
@@ -98,22 +98,20 @@ export class SsEntriesComponent {
     this.entriesService.getCourse(this.currentCourse._id).subscribe(
       (res) => {
         // Creamos el objeto de la entrada
-        const date = new Date();
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear().toString();
-        const actualdate = `${year}-${month}-${day}`;
+        // const date = new Date();
+        // const day = date.getDate().toString().padStart(2, '0');
+        // const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        // const year = date.getFullYear().toString();
+        // const actualdate = `${year}-${month}-${day}`;
 
-        const hour = date.getHours();
-        const minute = date.getMinutes();
-        const actualtime = `${hour}:${minute}`;
+        // const hour = date.getHours();
+        // const minute = date.getMinutes();
+        // const actualtime = `${hour}:${minute}`;
 
-        console.log(actualdate)
-        console.log(actualtime)
+        const date = new Date().toString();
 
         const entry = {
-          date: actualdate,
-          time: actualtime,
+          date: date,
           course: res,
           student: this.studentId,
           lab: this.user.user.lab
@@ -134,8 +132,8 @@ export class SsEntriesComponent {
                 registryId: res._id,
                 studentId: res.student._id,
                 name: res.student.name,
-                date: res.date,
-                time: res.time
+                date: date,
+                end_time: ""
               }];
               localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
               this.studentId = '';
@@ -170,6 +168,22 @@ export class SsEntriesComponent {
         this.registeredStudents.splice(index, 1);
         this.registeredStudents = [...this.registeredStudents];
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
+      },
+      (err) => {
+        this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);
+        console.log(err);
+      }
+    )
+  }
+
+  checkEndTime(student: RegisteredStudent) {
+    // Elimiamos el registro de la base de datos
+    this.entriesService.updateStudentEntry(student.registryId, student).subscribe(
+      (res) => {
+        this._message.next(`Registro eliminado correctamente`);
+        this.alertMessage.type = 'info';
+        
+        student.end_time = new Date().toString()
       },
       (err) => {
         this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);

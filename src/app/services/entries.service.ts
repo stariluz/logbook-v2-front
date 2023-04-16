@@ -36,4 +36,8 @@ export class EntriesService {
   deleteStudentEntry(id: string): Observable<any> {
     return this.http.delete<any>(`api/entries/${id}`);
   }
+
+  updateStudentEntry(id: string, student: any): Observable<any> {
+    return this.http.patch<any>(`api/entries/${id}`, student);
+  }
 }
