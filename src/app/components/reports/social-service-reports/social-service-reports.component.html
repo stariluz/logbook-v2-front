@@ -1,1 +1,49 @@
-<p>social-service-reports works!</p>
+<div class="w-100">
+    <h4 class="mb-5">Reportes de estudiantes</h4>
+    <!-- Alerta de error al no ingresar correctamente el campo -->
+    <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="mb-4">{{ errorMessage }}</ngb-alert>
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
+        <!-- Campo para ingresar el laboratorio deseado -->
+        <div class="col">
+            <h5 class="fs-5 mb-3 w-100">Laboratorio</h5>
+            <p-autoComplete styleClass="input-autocomplete" [(ngModel)]="selectedLab" [suggestions]="filteredLabs" (completeMethod)="filterLab($event)" [dropdown]="true" placeholder="Nombre del laboratorio" [forceSelection]="true"></p-autoComplete>
+        </div>
+        <!-- Campo para ingresar el alumno deseado -->
+        <div class="col">
+            <h5 class="fs-5 mb-3 w-100">Alumno</h5>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="Matrícula del alumno" name="student" [(ngModel)]="studentId"/>
+        </div>
+        <!-- Campo para seleccionar el rango de fechas -->
+        <div class="col">
+            <h5 class="fs-5 mb-3 w-100">Rango de fechas</h5>
+            <p-calendar styleClass="custom-calendar" placeholder="Rango de fechas" [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range" [showIcon]="true" [numberOfMonths]="2" appendTo="body"></p-calendar>
+        </div>
+    </div>
+    <div class="w-100 d-flex align-items-center justify-content-end mt-4 mb-5">
+        <button *ngIf="studentReports.length > 0" id="pdf-btn" type="button" class="btn btn-dark me-3" (click)="generatePdfReport()">Guardar PDF</button>
+        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getStudentReports()">Generar</button>
+    </div>
+    <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
+    <p-table id="reportTable" *ngIf="studentReports.length > 0" [value]="studentReports" styleClass="report-table">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="student._id">Matricula <p-sortIcon field="student._id"></p-sortIcon></th>
+                <th pSortableColumn="student.name">Nombre <p-sortIcon field="student.name"></p-sortIcon></th>
+                <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
+                <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="date">Hora Entrada <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="date">Hora Salida <p-sortIcon field="date"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-entry>
+            <tr>
+                <td>{{entry.student._id}}</td>
+                <td>{{entry.student.name}}</td>
+                <td>{{entry.lab}}</td>
+                <td>{{entry.date | date:'yyyy-MM-dd'}}</td>
+                <td>{{entry.date | date:'hh:mm'}}</td>
+                <td>{{entry.end_time | date:'hh:mm'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

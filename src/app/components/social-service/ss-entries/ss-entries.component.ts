@@ -180,10 +180,15 @@ export class SsEntriesComponent {
     // Elimiamos el registro de la base de datos
     this.entriesService.updateStudentEntry(student.registryId, student).subscribe(
       (res) => {
-        this._message.next(`Registro eliminado correctamente`);
+        this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
-        
-        student.end_time = new Date().toString()
+
+        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.studentId == student.studentId);
+
+        this.registeredStudents[index].end_time = new Date().toString()
+
+        this.registeredStudents = [...this.registeredStudents];
+        localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },
       (err) => {
         this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);
