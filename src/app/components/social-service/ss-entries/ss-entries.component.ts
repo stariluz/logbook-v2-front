@@ -4,7 +4,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; name: string; date: String; end_time: String; }
+type RegisteredStudent = { registryId: string; studentId: string; name: string; date: string; end_time?: string; hours?: number; checked: boolean}
 type AlertMessage = { message: string; type: string }
 
 
@@ -97,24 +97,17 @@ export class SsEntriesComponent {
     this.requestInProgress = true;
     this.entriesService.getCourse(this.currentCourse._id).subscribe(
       (res) => {
-        // Creamos el objeto de la entrada
-        // const date = new Date();
-        // const day = date.getDate().toString().padStart(2, '0');
-        // const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        // const year = date.getFullYear().toString();
-        // const actualdate = `${year}-${month}-${day}`;
-
-        // const hour = date.getHours();
-        // const minute = date.getMinutes();
-        // const actualtime = `${hour}:${minute}`;
-
-        const date = new Date().toString();
+        const date: string = new Date().toISOString();
 
         const entry = {
+          // start_time: date,
+          // end_time: "",
           date: date,
+          end_time: "",
           course: res,
           student: this.studentId,
-          lab: this.user.user.lab
+          lab: this.user.user.lab,
+          checked: false
         }
         
         // Registramos la nueva entrada
@@ -133,7 +126,7 @@ export class SsEntriesComponent {
                 studentId: res.student._id,
                 name: res.student.name,
                 date: date,
-                end_time: ""
+                checked: false
               }];
               localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
               this.studentId = '';
@@ -185,8 +178,28 @@ export class SsEntriesComponent {
 
         let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.studentId == student.studentId);
 
-        this.registeredStudents[index].end_time = new Date().toString()
+        this.registeredStudents[index].end_time = new Date().toISOString();
+        
+        let x : string = this.registeredStudents[index].date;
+        let y: string | undefined = this.registeredStudents[index].end_time;
+        
+        if (y !== undefined) {
+          let start = new Date(x);
+          let end = new Date(y);
+      
+          const diffMilliseconds = end.getTime() - start.getTime();
+      
+          const diffHours = diffMilliseconds / (1000 * 60 * 60);
 
+          if (diffHours > 4) {
+            this.registeredStudents[index].hours = 4;
+          } else {
+            this.registeredStudents[index].hours = Math.floor(diffHours);
+          }
+
+          this.registeredStudents[index].checked = true;
+        }
+        
         this.registeredStudents = [...this.registeredStudents];
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },

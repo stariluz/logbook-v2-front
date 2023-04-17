@@ -34,14 +34,14 @@ export class EntriesService {
   }
 
   registerSSEntry(obj: any): Observable<any> {
-    return this.http.post<any>('api/ssRegister', obj);
+    return this.http.post<any>('api/ss', obj);
   }
 
   deleteSSEntry(id: string): Observable<any> {
-    return this.http.delete<any>(`api/ssRegister/${id}`);
+    return this.http.delete<any>(`api/ss/${id}`);
   }
 
   updateSSEntry(id: string, student: any): Observable<any> {
-    return this.http.patch<any>(`api/ssRegister/${id}`, student);
+    return this.http.patch<any>(`api/ss/${id}`, student);
   }
 }
