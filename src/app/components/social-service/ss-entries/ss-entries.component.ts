@@ -73,17 +73,21 @@ export class SsEntriesComponent {
     }
 
     // Revisa si el alumno ya se ha registrado
-    let registered = false;
+    let regStudent: RegisteredStudent | null = null;
+    
     this.registeredStudents.forEach((element: RegisteredStudent) => {
-      if(element.studentId == this.studentId) {
-        registered = true;
+      if(element.studentId == this.studentId && !element.checked) {
+        regStudent = element;
       }
     });
-    if(registered) {
-      this._message.next(`Este alumno ya ha sido registrado`);
-      this.alertMessage.type = 'danger';
-      this.studentId = '';
-      return;
+    // Si ya esta registrado checamos si ya tiene marcada su salida, si no creamos una nueva entrada
+    if(regStudent) {
+      let aux: RegisteredStudent = regStudent
+      if(!aux.end_time) {
+        this.checkEndTime(regStudent)
+        this.studentId = '';
+        return;
+      }
     }
 
     // Revisa si existe una petición en curso
@@ -170,7 +174,7 @@ export class SsEntriesComponent {
   }
 
   checkEndTime(student: RegisteredStudent) {
-    // Elimiamos el registro de la base de datos
+    // Actualizamos el registro
     this.entriesService.updateSSEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
@@ -204,7 +208,7 @@ export class SsEntriesComponent {
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },
       (err) => {
-        this._message.next(`No se pudo eliminar el registro debido a un error en el servidor`);
+        this._message.next(`No se pudo checar el registro debido a un error en el servidor`);
         console.log(err);
       }
     )
