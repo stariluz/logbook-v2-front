@@ -23,7 +23,9 @@
             </form>
         </div>
     </div>
+    <hr>
     <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
+    <h4 class="fs-5"><strong>PENDIENTE DE CHECAR</strong></h4>
     <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
         <ng-template pTemplate="header">
             <tr>
@@ -33,11 +35,10 @@
                 <th pSortableColumn="startTime">Hora Entrada <p-sortIcon field="startTime"></p-sortIcon></th>
                 <th pSortableColumn="endTime">Hora Salida <p-sortIcon field="endTime"></p-sortIcon></th>
                 <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
-
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student>
-            <tr>
+            <tr *ngIf="!student.checked">
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
                 <td>{{student.date | date:'yyyy-MM-dd'}}</td>
@@ -49,6 +50,35 @@
                     </button>
                     <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="checkEndTime(student)">
                         <i class="bi bi-check2 fs-6"></i>
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <hr>
+    <!-- Tabla de Registros ya checados -->
+    <h4 class="fs-5"><strong>REGISTRO DE CHEQUEO</strong></h4>
+    <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="id">Matricula <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
+                <th pSortableColumn="startTime">Hora Entrada <p-sortIcon field="startTime"></p-sortIcon></th>
+                <th pSortableColumn="endTime">Hora Salida <p-sortIcon field="endTime"></p-sortIcon></th>
+                <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+            <tr *ngIf="student.checked">
+                <td>{{student.studentId}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.date | date:'yyyy-MM-dd'}}</td>
+                <td>{{student.date | date:'hh:mm'}}</td>
+                <td>{{student.end_time | date:'hh:mm'}}</td>
+                <td>
+                    <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteRegistry(student.registryId)">
+                        <i class="bi bi-trash fs-6"></i>
                     </button>
                 </td>
             </tr>
