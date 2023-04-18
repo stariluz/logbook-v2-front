@@ -4,7 +4,7 @@ import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; name: string; date: string; end_time?: string; hours?: number; checked: boolean}
+type RegisteredStudent = { registryId: string; studentId: string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
 type AlertMessage = { message: string; type: string }
 
 
@@ -104,19 +104,19 @@ export class SsEntriesComponent {
         const date: string = new Date().toISOString();
 
         const entry = {
-          // start_time: date,
-          // end_time: "",
-          date: date,
-          end_time: "",
+          start_time: date,
+          end_time: date,
           course: res,
           student: this.studentId,
           lab: this.user.user.lab,
+          hours: 0,
           checked: false
         }
         
         // Registramos la nueva entrada
         this.entriesService.registerSSEntry(entry).subscribe(
           (res) => {
+            console.log(res)
             // Revisamos si existe alumno en la base de datos con dicha matrícula
             if(res.status == 400) {
               this._message.next(`No se tiene alumno registrado con esta matrícula`);
@@ -129,7 +129,8 @@ export class SsEntriesComponent {
                 registryId: res._id,
                 studentId: res.student._id,
                 name: res.student.name,
-                date: date,
+                start_time: date,
+                hours: 0,
                 checked: false
               }];
               localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
@@ -180,11 +181,11 @@ export class SsEntriesComponent {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
 
-        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.studentId == student.studentId);
+        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => (element.studentId == student.studentId && !element.checked));
 
         this.registeredStudents[index].end_time = new Date().toISOString();
         
-        let x : string = this.registeredStudents[index].date;
+        let x : string = this.registeredStudents[index].start_time;
         let y: string | undefined = this.registeredStudents[index].end_time;
         
         if (y !== undefined) {

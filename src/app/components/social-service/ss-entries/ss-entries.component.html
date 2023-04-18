@@ -41,9 +41,9 @@
             <tr *ngIf="!student.checked">
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
-                <td>{{student.date | date:'yyyy-MM-dd'}}</td>
-                <td>{{student.date | date:'hh:mm'}}</td>
-                <td>{{student.end_time | date:'hh:mm'}}</td>
+                <td>{{student.start_time | date:'yyyy-MM-dd'}}</td>
+                <td>{{student.start_time | date:'hh:mm'}}</td>
+                <td></td>
                 <td>
                     <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteRegistry(student.registryId)">
                         <i class="bi bi-trash fs-6"></i>
@@ -73,8 +73,8 @@
             <tr *ngIf="student.checked">
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
-                <td>{{student.date | date:'yyyy-MM-dd'}}</td>
-                <td>{{student.date | date:'hh:mm'}}</td>
+                <td>{{student.start_time | date:'yyyy-MM-dd'}}</td>
+                <td>{{student.start_time | date:'hh:mm'}}</td>
                 <td>{{student.end_time | date:'hh:mm'}}</td>
                 <td>
                     <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteRegistry(student.registryId)">
