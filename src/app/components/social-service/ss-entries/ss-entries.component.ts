@@ -105,7 +105,6 @@ export class SsEntriesComponent {
 
         const entry = {
           start_time: date,
-          end_time: date,
           course: res,
           student: this.studentId,
           lab: this.user.user.lab,
@@ -116,7 +115,6 @@ export class SsEntriesComponent {
         // Registramos la nueva entrada
         this.entriesService.registerSSEntry(entry).subscribe(
           (res) => {
-            console.log(res)
             // Revisamos si existe alumno en la base de datos con dicha matrícula
             if(res.status == 400) {
               this._message.next(`No se tiene alumno registrado con esta matrícula`);
@@ -176,14 +174,16 @@ export class SsEntriesComponent {
 
   checkEndTime(student: RegisteredStudent) {
     // Actualizamos el registro
+
+    let index = this.registeredStudents.findIndex((element: RegisteredStudent) => (element.studentId == student.studentId && !element.checked));
+    let aux = this.registeredStudents[index].end_time
+
+    this.registeredStudents[index].end_time = new Date().toISOString();
+    
     this.entriesService.updateSSEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
-
-        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => (element.studentId == student.studentId && !element.checked));
-
-        this.registeredStudents[index].end_time = new Date().toISOString();
         
         let x : string = this.registeredStudents[index].start_time;
         let y: string | undefined = this.registeredStudents[index].end_time;
@@ -209,6 +209,7 @@ export class SsEntriesComponent {
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },
       (err) => {
+        this.registeredStudents[index].end_time = aux;
         this._message.next(`No se pudo checar el registro debido a un error en el servidor`);
         console.log(err);
       }
