@@ -159,7 +159,7 @@ export class SsEntriesComponent {
         this._message.next(`Registro eliminado correctamente`);
         this.alertMessage.type = 'info';
         // Obtenemos el indice del elemento eliminado con el id del estudiante
-        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.studentId == res.student);
+        let index = this.registeredStudents.findIndex((element: RegisteredStudent) => element.registryId == res.registryId);
         // Eliminamos el elemento del arreglo
         this.registeredStudents.splice(index, 1);
         this.registeredStudents = [...this.registeredStudents];
