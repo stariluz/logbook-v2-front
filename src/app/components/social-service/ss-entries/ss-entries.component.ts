@@ -105,11 +105,9 @@ export class SsEntriesComponent {
 
         const entry = {
           start_time: date,
-          course: res,
           student: this.studentId,
           lab: this.user.user.lab,
           hours: 0,
-          checked: false
         }
         
         // Registramos la nueva entrada
