@@ -124,7 +124,7 @@ export class SocialServiceReportsComponent {
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getStudentReports() {
-    if(!this.selectedLab && !this.selectedCourse && !this.studentId) {
+    if(!this.selectedLab && !this.studentId) {
       this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
     } else if(this.rangeDates.length == 0) {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
@@ -174,7 +174,6 @@ export class SocialServiceReportsComponent {
           { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'text', absolutePosition: { x: pageSize / 2, y: 77 } },
           // // { text: 'Parámetros', bold: true,, margin: [120, 2, 0, 0] },
           { text: this.selectedLab || 'Todos los laboratorios', style: 'text', absolutePosition: { x: pageSize / 2, y: 90 } },
-          { text: this.selectedCourse?.name || 'Todos los cursos', style: 'text', absolutePosition: { x: pageSize / 2, y: 103 } },
           { text: this.studentId || 'Todos los alumnos', style: 'text', absolutePosition: { x: pageSize / 2, y: 116 } },
           { text: `Del ${formatDate(this.rangeDates[0], 'shortDate', this.locale, 'UTC -6')} al ${formatDate(this.rangeDates[1], 'shortDate', this.locale, 'UTC -6')}`, style: 'text', absolutePosition: { x: pageSize / 2, y: 129 } },
           {

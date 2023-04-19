@@ -171,11 +171,11 @@ export class SsEntriesComponent {
   }
 
   checkEndTime(student: RegisteredStudent) {
-    // Actualizamos el registro
-
     let index = this.registeredStudents.findIndex((element: RegisteredStudent) => (element.studentId == student.studentId && !element.checked));
+    // Guardamos el valor de end_time del para tener un respaldo
     let aux = this.registeredStudents[index].end_time
 
+    // Asignamos le hora y dia actual al end_time
     this.registeredStudents[index].end_time = new Date().toISOString();
     
     this.entriesService.updateSSEntry(student.registryId, student).subscribe(
