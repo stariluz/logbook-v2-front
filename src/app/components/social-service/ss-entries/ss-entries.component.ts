@@ -99,48 +99,40 @@ export class SsEntriesComponent {
 
     // Indicamos que se ha iniciado una petición
     this.requestInProgress = true;
-    this.entriesService.getCourse(this.currentCourse._id).subscribe(
-      (res) => {
-        const date: string = new Date().toISOString();
 
-        const entry = {
-          start_time: date,
-          student: this.studentId,
-          lab: this.user.user.lab,
-          hours: 0,
+    const date: string = new Date().toISOString();
+
+    const entry = {
+      start_time: date,
+      student: this.studentId,
+      lab: this.user.user.lab,
+      hours: 0,
+    }
+    
+    // Registramos la nueva entrada
+    this.entriesService.registerSSEntry(entry).subscribe(
+      (res) => {
+        // Revisamos si existe alumno en la base de datos con dicha matrícula
+        if(res.status == 400) {
+          this._message.next(`No se tiene alumno registrado con esta matrícula`);
+          this.alertMessage.type = 'danger';
+          this.studentId = '';
+        } else {
+          this._message.next(`Alumno registrado correctamente`);
+          this.alertMessage.type = 'success';
+          this.registeredStudents = [...this.registeredStudents, {
+            registryId: res._id,
+            studentId: res.student._id,
+            name: res.student.name,
+            start_time: date,
+            hours: 0,
+            checked: false
+          }];
+          localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
+          this.studentId = '';
         }
-        
-        // Registramos la nueva entrada
-        this.entriesService.registerSSEntry(entry).subscribe(
-          (res) => {
-            // Revisamos si existe alumno en la base de datos con dicha matrícula
-            if(res.status == 400) {
-              this._message.next(`No se tiene alumno registrado con esta matrícula`);
-              this.alertMessage.type = 'danger';
-              this.studentId = '';
-            } else {
-              this._message.next(`Alumno registrado correctamente`);
-              this.alertMessage.type = 'success';
-              this.registeredStudents = [...this.registeredStudents, {
-                registryId: res._id,
-                studentId: res.student._id,
-                name: res.student.name,
-                start_time: date,
-                hours: 0,
-                checked: false
-              }];
-              localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
-              this.studentId = '';
-            }
-            // Indicamos que ha terminado la petición
-            this.requestInProgress = false;
-          },
-          (err) => {
-            // Indicamos que ha terminado la petición
-            this.requestInProgress = false;
-            console.log(err);
-          }
-        );
+        // Indicamos que ha terminado la petición
+        this.requestInProgress = false;
       },
       (err) => {
         // Indicamos que ha terminado la petición
@@ -152,6 +144,8 @@ export class SsEntriesComponent {
 
   deleteRegistry(registryId: string) {
     // Elimiamos el registro de la base de datos
+    console.log("PITO")
+    console.log(registryId)
     this.entriesService.deleteSSEntry(registryId).subscribe(
       (res) => {
         this._message.next(`Registro eliminado correctamente`);
