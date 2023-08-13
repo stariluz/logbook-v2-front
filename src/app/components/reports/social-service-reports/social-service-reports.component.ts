@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
-type StudentRegistry = { id: string; name: string; date: Date; course: string; lab: string }
+type StudentRegistry = { id: string; name: string; start_date: Date; end_date: Date; lab: string; hours: number; }
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -123,7 +123,7 @@ export class SocialServiceReportsComponent {
   }
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
-  getStudentReports() {
+  getSSReports() {
     if(!this.selectedLab && !this.studentId) {
       this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
     } else if(this.rangeDates.length == 0) {
@@ -134,19 +134,18 @@ export class SocialServiceReportsComponent {
       const parameters = {
         lab: this.selectedLab,
         student: this.studentId,
-        courseCode: this.selectedCourse?.code,
-        courseGroup: this.selectedCourse?.group,
         startDate: this.rangeDates[0].toISOString(),
         endDate: this.rangeDates[1].toISOString()
       };
       // Resto un dia a la fecha final para que no afecte a la siguiente consulta
       this.rangeDates[1].setDate(this.rangeDates[1].getDate() - 1);
-      this.reportsService.getStudentReport(parameters).subscribe(
+      this.reportsService.getSSReport(parameters).subscribe(
         (res) => {
+          console.log(res);
           this.studentReports = res;
           this.reports = [];
           this.studentReports.forEach((element: any) => {
-            this.reports.push([element.student._id, element.student.name, element.lab, element.course.name, formatDate(element.date, 'medium', this.locale, 'UTC -6')]);
+            this.reports.push([element.student._id, element.lab, element.student.name, element.student.start_date, element.student.end_date, element.student.hours]);
           });
         },
         (err) => {

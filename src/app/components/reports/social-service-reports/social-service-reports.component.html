@@ -21,7 +21,7 @@
     </div>
     <div class="w-100 d-flex align-items-center justify-content-end mt-4 mb-5">
         <button *ngIf="studentReports.length > 0" id="pdf-btn" type="button" class="btn btn-dark me-3" (click)="generatePdfReport()">Guardar PDF</button>
-        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getStudentReports()">Generar</button>
+        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getSSReports()">Generar</button>
     </div>
     <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
     <p-table id="reportTable" *ngIf="studentReports.length > 0" [value]="studentReports" styleClass="report-table">
@@ -40,8 +40,8 @@
                 <td>{{entry.student._id}}</td>
                 <td>{{entry.student.name}}</td>
                 <td>{{entry.lab}}</td>
-                <td>{{entry.date | date:'yyyy-MM-dd'}}</td>
-                <td>{{entry.date | date:'hh:mm'}}</td>
+                <td>{{entry.start_time | date:'yyyy-MM-dd'}}</td>
+                <td>{{entry.start_time | date:'hh:mm'}}</td>
                 <td>{{entry.end_time | date:'hh:mm'}}</td>
             </tr>
         </ng-template>
