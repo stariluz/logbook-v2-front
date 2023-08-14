@@ -41,6 +41,9 @@
             <a href="/reports/professor-reports">
                 <p class="text-white fs-6 text-border">Maestros</p>
             </a>
+            <a href="/reports/social-service-reports">
+                <p class="text-white fs-6 text-border">Servicio Social</p>
+            </a>
         </div>
         <div class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
@@ -50,8 +53,8 @@
             <a href="{{entriesRouter}}">
                 <p class="text-white fs-6 text-border">Entradas</p>
             </a>
-            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/inventory">
-                <p class="text-white fs-6 text-border">Inventario</p>
+            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/social-service">
+                <p class="text-white fs-6 text-border">Servicio Social</p>
             </a>
         </div>
         <div *ngIf="userRole == 'superuser'" class="mb-5">

@@ -35,6 +35,8 @@ import { RoleGuard } from './services/role.guard';
 import { MessageService } from 'primeng/api';
 import { CustomCourseEntriesComponent } from './components/entries/custom-course-entries/custom-course-entries.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
+import { SocialServiceModule } from './components/social-service/social-service.module';
+import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
     LoginComponent,
     CustomCourseEntriesComponent,
     InventoryComponent,
+    SocialServiceReportsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -72,6 +75,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
     DropdownModule,
     MessagesModule,
     MessageModule,
+    SocialServiceModule,
   ],
   providers: [
     AuthGuard,

@@ -10,6 +10,7 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 export class HeaderComponent {
 
 	entriesRouter: String = '';
+	socialServiceRouter: String = '';
 	public windowWidth: any = window.innerWidth;
 	public user: any;
 	public userRole: string = '';

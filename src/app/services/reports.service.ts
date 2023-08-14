@@ -20,4 +20,8 @@ export class ReportsService {
   getProfessorReport(reportParams: any): Observable<any> {
     return this.http.get<any>('api/entries/professors/reports', { params: reportParams });
   }
+
+  getSSReport(reportParams: any): Observable<any> {
+    return this.http.get<any>('api/ss/reports', { params: reportParams });
+  }
 }
