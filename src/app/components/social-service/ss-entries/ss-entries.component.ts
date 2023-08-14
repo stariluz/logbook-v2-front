@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Inject, LOCALE_ID } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 import { ReportsService } from 'src/app/services/reports.service';
+import { formatDate } from '@angular/common';
 
 // Tipado de objeto para la busqueda de alumnos registrados
 type RegisteredStudent = { registryId: string; studentId: string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
@@ -28,7 +29,7 @@ export class SsEntriesComponent {
     type: ''
   };
 
-  constructor(private entriesService: EntriesService, private reportsService: ReportsService) { }
+  constructor(@Inject(LOCALE_ID) private locale: string, private entriesService: EntriesService, private reportsService: ReportsService) { }
 
   ngOnInit(): void {
     this.c_User = localStorage.getItem('user');
@@ -55,11 +56,9 @@ export class SsEntriesComponent {
   getSSReports() {
     // Set today and tomorrow dates
     const today = new Date();
-    // Set time to 7:00 am because of the timezone
-    today.setHours(7, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
-
     
     // Set parameters
     const parameters = {
@@ -205,37 +204,39 @@ export class SsEntriesComponent {
 
     // Asignamos le hora y dia actual al end_time
     this.registeredStudents[index].end_time = new Date().toISOString();
+
+    // Calculamos las horas que estuvo el alumno en el laboratorio
+    let x : string = this.registeredStudents[index].start_time;
+    let y: string | undefined = this.registeredStudents[index].end_time;
+
+    if (y !== undefined) {
+      let start = new Date(x);
+      let end = new Date(y);
+
+      const diffMilliseconds = end.getTime() - start.getTime();
+  
+      const diffHours = diffMilliseconds / (1000 * 60 * 60);
+
+      if (diffHours > 4) {
+        this.registeredStudents[index].hours = 4;
+      } else {
+        this.registeredStudents[index].hours = Math.floor(diffHours);
+      }
+
+      this.registeredStudents[index].checked = true;
+    }
     
     this.entriesService.updateSSEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
-        
-        let x : string = this.registeredStudents[index].start_time;
-        let y: string | undefined = this.registeredStudents[index].end_time;
-        
-        if (y !== undefined) {
-          let start = new Date(x);
-          let end = new Date(y);
-      
-          const diffMilliseconds = end.getTime() - start.getTime();
-      
-          const diffHours = diffMilliseconds / (1000 * 60 * 60);
 
-          if (diffHours > 4) {
-            this.registeredStudents[index].hours = 4;
-          } else {
-            this.registeredStudents[index].hours = Math.floor(diffHours);
-          }
-
-          this.registeredStudents[index].checked = true;
-        }
-        
         this.registeredStudents = [...this.registeredStudents];
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
       },
       (err) => {
         this.registeredStudents[index].end_time = aux;
+        this.registeredStudents[index].hours = 0;
         this._message.next(`No se pudo checar el registro debido a un error en el servidor`);
         console.log(err);
       }
