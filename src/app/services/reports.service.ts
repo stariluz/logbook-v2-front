@@ -22,7 +22,6 @@ export class ReportsService {
   }
 
   getSSReport(reportParams: any): Observable<any> {
-    // console.log(reportParams);
     return this.http.get<any>('api/ss/reports', { params: reportParams });
   }
 }

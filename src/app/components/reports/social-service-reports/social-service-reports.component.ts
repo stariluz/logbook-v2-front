@@ -159,7 +159,7 @@ export class SocialServiceReportsComponent {
             const student = this.studentReports[index];
             
             if (!student.end_time) {
-              this.updateStudentReport(student);
+              this.updateStudentReport(index, student);
             }
           }
         },
@@ -170,13 +170,11 @@ export class SocialServiceReportsComponent {
     }
   }
   
-  updateStudentReport(student: any) {
-    let index = this.studentReports.findIndex((element: StudentRegistry) => (element.studentId == student.studentId));
-    
-    let start: Date = new Date(this.studentReports[index].start_time);
+  updateStudentReport(index: number, student: any) {
+    let start: Date = new Date(student.start_time);
         
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    today.setHours(7, 0, 0, 0);
     
     if (start < today) {
       const endAfter4Hours: Date = new Date(start);
