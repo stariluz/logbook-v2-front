@@ -23,6 +23,7 @@
                 <zxing-scanner
                     [enable]="scannerEnabled"
                     [device]="myDevice"
+                    [timeBetweenScans]="2000"
                     (camerasFound)="camerasFoundHandler($event)"
                     (scanSuccess)="scanSuccessHandler($event)"
                 ></zxing-scanner>
@@ -43,6 +44,8 @@
                 <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="course">Clase <p-sortIcon field="course"></p-sortIcon></th>
                 <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student>
@@ -50,7 +53,12 @@
                 <td>{{student.studentId}}</td>
                 <td>{{student.name}}</td>
                 <td>{{student.course}}</td>
-                <td>{{student.date}}</td>
+                <td>{{student.date | date: 'medium' : 'UTC -6'}}</td>
+                <td>
+                    <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteRegistry(student.registryId)">
+                        <i class="bi bi-trash fs-6"></i>
+                    </button>
+                </td>
             </tr>
         </ng-template>
     </p-table>

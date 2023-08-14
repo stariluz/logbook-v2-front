@@ -39,12 +39,12 @@ export class LoginComponent {
       (res) => {
         localStorage.setItem('user', JSON.stringify(res));
         this.router.navigateByUrl(`/entries/course-entries`).then(() => {
-			
+          //
         });
       },
       (err) => {
         if(err.status == 404) {
-          this._message.next(`El correo electtrónico no es válido`);
+          this._message.next(`El correo electrónico no es válido`);
         } else if (err.status == 403) {
           this._message.next(`Contraseña incorrecta`);
         }

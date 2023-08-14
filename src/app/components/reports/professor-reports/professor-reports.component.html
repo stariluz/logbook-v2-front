@@ -11,7 +11,7 @@
         <!-- Campo para ingresar el profesor deseado -->
         <div class="col">
             <h5 class="fs-5 mb-3 w-100">Profesor</h5>
-            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="ID del profesor" name="professor" [(ngModel)]="professorId"/>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="Número de empleado" name="professor" [(ngModel)]="professorId"/>
         </div>
         <!-- Campo para seleccionar la clase desada -->
         <div class="col">
@@ -20,7 +20,7 @@
                 <ng-template let-course pTemplate="item">
                     <div class="d-flex flex-column">
                         <span>{{ course.name }}</span>
-                        <span *ngIf="course.professor" style="color: #E14D2A;">{{ course.professor.name }}</span>
+                        <span *ngIf="course.professor" style="color: #E14D2A;">{{ course.professor.name }} - {{course.group}}</span>
                     </div>
                 </ng-template>
             </p-autoComplete>
@@ -39,10 +39,10 @@
     <p-table id="reportTable" *ngIf="professorReports.length > 0" [value]="professorReports" styleClass="report-table">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id">Matrícula <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="group">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
-                <th pSortableColumn="course">Clase <p-sortIcon field="course"></p-sortIcon></th>
+                <th pSortableColumn="professor._id">No. Empleado <p-sortIcon field="professor._id"></p-sortIcon></th>
+                <th pSortableColumn="professor.name">Nombre <p-sortIcon field="professor.name"></p-sortIcon></th>
+                <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
+                <th pSortableColumn="course.name">Clase <p-sortIcon field="course.name"></p-sortIcon></th>
                 <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
             </tr>
         </ng-template>
@@ -52,7 +52,7 @@
                 <td>{{entry.professor.name}}</td>
                 <td>{{entry.lab}}</td>
                 <td>{{entry.course.name}}</td>
-                <td>{{entry.date}}</td>
+                <td>{{entry.date | date: 'mediumDate' : 'UTC -6'}}</td>
             </tr>
         </ng-template>
     </p-table>

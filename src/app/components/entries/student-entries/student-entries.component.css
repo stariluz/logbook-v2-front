@@ -51,3 +51,13 @@ h5 {
     color: white;
     background-color: #E14D2A;
 }
+
+.action-btn {
+    color: #0F4C75;
+    border-color: #0F4C75;
+}
+
+.action-btn:hover {
+    color: white;
+    background-color: #E14D2A;
+}
