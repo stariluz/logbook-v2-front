@@ -184,17 +184,17 @@ export class SocialServiceReportsComponent {
       
       this.studentReports[index].end_time = endAfter4Hours.toISOString();
       this.studentReports[index].hours = 4;
-    }
 
-    this.entriesService.updateSSEntry(student._id, student).subscribe(
-      (res) => {
-        this.studentReports = [...this.studentReports];
-        localStorage.setItem('SS-register', JSON.stringify(this.studentReports));
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+      this.entriesService.updateSSEntry(student._id, student).subscribe(
+        (res) => {
+          this.studentReports = [...this.studentReports];
+          localStorage.setItem('SS-register', JSON.stringify(this.studentReports));
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
   
 

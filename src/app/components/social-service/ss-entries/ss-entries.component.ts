@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
+import { ReportsService } from 'src/app/services/reports.service';
 
 // Tipado de objeto para la busqueda de alumnos registrados
 type RegisteredStudent = { registryId: string; studentId: string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
@@ -17,7 +18,6 @@ export class SsEntriesComponent {
   public studentId?: string;
   private requestInProgress: boolean = false;
   public registeredStudents: Array<RegisteredStudent> = [];
-  public currentCourse: any;
   private user: any;
   public c_User: any;
 
@@ -28,27 +28,26 @@ export class SsEntriesComponent {
     type: ''
   };
 
-  constructor(private entriesService: EntriesService) { }
+  constructor(private entriesService: EntriesService, private reportsService: ReportsService) { }
 
   ngOnInit(): void {
     this.c_User = localStorage.getItem('user');
     if (this.c_User) {
       this.c_User = JSON.parse(this.c_User);
     }
-    // Tomamos el objeto del curso actual
-    this.currentCourse = localStorage.getItem('currentCourse');
-    this.currentCourse = JSON.parse(this.currentCourse);
     // Almacenamos los alumnos que ya se han registrado al curso
-    let registered: any = localStorage.getItem('SS-register');
-    registered = JSON.parse(registered);
-    if(registered) {
-      this.registeredStudents = registered;
-    }
+    // let registered: any = localStorage.getItem('SS-register');
+    // registered = JSON.parse(registered);
+    // if(registered) {
+    //   this.registeredStudents = registered;
+    // }    
     // Tomamos el usuario actual
     this.user = localStorage.getItem('user');
     if (this.user) {
       this.user = JSON.parse(this.user);
     }
+    // Almacenamos los alumnos que ya se han registrado al curso
+    this.getSSReports();
     // Tiempo de duración y mensaje de la alerta
 		this._message.subscribe((message) => (this.alertMessage.message = message));
 		this._message.pipe(debounceTime(4000)).subscribe(() => {
@@ -56,6 +55,47 @@ export class SsEntriesComponent {
 				this.selfClosingAlert.close();
 			}
 		});
+  }
+
+  // Get data from database
+  getSSReports() {
+    // Set today and tomorrow dates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // Set parameters
+    const parameters = {
+      lab: this.user.lab,
+      startDate: today,
+      endDate: tomorrow,
+    };
+    
+    // Get data from database
+    this.reportsService.getSSReport(parameters).subscribe(
+      (res) => {
+        let aux: any = [];
+        res.forEach((element: any) => {
+          aux.push({
+            registryId: element._id,
+            studentId: element.student._id,
+            name: element.student.name,
+            start_time: element.start_time,
+            end_time: element.end_time,
+            hours: element.hours,
+            checked: element.end_time ? true : false,
+          });
+        });
+        this.registeredStudents = aux;
+
+        this.registeredStudents = [...this.registeredStudents];
+        localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
   }
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
