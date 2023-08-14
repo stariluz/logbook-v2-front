@@ -144,8 +144,6 @@ export class SsEntriesComponent {
 
   deleteRegistry(registryId: string) {
     // Elimiamos el registro de la base de datos
-    console.log("PITO")
-    console.log(registryId)
     this.entriesService.deleteSSEntry(registryId).subscribe(
       (res) => {
         this._message.next(`Registro eliminado correctamente`);

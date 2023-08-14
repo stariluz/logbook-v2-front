@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
-type StudentRegistry = { id: string; name: string; start_date: Date; end_date: Date; lab: string; hours: number; }
+type StudentRegistry = { _id: string; studentId: string; name: string; start_time: Date; end_time: string; lab: string; hours: number; }
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -124,29 +124,44 @@ export class SocialServiceReportsComponent {
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getSSReports() {
-    if(!this.selectedLab && !this.studentId) {
+    if (!this.selectedLab && !this.studentId) {
       this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
-    } else if(this.rangeDates.length == 0) {
+    } else if (this.rangeDates.length == 0) {
       this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
     } else {
-      // Sumo un dia a la fecha final para que incluya el ultimo dia
       this.rangeDates[1].setDate(this.rangeDates[1].getDate() + 1);
       const parameters = {
         lab: this.selectedLab,
         student: this.studentId,
         startDate: this.rangeDates[0].toISOString(),
-        endDate: this.rangeDates[1].toISOString()
+        endDate: this.rangeDates[1].toISOString(),
       };
-      // Resto un dia a la fecha final para que no afecte a la siguiente consulta
       this.rangeDates[1].setDate(this.rangeDates[1].getDate() - 1);
+      
       this.reportsService.getSSReport(parameters).subscribe(
         (res) => {
-          console.log(res);
           this.studentReports = res;
           this.reports = [];
           this.studentReports.forEach((element: any) => {
-            this.reports.push([element.student._id, element.lab, element.student.name, element.student.start_date, element.student.end_date, element.student.hours]);
+            this.reports.push([
+              element._id,
+              element.student._id,
+              element.lab,
+              element.student.name,
+              element.student.start_date,
+              element.student.end_date,
+              element.student.hours,
+            ]);
           });
+          
+          // Ejecutar el proceso en los elementos sin end_time
+          for (let index = 0; index < this.studentReports.length; index++) {
+            const student = this.studentReports[index];
+            
+            if (!student.end_time) {
+              this.updateStudentReport(student);
+            }
+          }
         },
         (err) => {
           console.log(err);
@@ -154,6 +169,34 @@ export class SocialServiceReportsComponent {
       );
     }
   }
+  
+  updateStudentReport(student: any) {
+    let index = this.studentReports.findIndex((element: StudentRegistry) => (element.studentId == student.studentId));
+    
+    let start: Date = new Date(this.studentReports[index].start_time);
+        
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (start < today) {
+      const endAfter4Hours: Date = new Date(start);
+      endAfter4Hours.setHours(endAfter4Hours.getHours() + 4);
+      
+      this.studentReports[index].end_time = endAfter4Hours.toISOString();
+      this.studentReports[index].hours = 4;
+    }
+
+    this.entriesService.updateSSEntry(student._id, student).subscribe(
+      (res) => {
+        this.studentReports = [...this.studentReports];
+        localStorage.setItem('SS-register', JSON.stringify(this.studentReports));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+  
 
   // Genera el PDF con la información del reporte
   generatePdfReport() {
