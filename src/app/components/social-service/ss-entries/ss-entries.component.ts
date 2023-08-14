@@ -35,12 +35,6 @@ export class SsEntriesComponent {
     if (this.c_User) {
       this.c_User = JSON.parse(this.c_User);
     }
-    // Almacenamos los alumnos que ya se han registrado al curso
-    // let registered: any = localStorage.getItem('SS-register');
-    // registered = JSON.parse(registered);
-    // if(registered) {
-    //   this.registeredStudents = registered;
-    // }    
     // Tomamos el usuario actual
     this.user = localStorage.getItem('user');
     if (this.user) {
@@ -61,17 +55,19 @@ export class SsEntriesComponent {
   getSSReports() {
     // Set today and tomorrow dates
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Set time to 7:00 am because of the timezone
+    today.setHours(7, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
+    
     // Set parameters
     const parameters = {
-      lab: this.user.lab,
+      lab: this.user.user.lab,
       startDate: today,
       endDate: tomorrow,
     };
-    
+  
     // Get data from database
     this.reportsService.getSSReport(parameters).subscribe(
       (res) => {
