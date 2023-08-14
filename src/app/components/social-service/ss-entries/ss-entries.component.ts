@@ -153,7 +153,7 @@ export class SsEntriesComponent {
           this.alertMessage.type = 'danger';
           this.studentId = '';
         } else {
-          this._message.next(`Alumno registrado correctamente`);
+          this._message.next(`Hora de entrada registrada correctamente`);
           this.alertMessage.type = 'success';
           this.registeredStudents = [...this.registeredStudents, {
             registryId: res._id,
@@ -217,19 +217,15 @@ export class SsEntriesComponent {
   
       const diffHours = diffMilliseconds / (1000 * 60 * 60);
 
-      if (diffHours > 4) {
-        this.registeredStudents[index].hours = 4;
-      } else {
-        this.registeredStudents[index].hours = diffHours;
-      }
-
-      this.registeredStudents[index].checked = true;
+      this.registeredStudents[index].hours = diffHours;
     }
     
     this.entriesService.updateSSEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';
+
+        this.registeredStudents[index].checked = true;
 
         this.registeredStudents = [...this.registeredStudents];
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
