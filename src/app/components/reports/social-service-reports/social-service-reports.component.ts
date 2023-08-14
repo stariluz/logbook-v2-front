@@ -6,7 +6,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { AssetsService } from 'src/app/services/assets.service';
-import { formatDate } from '@angular/common';
+import { SelectItem } from 'primeng/api';
 
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
@@ -32,6 +32,7 @@ export class SocialServiceReportsComponent {
   public studentReports: StudentRegistry[] = [];
   private reports: any[] = [];
   private user: any;
+  selectedDate: Date = new Date();
 
   // Blob de las imagenes para los reportes
   private uachLogoBlob: any;
@@ -43,7 +44,11 @@ export class SocialServiceReportsComponent {
   private _message = new Subject<string>();
   errorMessage: string = '';
 
-  constructor(@Inject(LOCALE_ID) private locale: string, private assetsService: AssetsService, private reportsService: ReportsService, private entriesService: EntriesService) {
+  constructor(@Inject(LOCALE_ID) 
+    private locale: string, 
+    private assetsService: AssetsService, 
+    private reportsService: ReportsService, 
+    private entriesService: EntriesService) {
     (pdfMake as any).fonts = {
       Roboto: {
         normal: 'Roboto-Regular.ttf',
@@ -124,50 +129,36 @@ export class SocialServiceReportsComponent {
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getSSReports() {
-    if (!this.selectedLab && !this.studentId) {
-      this._message.next(`Porfavor seleccione por lo menos un campo incluyendo el rango de fechas`);
-    } else if (this.rangeDates.length == 0) {
-      this._message.next(`Porfavor seleccione una fecha o rango de fechas`);
-    } else {
-      this.rangeDates[1].setDate(this.rangeDates[1].getDate() + 1);
-      const parameters = {
-        lab: this.selectedLab,
-        student: this.studentId,
-        startDate: this.rangeDates[0].toISOString(),
-        endDate: this.rangeDates[1].toISOString(),
-      };
-      this.rangeDates[1].setDate(this.rangeDates[1].getDate() - 1);
-      
-      this.reportsService.getSSReport(parameters).subscribe(
-        (res) => {
-          this.studentReports = res;
-          this.reports = [];
-          this.studentReports.forEach((element: any) => {
-            this.reports.push([
-              element._id,
-              element.student._id,
-              element.lab,
-              element.student.name,
-              element.student.start_date,
-              element.student.end_date,
-              element.student.hours,
-            ]);
-          });
+    const year = this.selectedDate.getFullYear();
+    const month = this.selectedDate.getMonth();
+
+    const parameters = {
+      lab: this.selectedLab,
+      student: this.studentId,
+      startDate: new Date(year, month, 1),
+      endDate: new Date(year, month + 1, 1),
+    };
+    
+    this.reportsService.getSSReport(parameters).subscribe(
+      (res) => {
+        this.studentReports = res;
+
+        // Set the hour made by every student
+        this.reports = this.getHoursPerMouth(this.studentReports);
+        
+        // Ejecutar el proceso en los elementos sin end_time
+        for (let index = 0; index < this.studentReports.length; index++) {
+          const student = this.studentReports[index];
           
-          // Ejecutar el proceso en los elementos sin end_time
-          for (let index = 0; index < this.studentReports.length; index++) {
-            const student = this.studentReports[index];
-            
-            if (!student.end_time) {
-              this.updateStudentReport(index, student);
-            }
+          if (!student.end_time) {
+            this.updateStudentReport(index, student);
           }
-        },
-        (err) => {
-          console.log(err);
         }
-      );
-    }
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
   
   updateStudentReport(index: number, student: any) {
@@ -194,10 +185,45 @@ export class SocialServiceReportsComponent {
       );
     }
   }
-  
 
+  getHoursPerMouth(reports: any[]) {
+    let result: any[] = [];
+  
+    // Crear un objeto para almacenar las horas por student.Id
+    const hoursPerStudent: { [key: number]: number } = {};
+    
+    reports.forEach((item: any) => {
+      const studentId = item.student._id;
+      const hours = item.hours;
+  
+      if (hoursPerStudent[studentId]) {
+        hoursPerStudent[studentId] += hours;
+      } else {
+        hoursPerStudent[studentId] = hours;
+      }
+    });
+
+    let index = 0;
+    // Convertir el objeto de horas por student.Id a un arreglo de objetos
+    for (const studentId in hoursPerStudent) {
+      index = reports.findIndex((item: any) => item.student._id === parseInt(studentId, 10));
+      result.push([
+        studentId,
+        reports[index].student.name, 
+        reports[index].lab,
+        hoursPerStudent[studentId] 
+      ]);
+    }
+    return result;
+  }  
+  
   // Genera el PDF con la información del reporte
   generatePdfReport() {
+    // Set month names
+    const months = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
     // Configuración del documento
     const docDefinition: any = {
       pageSize: 'LETTER',
@@ -209,13 +235,13 @@ export class SocialServiceReportsComponent {
             height: pageSize.height,
             width: pageSize.width,
           },
-          { text: 'Bitácora de Asistencia de Alumnos', style: 'header', absolutePosition: { x: pageSize / 2, y: 48 } },
-          { text: `Laboratorio: ${this.user.user.lab}`, style: 'text', absolutePosition: { x: pageSize / 2, y: 64 } },
-          { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'text', absolutePosition: { x: pageSize / 2, y: 77 } },
-          // // { text: 'Parámetros', bold: true,, margin: [120, 2, 0, 0] },
-          { text: this.selectedLab || 'Todos los laboratorios', style: 'text', absolutePosition: { x: pageSize / 2, y: 90 } },
-          { text: this.studentId || 'Todos los alumnos', style: 'text', absolutePosition: { x: pageSize / 2, y: 116 } },
-          { text: `Del ${formatDate(this.rangeDates[0], 'shortDate', this.locale, 'UTC -6')} al ${formatDate(this.rangeDates[1], 'shortDate', this.locale, 'UTC -6')}`, style: 'text', absolutePosition: { x: pageSize / 2, y: 129 } },
+          { text: 'Bitácora Mensual de Servicio Social', style: 'header', absolutePosition: { x: 200, y: 48 }, alignment: 'start' },
+          { text: `Laboratorio: ${this.user.user.lab}`, style: 'text', absolutePosition: { x: 200, y: 64 }, alignment: 'start' },
+          { text: `Jefe de Laboratorio: ${this.user.user.name}`, style: 'text', absolutePosition: { x: 200, y: 77 }, alignment: 'start' },
+          { text: 'Parámetros', style: 'text', absolutePosition: { x: 200, y: 100 }, bold: true, alignment: 'start' },
+          { text: this.selectedLab ? `Laboratorio: ${this.selectedLab}` : 'Todos los laboratorios', style: 'text', absolutePosition: { x: 200, y: 113 }, alignment: 'start' },
+          { text: this.studentId ? `Alumno: ${this.studentId}` : 'Todos los alumnos', style: 'text', absolutePosition: { x: 200, y: 126 }, alignment: 'start' },
+          { text: `Mes de ${months[this.selectedDate.getMonth()]}`, style: 'text', absolutePosition: { x: 200, y: 139 }, alignment: 'start' },
           {
             image: this.fingLogoBlob,
             height: 90,
@@ -229,9 +255,9 @@ export class SocialServiceReportsComponent {
           layout: 'lightHorizontalLines',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto'],
             body: [
-              [{ text: 'Matrícula', style: 'tableHeader' }, { text: 'Nombre', style: 'tableHeader' }, { text: 'Laboratorio', style: 'tableHeader' }, { text: 'Clase', style: 'tableHeader' }, { text: 'Fecha', style: 'tableHeader' }],
+              [{ text: 'Matrícula', style: 'tableHeader' }, { text: 'Nombre', style: 'tableHeader' }, { text: 'Laboratorio', style: 'tableHeader' }, { text: 'Horas realizadas', style: 'tableHeader' }],
               ...this.reports
             ]
           }
