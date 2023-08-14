@@ -220,7 +220,7 @@ export class SsEntriesComponent {
       if (diffHours > 4) {
         this.registeredStudents[index].hours = 4;
       } else {
-        this.registeredStudents[index].hours = Math.floor(diffHours);
+        this.registeredStudents[index].hours = diffHours;
       }
 
       this.registeredStudents[index].checked = true;

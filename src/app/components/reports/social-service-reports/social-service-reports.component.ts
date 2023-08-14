@@ -211,7 +211,7 @@ export class SocialServiceReportsComponent {
         studentId,
         reports[index].student.name, 
         reports[index].lab,
-        hoursPerStudent[studentId] 
+        Math.floor(hoursPerStudent[studentId])
       ]);
     }
     return result;
