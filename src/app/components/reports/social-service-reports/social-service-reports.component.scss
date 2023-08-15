@@ -61,4 +61,31 @@
             }
         }
     }
+    .input-typeahead {
+        font-family: "Barlow";
+        color: #0F4C75;
+        border: none;
+        border-radius: 0;
+        border-bottom: #E14D2A solid;
+        background-color: transparent;
+    
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    
+        &:focus {
+            outline: none;
+        }
+    
+        &::placeholder {
+            color: #0f4c7557;
+        }
+    }
+    .tab-header, .ui-tabview-title {
+        font-family: "Barlow";
+        color: #0F4C75;
+        /* Otros estilos */
+    }
 }

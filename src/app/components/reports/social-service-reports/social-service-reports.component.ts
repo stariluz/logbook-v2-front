@@ -12,6 +12,7 @@ import { SelectItem } from 'primeng/api';
 type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
 type StudentRegistry = { _id: string; studentId: string; name: string; start_time: Date; end_time: string; lab: string; hours: number; }
+type AlertMessage = { message: string; type: string }
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -28,20 +29,31 @@ export class SocialServiceReportsComponent {
   private courses: Course[] = [];
   public filteredLabs: string[] = [];
   public filteredCourses: Course[] = [];
-  public rangeDates: Date[] = [];
   public studentReports: StudentRegistry[] = [];
   reports: any[] = [];
   private user: any;
   selectedDate: Date = new Date();
+  selectedTabIndex: number = 0;
+  monthOptions: SelectItem[] = [
+      { label: 'Un solo mes', value: 'single' },
+      { label: 'Rango de meses', value: 'range' }
+  ];
+  start_Range: Date = new Date();
+  end_Range: Date = new Date();
 
   // Blob de las imagenes para los reportes
   private uachLogoBlob: any;
   private fingLogoBlob: any;
   private reportSheetBlob: any;
 
+  private _message = new Subject<string>();
+  alertMessage: AlertMessage = {
+    message: '',
+    type: ''
+  };
+
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
-  private _message = new Subject<string>();
   errorMessage: string = '';
 
   constructor(@Inject(LOCALE_ID) 
@@ -129,14 +141,22 @@ export class SocialServiceReportsComponent {
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
   getSSReports() {
+    // Individual
     const year = this.selectedDate.getFullYear();
     const month = this.selectedDate.getMonth();
 
+    // Rango
+    const start_year = this.start_Range.getFullYear();
+    const start_month = this.start_Range.getMonth();
+    const end_year = this.end_Range.getFullYear();
+    const end_month = this.end_Range.getMonth();
+
+    // Dependiando de la pestaña seleccionada, se obtienen los parametros
     const parameters = {
       lab: this.selectedLab,
       student: this.studentId,
-      startDate: new Date(year, month, 1),
-      endDate: new Date(year, month + 1, 1),
+      startDate: this.selectedTabIndex == 0 ? new Date(year, month, 1) : new Date(start_year, start_month, 1),
+      endDate: this.selectedTabIndex == 0 ? new Date(year, month + 1, 1) : new Date(end_year, end_month + 1, 1),
     };
     
     this.reportsService.getSSReport(parameters).subscribe(
@@ -154,9 +174,13 @@ export class SocialServiceReportsComponent {
             this.updateStudentReport(index, student);
           }
         }
+
+        if (this.studentReports.length == 0) {
+          this._message.next(`No se encontraron registros para los filtros proporcionados`);
+          this.alertMessage.type = 'danger';
+        }
       },
       (err) => {
-        console.log("No verdad?");
         console.log(err);
       }
     )
