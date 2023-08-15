@@ -35,6 +35,7 @@
                         <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
                         <th pSortableColumn="date">Hora Entrada <p-sortIcon field="date"></p-sortIcon></th>
                         <th pSortableColumn="date">Hora Salida <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="number">Horas <p-sortIcon field="date"></p-sortIcon></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-entry>
@@ -51,7 +52,8 @@
                             <ng-template #showTime>
                             {{ entry.end_time | date:'hh:mm' }}
                             </ng-template>
-                        </td>                  
+                        </td>  
+                        <td>{{ entry.hours | number:'1.0-0' }}</td>       
                     </tr>
                 </ng-template>
             </p-table>
