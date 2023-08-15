@@ -37,6 +37,7 @@ import { CustomCourseEntriesComponent } from './components/entries/custom-course
 import { InventoryComponent } from './components/inventory/inventory.component';
 import { SocialServiceModule } from './components/social-service/social-service.module';
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { SocialServiceReportsComponent } from './components/reports/social-servi
     MessagesModule,
     MessageModule,
     SocialServiceModule,
+    TabViewModule
   ],
   providers: [
     AuthGuard,

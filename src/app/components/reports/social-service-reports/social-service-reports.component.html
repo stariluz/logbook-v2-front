@@ -23,35 +23,58 @@
         <button *ngIf="studentReports.length > 0" id="pdf-btn" type="button" class="btn btn-dark me-3" (click)="generatePdfReport()">Guardar PDF</button>
         <button id="generate-btn" type="button" class="btn btn-dark" (click)="getSSReports()">Generar</button>
     </div>
-    <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
-    <p-table id="reportTable" *ngIf="studentReports.length > 0" [value]="studentReports" styleClass="report-table">
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="student._id">Matricula <p-sortIcon field="student._id"></p-sortIcon></th>
-                <th pSortableColumn="student.name">Nombre <p-sortIcon field="student.name"></p-sortIcon></th>
-                <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
-                <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
-                <th pSortableColumn="date">Hora Entrada <p-sortIcon field="date"></p-sortIcon></th>
-                <th pSortableColumn="date">Hora Salida <p-sortIcon field="date"></p-sortIcon></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-entry>
-            <tr *ngIf="entry.end_time !== undefined">
-                <td>{{entry.student._id}}</td>
-                <td>{{entry.student.name}}</td>
-                <td>{{entry.lab}}</td>
-                <td>{{entry.start_time | date:'yyyy-MM-dd'}}</td>
-                <td>{{entry.start_time | date:'hh:mm'}}</td>
-                <td>
-                    <ng-container *ngIf="entry.end_time === ''; else showTime">
-                      No checado
-                    </ng-container>
-                    <ng-template #showTime>
-                      {{ entry.end_time | date:'hh:mm' }}
-                    </ng-template>
-                </td>                  
-                <!-- <td>{{entry.hours}}</td> -->
-            </tr>
-        </ng-template>
-    </p-table>
+    <p-tabView *ngIf="reports.length > 0 or studentReports.length > 0">
+        <p-tabPanel header="Registros Individuales" *ngIf="studentReports.length > 0">
+            <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
+            <p-table class="col-7" id="reportTable"[value]="studentReports" styleClass="report-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="student._id">Matricula <p-sortIcon field="student._id"></p-sortIcon></th>
+                        <th pSortableColumn="student.name">Nombre <p-sortIcon field="student.name"></p-sortIcon></th>
+                        <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
+                        <th pSortableColumn="date">Fecha <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="date">Hora Entrada <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="date">Hora Salida <p-sortIcon field="date"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-entry>
+                    <tr *ngIf="entry.end_time !== undefined">
+                        <td>{{entry.student._id}}</td>
+                        <td>{{entry.student.name}}</td>
+                        <td>{{entry.lab}}</td>
+                        <td>{{entry.start_time | date:'yyyy-MM-dd'}}</td>
+                        <td>{{entry.start_time | date:'hh:mm'}}</td>
+                        <td>
+                            <ng-container *ngIf="entry.end_time === ''; else showTime">
+                            No checado
+                            </ng-container>
+                            <ng-template #showTime>
+                            {{ entry.end_time | date:'hh:mm' }}
+                            </ng-template>
+                        </td>                  
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel header="Horas Totales" *ngIf="reports.length > 0">
+            <p-table class="col-5" id="reportTable" [value]="reports" styleClass="report-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="student._id">Matricula <p-sortIcon field="student._id"></p-sortIcon></th>
+                        <th pSortableColumn="student.name">Nombre <p-sortIcon field="student.name"></p-sortIcon></th>
+                        <th pSortableColumn="lab">Laboratorio <p-sortIcon field="lab"></p-sortIcon></th>
+                        <th pSortableColumn="date">Horas Totales <p-sortIcon field="date"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-entry>
+                    <tr>
+                        <td>{{entry[0]}}</td>
+                        <td>{{entry[1]}}</td>
+                        <td>{{entry[2]}}</td>
+                        <td>{{entry[3]}}</td>   
+                    </tr>             
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
 </div>

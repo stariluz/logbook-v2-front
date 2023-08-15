@@ -30,7 +30,7 @@ export class SocialServiceReportsComponent {
   public filteredCourses: Course[] = [];
   public rangeDates: Date[] = [];
   public studentReports: StudentRegistry[] = [];
-  private reports: any[] = [];
+  reports: any[] = [];
   private user: any;
   selectedDate: Date = new Date();
 
