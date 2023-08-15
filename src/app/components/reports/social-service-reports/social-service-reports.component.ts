@@ -156,6 +156,7 @@ export class SocialServiceReportsComponent {
         }
       },
       (err) => {
+        console.log("No verdad?");
         console.log(err);
       }
     )
@@ -165,14 +166,11 @@ export class SocialServiceReportsComponent {
     let start: Date = new Date(student.start_time);
         
     const today = new Date();
-    today.setHours(7, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
     
-    if (start < today) {
-      const endAfter4Hours: Date = new Date(start);
-      endAfter4Hours.setHours(endAfter4Hours.getHours() + 4);
-      
-      this.studentReports[index].end_time = endAfter4Hours.toISOString();
-      this.studentReports[index].hours = 4;
+    if (start < today) {      
+      this.studentReports[index].end_time = '';
+      this.studentReports[index].hours = 0;
 
       this.entriesService.updateSSEntry(student._id, student).subscribe(
         (res) => {
@@ -180,10 +178,12 @@ export class SocialServiceReportsComponent {
           localStorage.setItem('SS-register', JSON.stringify(this.studentReports));
         },
         (err) => {
+          console.log("Enserio");
           console.log(err);
         }
       );
     }
+    
   }
 
   getHoursPerMouth(reports: any[]) {

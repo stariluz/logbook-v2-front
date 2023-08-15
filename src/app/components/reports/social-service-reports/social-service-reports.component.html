@@ -36,13 +36,20 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-entry>
-            <tr *ngIf="entry.end_time">
+            <tr *ngIf="entry.end_time !== undefined">
                 <td>{{entry.student._id}}</td>
                 <td>{{entry.student.name}}</td>
                 <td>{{entry.lab}}</td>
                 <td>{{entry.start_time | date:'yyyy-MM-dd'}}</td>
                 <td>{{entry.start_time | date:'hh:mm'}}</td>
-                <td>{{entry.end_time | date:'hh:mm'}}</td>
+                <td>
+                    <ng-container *ngIf="entry.end_time === ''; else showTime">
+                      No checado
+                    </ng-container>
+                    <ng-template #showTime>
+                      {{ entry.end_time | date:'hh:mm' }}
+                    </ng-template>
+                </td>                  
                 <!-- <td>{{entry.hours}}</td> -->
             </tr>
         </ng-template>
