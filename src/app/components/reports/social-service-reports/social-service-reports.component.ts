@@ -310,6 +310,7 @@ export class SocialServiceReportsComponent {
     // Creamos el PDF
     const pdf = pdfMake.createPdf(docDefinition);
     pdf.open();
+    this.getSSReports()
   }
 
   // Convertimos las imagenes que utilizaremos en blobs
