@@ -38,6 +38,7 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { SocialServiceModule } from './components/social-service/social-service.module';
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
 import { TabViewModule } from 'primeng/tabview';
+import { AssistantshipsComponent } from './components/reports/assistantships/assistantships.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { TabViewModule } from 'primeng/tabview';
     CustomCourseEntriesComponent,
     InventoryComponent,
     SocialServiceReportsComponent,
+    AssistantshipsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

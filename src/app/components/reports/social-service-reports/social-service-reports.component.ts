@@ -151,7 +151,7 @@ export class SocialServiceReportsComponent {
     const end_year = this.end_Range.getFullYear();
     const end_month = this.end_Range.getMonth();
 
-    // Dependiando de la pestaña seleccionada, se obtienen los parametros
+    // Dependiendo de la pestaña seleccionada, se obtienen los parametros
     const parameters = {
       lab: this.selectedLab,
       student: this.studentId,
