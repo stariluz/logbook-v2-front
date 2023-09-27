@@ -48,9 +48,7 @@
             <a href="/reports/social-service-reports">
                 <p class="text-white fs-6 text-border">Servicio Social</p>
             </a>
-            <a href="/reports/assistantships">
-                <p class="text-white fs-6 text-border">Ayudantias</p>
-            </a>
+
         </div>
         <!-- Registros -->
         <div class="mb-5">
@@ -64,9 +62,7 @@
             <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/social-service">
                 <p class="text-white fs-6 text-border">Servicio Social</p>
             </a>
-            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/social-service">
-                <p class="text-white fs-6 text-border">Ayudantias</p>
-            </a>
+
         </div>
         <!-- Datos -->
         <div *ngIf="userRole == 'superuser'" class="mb-5">
