@@ -39,6 +39,7 @@ import { SocialServiceModule } from './components/social-service/social-service.
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
 import { TabViewModule } from 'primeng/tabview';
 import { AssitanshipsReportsComponent } from './components/reports/assitanships-reports/assitanships-reports.component';
+import { AssitanshipsComponent } from './components/assitanships/assitanships.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { AssitanshipsReportsComponent } from './components/reports/assitanships-
     CustomCourseEntriesComponent,
     InventoryComponent,
     SocialServiceReportsComponent,
-    AssitanshipsReportsComponent
+    AssitanshipsReportsComponent,
+    AssitanshipsComponent
   ],
   imports: [
     BrowserAnimationsModule,

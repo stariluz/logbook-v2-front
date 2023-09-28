@@ -17,6 +17,8 @@ import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
 import { MainPageComponent } from './components/social-service/main-page/main-page.component';
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
+import { AssitanshipsReportsComponent } from './components/reports/assitanships-reports/assitanships-reports.component';
+import { AssitanshipsComponent } from './components/assitanships/assitanships.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,7 +32,8 @@ const routes: Routes = [
     { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard, RoleGuard], children: [
       { path: 'student-reports', component: StudentReportsComponent },
       { path: 'professor-reports', component: ProfessorReportsComponent },
-      { path: 'social-service-reports', component: SocialServiceReportsComponent }
+      { path: 'social-service-reports', component: SocialServiceReportsComponent },
+      { path: 'assistanships-reports', component: AssitanshipsReportsComponent}
     ] },
     { path: 'database', component: DatabaseComponent, canActivate: [AuthGuard, RoleGuard], children: [
       { path: 'file-upload', component: FileUploadComponent },
@@ -38,6 +41,7 @@ const routes: Routes = [
     ] },
     { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard, RoleGuard] },
     { path: 'social-service', component: MainPageComponent, canActivate: [AuthGuard, RoleGuard]},
+    { path: 'assistanships', component: AssitanshipsComponent, canActivate: [AuthGuard, RoleGuard]}
   ]},
 ];
 

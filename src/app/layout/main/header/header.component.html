@@ -32,6 +32,7 @@
             <i class="bi bi-list fs-4 text-white"></i>
         </button>
     </div>
+
     <!-- Reportes -->
     <div class="offcanvas-bg offcanvas-body p-5 pt-0">
         <div *ngIf="userRole == 'admin' || userRole == 'superuser'" class="mb-5">
@@ -48,6 +49,9 @@
             <a href="/reports/social-service-reports">
                 <p class="text-white fs-6 text-border">Servicio Social</p>
             </a>
+            <a href="/reports/assistanships-reports">
+                <p class="text-white fs-6 text-border">Ayudantias</p>
+            </a>
 
         </div>
         <!-- Registros -->
@@ -61,6 +65,9 @@
             </a>
             <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/social-service">
                 <p class="text-white fs-6 text-border">Servicio Social</p>
+            </a>
+            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/assistanships">
+                <p class="text-white fs-6 text-border">Ayudantias</p>
             </a>
 
         </div>
