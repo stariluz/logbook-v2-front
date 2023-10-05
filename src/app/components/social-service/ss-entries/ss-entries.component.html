@@ -1,6 +1,6 @@
 <div class="w-100">
-    <div class="row w-100 gy-4 mt-4">
-        <div class="col-lg-5 col-md-12 d-flex flex-column align-items-center justify-content-center">
+    <div class="row w-100 gy-1 mt-1">
+        <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center justify-content-center">
             <!-- Alerta de confirmación o error al registrar alumno -->
             <ngb-alert #selfClosingAlert *ngIf="alertMessage.message" class="alert-message" type="{{ alertMessage.type }}" (closed)="alertMessage.message= ''" class="w-75 mb-4">{{ alertMessage.message }}</ngb-alert>
             <!-- Clase actual -->
@@ -11,31 +11,59 @@
                 <h5 class="mb-4 fs-5" style="text-transform: uppercase;">{{ c_User.user.name }}</h5>
             </div>
         </div>
-        <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
-            <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
+        <div class="col-lg-2 col-md-6 d-flex ">
+            <div class="w-100 mb-2">
+                <h4 class="fs-5"><strong>Facultad</strong></h4>
+                <div class="row">
+                    <div class="col-12 mb-2">
+                        <input type="radio" name="connection_type" class="form-check-input" id="internal">
+                        <label for="internal" class="form-label">Interno &#40;Ingenieria&#41;</label>
+                    </div>
+                    <div class="col-12">
+                        <input type="radio" name="connection_type" class="form-check-input" id="external">
+                        <label for="external" class="form-label">Externo &#40;Otro&#41;</label>
+                    </div>
+                    <!-- aqui va para seleccionar facultad si es externo -->
+                </div>
+            </div>
         </div>
-        <div class="col-lg-5 col-md-12 d-flex">
+        <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative ">
+            <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75 "></div>
+        </div>
+        <div class="col-lg-5 col-md-12 d-flex ">
             <!-- Campo para ingresar la matricula del alumno -->
-            <form name="professor-form" class="w-75" novalidate>
-                <p class="fs-5 mb-1">REGISTRAR ENTRADA/SALIDA</p>
-                <input class="input-typeahead w-100 fs-5 mb-4" type="text" placeholder="Ingrese la matricula del alumno" name="student" [(ngModel)]="studentId" (keyup.enter)="registerStudentEntry()"/>
-                <button id="register-class-btn" class="btn btn-outline-dark" type="button" (click)="registerStudentEntry()">Registrar</button>
+            <form name="professor-form " class="w-75 " novalidate>
+                <p class="fs-5 mb-1 ">REGISTRAR ENTRADA/SALIDA</p>
+                <input class="input-typeahead w-100 fs-5 mb-4 " type="text " placeholder="Ingrese la matricula del alumno " name="student " [(ngModel)]="studentId " (keyup.enter)="registerStudentEntry() " />
+                <button id="register-class-btn " class="btn btn-outline-dark " type="button " (click)="registerStudentEntry() ">Registrar</button>
             </form>
         </div>
     </div>
     <hr>
     <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
-    <div *ngIf="registeredStudents.length > 0">
+    <div *ngIf="registeredStudents.length> 0">
         <h4 class="fs-5"><strong>PENDIENTE DE CHECAR</strong></h4>
         <p-table [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">Matricula <p-sortIcon field="id"></p-sortIcon></th>
-                    <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
-                    <th pSortableColumn="startTime">Hora Entrada <p-sortIcon field="startTime"></p-sortIcon></th>
-                    <th pSortableColumn="endTime">Hora Salida <p-sortIcon field="endTime"></p-sortIcon></th>
-                    <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
+                    <th pSortableColumn="id">Matricula
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name">Nombre
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fecha">Fecha
+                        <p-sortIcon field="fecha"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="startTime">Hora Entrada
+                        <p-sortIcon field="startTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="endTime">Hora Salida
+                        <p-sortIcon field="endTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="actions">Acciones
+                        <p-sortIcon field="actions"></p-sortIcon>
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-student>
@@ -56,7 +84,7 @@
                 </tr>
             </ng-template>
         </p-table>
-    </div>  
+    </div>
     <hr>
     <!-- Tabla de Registros ya checados -->
     <div *ngIf="registeredStudents.length > 0">
@@ -64,12 +92,24 @@
         <p-table [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="id">Matricula <p-sortIcon field="id"></p-sortIcon></th>
-                    <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="fecha">Fecha <p-sortIcon field="fecha"></p-sortIcon></th>
-                    <th pSortableColumn="startTime">Hora Entrada <p-sortIcon field="startTime"></p-sortIcon></th>
-                    <th pSortableColumn="endTime">Hora Salida <p-sortIcon field="endTime"></p-sortIcon></th>
-                    <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
+                    <th pSortableColumn="id">Matricula
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name">Nombre
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="fecha">Fecha
+                        <p-sortIcon field="fecha"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="startTime">Hora Entrada
+                        <p-sortIcon field="startTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="endTime">Hora Salida
+                        <p-sortIcon field="endTime"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="actions">Acciones
+                        <p-sortIcon field="actions"></p-sortIcon>
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-student>
