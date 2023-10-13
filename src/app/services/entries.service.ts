@@ -44,4 +44,8 @@ export class EntriesService {
   updateSSEntry(id: string, student: any): Observable<any> {
     return this.http.patch<any>(`api/ss/${id}`, student);
   }
+
+  getFaculties(): Observable<any> {
+    return this.http.get<any>('api/faculties');
+  }
 }

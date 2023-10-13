@@ -15,15 +15,16 @@
             <div class="w-100 mb-2">
                 <h4 class="fs-5"><strong>Facultad</strong></h4>
                 <div class="row">
-                    <div class="col-12 mb-2">
-                        <input type="radio" name="connection_type" class="form-check-input" id="internal">
-                        <label for="internal" class="form-label">Interno &#40;Ingenieria&#41;</label>
+                    <div class="dropdown" style="width:300px;">
+                        <button class="dropbtn" (click)="toggleDropdown()">
+                          {{ selectedFaculty ? selectedFaculty.name : 'Elige tu facultad' }}
+                        </button>
+                        <div class="dropdown-content" [ngStyle]="{'display': showDropdown ? 'block' : 'none'}">
+                            <a *ngFor="let faculty of faculties; let i = index" class="list-group-item" [ngClass]="{'selected': selectedFaculty === faculty}" (click)="setFaculty(faculty)">
+                            {{ faculty.name }} ({{ faculty._id }})
+                          </a>
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <input type="radio" name="connection_type" class="form-check-input" id="external">
-                        <label for="external" class="form-label">Externo &#40;Otro&#41;</label>
-                    </div>
-                    <!-- aqui va para seleccionar facultad si es externo -->
                 </div>
             </div>
         </div>
@@ -49,6 +50,9 @@
                     <th pSortableColumn="id">Matricula
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="faculty">Facultad
+                        <p-sortIcon field="faculty"></p-sortIcon>
+                    </th>
                     <th pSortableColumn="name">Nombre
                         <p-sortIcon field="name"></p-sortIcon>
                     </th>
@@ -69,6 +73,7 @@
             <ng-template pTemplate="body" let-student>
                 <tr *ngIf="!student.checked">
                     <td>{{student.studentId}}</td>
+                    <td>{{student.selectedFaculty}}</td>
                     <td>{{student.name}}</td>
                     <td>{{student.start_time | date:'yyyy-MM-dd'}}</td>
                     <td>{{student.start_time | date:'hh:mm'}}</td>

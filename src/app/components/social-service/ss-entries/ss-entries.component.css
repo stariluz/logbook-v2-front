@@ -11,7 +11,8 @@ h5 {
     background-color: transparent;
 }
 
-.input-typeahead::-webkit-outer-spin-button, .input-typeahead::-webkit-inner-spin-button {
+.input-typeahead::-webkit-outer-spin-button,
+.input-typeahead::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -26,6 +27,10 @@ h5 {
 
 .input-typeahead::placeholder {
     color: #0f4c7557;
+}
+
+input.radio {
+    border: 0;
 }
 
 .vertical-line {
@@ -60,4 +65,68 @@ h5 {
 .action-btn:hover {
     color: white;
     background-color: #E14D2A;
+}
+
+input {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+}
+
+input[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+}
+
+.dropbtn {
+    background-color: white;
+    color: rgb(0, 0, 0);
+    padding: 8px 10px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 250px;
+    max-height: 150px;
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #a7b3a8;
+}
+
+.dropbtn::after {
+    content: '\25BC';
+    margin-left: 5px;
 }

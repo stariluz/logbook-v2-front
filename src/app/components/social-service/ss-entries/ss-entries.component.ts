@@ -6,9 +6,10 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { formatDate } from '@angular/common';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
+type RegisteredStudent = { registryId: string; studentId: string; faculty:string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
 type AlertMessage = { message: string; type: string }
 
+type Faculty = { _id: string, name: string}
 
 @Component({
   selector: 'app-ss-entries',
@@ -21,6 +22,22 @@ export class SsEntriesComponent {
   public registeredStudents: Array<RegisteredStudent> = [];
   private user: any;
   public c_User: any;
+  public faculty?: string;
+  public faculties: Faculty[] = [];
+  public selectedFaculty: Faculty | null = null;
+  public selectedFacultyId: string | null = null;
+
+  public showDropdown: boolean = false; // Variable para controlar la visibilidad del menú desplegable
+
+  toggleDropdown() {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  setFaculty(faculty: Faculty) {
+    this.selectedFaculty = faculty;
+    this.selectedFacultyId = faculty._id;
+    this.toggleDropdown(); // Cerrar el menú desplegable después de seleccionar una facultad
+  }
 
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
@@ -41,8 +58,10 @@ export class SsEntriesComponent {
     if (this.user) {
       this.user = JSON.parse(this.user);
     }
+
     // Almacenamos los alumnos que ya se han registrado al curso
     this.getSSReports();
+
     // Tiempo de duración y mensaje de la alerta
 		this._message.subscribe((message) => (this.alertMessage.message = message));
 		this._message.pipe(debounceTime(4000)).subscribe(() => {
@@ -50,6 +69,16 @@ export class SsEntriesComponent {
 				this.selfClosingAlert.close();
 			}
 		});
+    
+    // Obtenemos las facultades
+    this.entriesService.getFaculties().subscribe(
+      (res) => {
+        this.faculties = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
   // Get data from database
@@ -75,6 +104,7 @@ export class SsEntriesComponent {
           aux.push({
             registryId: element._id,
             studentId: element.student._id,
+            faculty: element.student.faculty,
             name: element.student.name,
             start_time: element.start_time,
             end_time: element.end_time,
@@ -95,60 +125,68 @@ export class SsEntriesComponent {
   
   // Revisión que la matrícula se haya ingresado, para posteriormente guardar la matrícula en el almacenamiento local dentro de un arreglo
   registerStudentEntry() {
-    // Revisamos que se haya ingresado una matrícula
-    if(!this.studentId) {
-      this._message.next(`Porfavor ingrese la matrícula del alumno`);
+    if (!this.studentId) {
+      this._message.next(`Por favor ingrese la matrícula del alumno`);
+      this.alertMessage.type = 'danger';
+      return;
+    }
+  
+    if (!this.selectedFaculty) {
+      this._message.next(`Por favor seleccione su facultad`);
       this.alertMessage.type = 'danger';
       return;
     }
 
-    // Eliminamos los números 4400 de la matrícula escaneada
-    if(this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
+    if (!this.selectedFacultyId) {
+      // Almacenar la facultad seleccionada temporalmente solo si no tiene un valor
+      this.selectedFacultyId = this.selectedFaculty?._id;
+    }
+  
+    if (this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
       this.studentId = this.studentId.substr(1, 6);
     }
-
-    // Revisa si el alumno ya se ha registrado
+  
     let regStudent: RegisteredStudent | null = null;
-    
+  
     this.registeredStudents.forEach((element: RegisteredStudent) => {
-      if(element.studentId == this.studentId && !element.checked) {
+      if (element.studentId == this.studentId && !element.checked) {
         regStudent = element;
       }
     });
-    // Si ya esta registrado checamos si ya tiene marcada su salida, si no creamos una nueva entrada
-    if(regStudent) {
-      let aux: RegisteredStudent = regStudent
-      if(!aux.end_time) {
-        this.checkEndTime(regStudent)
+  
+    if (regStudent) {
+      let aux: RegisteredStudent = regStudent;
+      if (!aux.end_time) {
+        this.checkEndTime(regStudent);
         this.studentId = '';
         return;
       }
     }
-
-    // Revisa si existe una petición en curso
-    if(this.requestInProgress) {
-      this._message.next(`Porfavor espere a que termine de ser registrada la entrada anterior`);
+  
+    if (this.requestInProgress) {
+      this._message.next(`Por favor espere a que termine de ser registrada la entrada anterior`);
       this.alertMessage.type = 'warning';
       return;
     }
-
-    // Indicamos que se ha iniciado una petición
+  
     this.requestInProgress = true;
-
+  
     const date: string = new Date().toISOString();
-
+  
+    // Almacenar la facultad seleccionada temporalmente
+    this.selectedFacultyId = this.selectedFaculty?._id;
+  
     const entry = {
       start_time: date,
       student: this.studentId,
       lab: this.user.user.lab,
       hours: 0,
-    }
-    
-    // Registramos la nueva entrada
+      faculty: this.selectedFacultyId
+    };
+  
     this.entriesService.registerSSEntry(entry).subscribe(
       (res) => {
-        // Revisamos si existe alumno en la base de datos con dicha matrícula
-        if(res.status == 400) {
+        if (res.status == 400) {
           this._message.next(`No se tiene alumno registrado con esta matrícula`);
           this.alertMessage.type = 'danger';
           this.studentId = '';
@@ -158,19 +196,22 @@ export class SsEntriesComponent {
           this.registeredStudents = [...this.registeredStudents, {
             registryId: res._id,
             studentId: res.student._id,
+            faculty: res.student.faculty,
             name: res.student.name,
             start_time: date,
             hours: 0,
-            checked: false
+            checked: false,
           }];
           localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
           this.studentId = '';
+  
+          // Restablecer el menú desplegable y la facultad seleccionada
+          this.showDropdown = false;
+          this.selectedFaculty = null;
         }
-        // Indicamos que ha terminado la petición
         this.requestInProgress = false;
       },
       (err) => {
-        // Indicamos que ha terminado la petición
         this.requestInProgress = false;
         console.log(err);
       }

@@ -1,5 +1,7 @@
 :host ::ng-deep {
-    .entries-table {
+    .entries-table,
+    .custom-calendar.p-calendar,
+    .input-autocomplete {
         margin-top: 1.5rem;
         .p-datatable-thead {
             border-bottom: #E14D2A solid;
