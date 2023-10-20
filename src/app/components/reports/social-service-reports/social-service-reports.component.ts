@@ -11,7 +11,7 @@ import { SelectItem } from 'primeng/api';
 // Tipado de objetos para la busqueda en el elemento dropdown
 type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
-type StudentRegistry = { _id: string; studentId: string; name: string; start_time: Date; end_time: string; lab: string; hours: number; }
+type StudentRegistry = { _id: string; studentId: string; facultyId:string; name: string; start_time: Date; end_time: string; lab: string; hours: number; }
 type AlertMessage = { message: string; type: string }
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -23,6 +23,7 @@ type AlertMessage = { message: string; type: string }
 })
 export class SocialServiceReportsComponent {
   public studentId?: string;
+  public facultyId?: string;
   public selectedLab?: string;
   public selectedCourse?: Course;
   private labs: string[] = [];
@@ -161,14 +162,17 @@ export class SocialServiceReportsComponent {
     
     this.reportsService.getSSReport(parameters).subscribe(
       (res) => {
+        console.log(parameters);
         this.studentReports = res;
 
+        console.log(res);
         // Set the hour made by every student
         this.reports = this.getHoursPerMouth(this.studentReports);
         
         // Ejecutar el proceso en los elementos sin end_time
         for (let index = 0; index < this.studentReports.length; index++) {
           const student = this.studentReports[index];
+          console.log(student);
           
           if (!student.end_time) {
             this.updateStudentReport(index, student);
@@ -233,6 +237,7 @@ export class SocialServiceReportsComponent {
       index = reports.findIndex((item: any) => item.student._id === parseInt(studentId, 10));
       result.push([
         studentId,
+        reports[index].faculty,
         reports[index].student.name, 
         reports[index].lab,
         Math.floor(hoursPerStudent[studentId])
@@ -279,9 +284,9 @@ export class SocialServiceReportsComponent {
           layout: 'lightHorizontalLines',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto','auto'],
             body: [
-              [{ text: 'Matrícula', style: 'tableHeader' }, { text: 'Nombre', style: 'tableHeader' }, { text: 'Laboratorio', style: 'tableHeader' }, { text: 'Horas realizadas', style: 'tableHeader' }],
+              [{ text: 'Matrícula', style: 'tableHeader' },{ text: 'Facultad', style: 'tableHeader' }, { text: 'Nombre', style: 'tableHeader' }, { text: 'Laboratorio', style: 'tableHeader' }, { text: 'Horas realizadas', style: 'tableHeader' }],
               ...this.reports
             ]
           }

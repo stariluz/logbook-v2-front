@@ -73,7 +73,7 @@
             <ng-template pTemplate="body" let-student>
                 <tr *ngIf="!student.checked">
                     <td>{{student.studentId}}</td>
-                    <td>{{student.selectedFaculty}}</td>
+                    <td>{{student.facultyId}}</td>
                     <td>{{student.name}}</td>
                     <td>{{student.start_time | date:'yyyy-MM-dd'}}</td>
                     <td>{{student.start_time | date:'hh:mm'}}</td>
@@ -100,6 +100,9 @@
                     <th pSortableColumn="id">Matricula
                         <p-sortIcon field="id"></p-sortIcon>
                     </th>
+                    <th pSortableColumn="faculty">Facultad
+                        <p-sortIcon field="faculty"></p-sortIcon>
+                    </th>
                     <th pSortableColumn="name">Nombre
                         <p-sortIcon field="name"></p-sortIcon>
                     </th>
@@ -120,6 +123,7 @@
             <ng-template pTemplate="body" let-student>
                 <tr *ngIf="student.checked">
                     <td>{{student.studentId}}</td>
+                    <td>{{student.facultyId}}</td>
                     <td>{{student.name}}</td>
                     <td>{{student.start_time | date:'yyyy-MM-dd'}}</td>
                     <td>{{student.start_time | date:'hh:mm'}}</td>

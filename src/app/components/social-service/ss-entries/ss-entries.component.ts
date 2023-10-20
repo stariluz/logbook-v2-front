@@ -6,7 +6,7 @@ import { ReportsService } from 'src/app/services/reports.service';
 import { formatDate } from '@angular/common';
 
 // Tipado de objeto para la busqueda de alumnos registrados
-type RegisteredStudent = { registryId: string; studentId: string; faculty:string; name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
+type RegisteredStudent = { registryId: string; studentId: string; facultyId: string, name: string; start_time: string; end_time?: string; hours: number; checked: boolean}
 type AlertMessage = { message: string; type: string }
 
 type Faculty = { _id: string, name: string}
@@ -25,7 +25,6 @@ export class SsEntriesComponent {
   public faculty?: string;
   public faculties: Faculty[] = [];
   public selectedFaculty: Faculty | null = null;
-  public selectedFacultyId: string | null = null;
 
   public showDropdown: boolean = false; // Variable para controlar la visibilidad del menú desplegable
 
@@ -35,7 +34,6 @@ export class SsEntriesComponent {
 
   setFaculty(faculty: Faculty) {
     this.selectedFaculty = faculty;
-    this.selectedFacultyId = faculty._id;
     this.toggleDropdown(); // Cerrar el menú desplegable después de seleccionar una facultad
   }
 
@@ -59,6 +57,16 @@ export class SsEntriesComponent {
       this.user = JSON.parse(this.user);
     }
 
+    // Obtenemos las facultades
+    this.entriesService.getFaculties().subscribe(
+      (res) => {
+        this.faculties = res;
+      },
+      (err) => {
+         console.log(err);
+      }
+    )
+
     // Almacenamos los alumnos que ya se han registrado al curso
     this.getSSReports();
 
@@ -69,16 +77,6 @@ export class SsEntriesComponent {
 				this.selfClosingAlert.close();
 			}
 		});
-    
-    // Obtenemos las facultades
-    this.entriesService.getFaculties().subscribe(
-      (res) => {
-        this.faculties = res;
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
   }
 
   // Get data from database
@@ -104,7 +102,7 @@ export class SsEntriesComponent {
           aux.push({
             registryId: element._id,
             studentId: element.student._id,
-            faculty: element.student.faculty,
+            facultyId: element.faculty,
             name: element.student.name,
             start_time: element.start_time,
             end_time: element.end_time,
@@ -116,7 +114,9 @@ export class SsEntriesComponent {
 
         this.registeredStudents = [...this.registeredStudents];
         localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
-      },
+
+        console.log(res);
+      }, 
       (err) => {
         console.log(err);
       },
@@ -135,11 +135,6 @@ export class SsEntriesComponent {
       this._message.next(`Por favor seleccione su facultad`);
       this.alertMessage.type = 'danger';
       return;
-    }
-
-    if (!this.selectedFacultyId) {
-      // Almacenar la facultad seleccionada temporalmente solo si no tiene un valor
-      this.selectedFacultyId = this.selectedFaculty?._id;
     }
   
     if (this.studentId.endsWith('4400') && this.studentId.startsWith('A')) {
@@ -173,15 +168,12 @@ export class SsEntriesComponent {
   
     const date: string = new Date().toISOString();
   
-    // Almacenar la facultad seleccionada temporalmente
-    this.selectedFacultyId = this.selectedFaculty?._id;
-  
     const entry = {
       start_time: date,
       student: this.studentId,
       lab: this.user.user.lab,
       hours: 0,
-      faculty: this.selectedFacultyId
+      faculty: this.selectedFaculty._id
     };
   
     this.entriesService.registerSSEntry(entry).subscribe(
@@ -196,11 +188,12 @@ export class SsEntriesComponent {
           this.registeredStudents = [...this.registeredStudents, {
             registryId: res._id,
             studentId: res.student._id,
-            faculty: res.student.faculty,
+            facultyId: res.faculty,
             name: res.student.name,
             start_time: date,
             hours: 0,
             checked: false,
+            
           }];
           localStorage.setItem('SS-register', JSON.stringify(this.registeredStudents));
           this.studentId = '';
