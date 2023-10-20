@@ -253,6 +253,21 @@ export class SocialServiceReportsComponent {
       "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
       "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     ];
+
+    // Determinar el mes o rango de meses según la selección en la pestaña
+  let reportTitle = "";
+  let reportSubtitle = "";
+
+  if (this.selectedTabIndex === 0) {
+    // Un solo mes seleccionado
+    reportTitle = `Mes de ${months[this.selectedDate.getMonth()]}`;
+  } else {
+    // Rango de meses seleccionado
+    const startMonth = months[this.start_Range.getMonth()];
+    const endMonth = months[this.end_Range.getMonth()];
+    reportTitle = `${startMonth} - ${endMonth}`;
+  }
+
     // Configuración del documento
     const docDefinition: any = {
       pageSize: 'LETTER',
@@ -270,8 +285,15 @@ export class SocialServiceReportsComponent {
           { text: 'Parámetros', style: 'text', absolutePosition: { x: 200, y: 100 }, bold: true, alignment: 'start' },
           { text: this.selectedLab ? `Laboratorio: ${this.selectedLab}` : 'Todos los laboratorios', style: 'text', absolutePosition: { x: 200, y: 113 }, alignment: 'start' },
           { text: this.studentId ? `Alumno: ${this.studentId}` : 'Todos los alumnos', style: 'text', absolutePosition: { x: 200, y: 126 }, alignment: 'start' },
-          { text: `Mes de ${months[this.selectedDate.getMonth()]}`, style: 'text', absolutePosition: { x: 200, y: 139 }, alignment: 'start' },
-          {
+          { text: reportTitle, style: 'text', absolutePosition: { x: 200, y: 139 }, alignment: 'start' },
+                  // Agregar condición para mostrar el rango de meses si es un rango
+                  ...(this.selectedTabIndex === 1
+                    ? [
+                        { text: reportSubtitle, style: 'text', absolutePosition: { x: 200, y: 152 }, alignment: 'start' },
+                      ]
+                    : []
+                  ), 
+           {
             image: this.fingLogoBlob,
             height: 90,
             width: 90,
