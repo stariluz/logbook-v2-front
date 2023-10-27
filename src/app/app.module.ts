@@ -38,9 +38,8 @@ import { InventoryComponent } from './components/inventory/inventory.component';
 import { SocialServiceModule } from './components/social-service/social-service.module';
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
 import { TabViewModule } from 'primeng/tabview';
-import { AssitanshipsReportsComponent } from './components/reports/assitanships-reports/assitanships-reports.component';
-import { AssitanshipsComponent } from './components/assitanships/assitanships.component';
-
+import { AssistanshipsModule} from './components/assistanships/assistanships-service.module'
+import { AssistanshipsReportsComponent } from './components/reports/assistanships-reports/assistanships-reports.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +59,7 @@ import { AssitanshipsComponent } from './components/assitanships/assitanships.co
     CustomCourseEntriesComponent,
     InventoryComponent,
     SocialServiceReportsComponent,
-    AssitanshipsReportsComponent,
-    AssitanshipsComponent
+    AssistanshipsReportsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -82,7 +80,8 @@ import { AssitanshipsComponent } from './components/assitanships/assitanships.co
     MessagesModule,
     MessageModule,
     SocialServiceModule,
-    TabViewModule
+    TabViewModule,
+    AssistanshipsModule
   ],
   providers: [
     AuthGuard,
