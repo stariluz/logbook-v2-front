@@ -1,0 +1,127 @@
+<div class="w-100">
+    <h4 class="mb-5">Registro de ayudantias</h4>
+    <!-- Alerta de error al no ingresar correctamente el campo -->
+    <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="mb-4">{{ errorMessage }}</ngb-alert>
+    <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
+        <!-- Campo para ingresar el laboratorio deseado -->
+        <div class="col">
+            <h5 class="fs-5 mb-3 w-100">Laboratorio</h5>
+            <p-autoComplete styleClass="input-autocomplete" [(ngModel)]="selectedLab" [suggestions]="filteredLabs" (completeMethod)="filterLab($event)" [dropdown]="true" placeholder="Nombre del laboratorio" [forceSelection]="true"></p-autoComplete>
+        </div>
+        <!-- Campo para ingresar el alumno deseado -->
+        <div class="col">
+            <h5 class="fs-5 mb-3 w-100">Alumno</h5>
+            <input class="input-typeahead w-100 fs-5 mb-4" type="number" placeholder="Matrícula del alumno" name="student" [(ngModel)]="studentId" />
+        </div>
+        <!-- Campo para seleccionar el mes -->
+        <div class="col">
+            <p-tabView [(activeIndex)]="selectedTabIndex">
+                <p-tabPanel class="tab-header" header="Un solo mes">
+                    <p-calendar [(ngModel)]="selectedDate" view="month" dateFormat="mm/yy"></p-calendar>
+                </p-tabPanel>
+                <p-tabPanel class="tab-header" header="Rango de meses">
+                    <div class="d-flex">
+                        <div>
+                            <h5>Comienzo</h5>
+                            <p-calendar [(ngModel)]="start_Range" view="month" dateFormat="mm/yy" [ngStyle]="{'margin-right': '10px'}"></p-calendar>
+                        </div>
+                        <div>
+                            <h5>Final</h5>
+                            <p-calendar [(ngModel)]="end_Range" view="month" dateFormat="mm/yy"></p-calendar>
+                        </div>
+                    </div>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+    <div class="w-100 d-flex align-items-center justify-content-end mt-4 mb-5">
+        <button *ngIf="studentReports.length > 0" id="pdf-btn" type="button" class="btn btn-dark me-3" (click)="generatePdfReport()">Guardar PDF</button>
+        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getASReports()">Generar</button>
+    </div>
+    <p-tabView *ngIf="reports.length > 0 || studentReports.length > 0">
+        <p-tabPanel class="tab-header" header="Registros individuales" *ngIf="studentReports.length > 0">
+            <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
+            <p-table class="col-7" id="reportTable" [value]="studentReports" styleClass="report-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="student._id">Matricula
+                            <p-sortIcon field="student._id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="student.faculty">Facultad
+                            <p-sortIcon field="student.faculty"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="student.name">Nombre
+                            <p-sortIcon field="student.name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="lab">Laboratorio
+                            <p-sortIcon field="lab"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date">Fecha
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date">Hora Entrada
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date">Hora Salida
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number">Horas
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-entry>
+                    <tr *ngIf="entry.end_time !== undefined">
+                        <td>{{entry.student._id}}</td>
+                        <td>{{entry.faculty}}</td>
+                        <td>{{entry.student.name}}</td>
+                        <td>{{entry.lab}}</td>
+                        <td>{{entry.start_time | date:'yyyy-MM-dd'}}</td>
+                        <td>{{entry.start_time | date:'hh:mm'}}</td>
+                        <td>
+                            <ng-container *ngIf="entry.end_time === ''; else showTime">
+                                No checado
+                            </ng-container>
+                            <ng-template #showTime>
+                                {{ entry.end_time | date:'hh:mm' }}
+                            </ng-template>
+                        </td>
+                        <td>{{ entry.hours | number:'1.0-0' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel class="tab-header" header="Horas Totales" *ngIf="reports.length > 0">
+            <p-table class="col-5" id="reportTable" [value]="reports" styleClass="report-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="student._id">Matricula
+                            <p-sortIcon field="student._id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="student.faculty">Facultad
+                            <p-sortIcon field="student.faculty"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="student.name">Nombre
+                            <p-sortIcon field="student.name"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="lab">Laboratorio
+                            <p-sortIcon field="lab"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date">Horas Totales
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-entry>
+                    <tr>
+                        <td>{{entry[0]}}</td>
+                        <td>{{entry[1]}}</td>
+                        <td>{{entry[2]}}</td>
+                        <td>{{entry[3]}}</td>
+                        <td>{{entry[4]}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
