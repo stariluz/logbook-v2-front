@@ -1,5 +1,5 @@
 <div class="w-100">
-    <h4 class="mb-5">Registro del servicio social</h4>
+    <h4 class="mb-5">Registro de ayudantias</h4>
     <!-- Alerta de error al no ingresar correctamente el campo -->
     <ngb-alert #selfClosingAlert *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''" class="mb-4">{{ errorMessage }}</ngb-alert>
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
@@ -36,7 +36,7 @@
     </div>
     <div class="w-100 d-flex align-items-center justify-content-end mt-4 mb-5">
         <button *ngIf="studentReports.length > 0" id="pdf-btn" type="button" class="btn btn-dark me-3" (click)="generatePdfReport()">Guardar PDF</button>
-        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getSSReports()">Generar</button>
+        <button id="generate-btn" type="button" class="btn btn-dark" (click)="getASReports()">Generar</button>
     </div>
     <p-tabView *ngIf="reports.length > 0 || studentReports.length > 0">
         <p-tabPanel class="tab-header" header="Registros individuales" *ngIf="studentReports.length > 0">

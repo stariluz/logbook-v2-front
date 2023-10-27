@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ReportsService {
 
   constructor(private http: HttpClient) { }
@@ -23,5 +24,9 @@ export class ReportsService {
 
   getSSReport(reportParams: any): Observable<any> {
     return this.http.get<any>('api/ss/reports', { params: reportParams });
+  }
+
+  getAssistanshipReport(reportParams: any): Observable<any> {
+    return this.http.get<any>('api/as/reports', {params: reportParams});
   }
 }

@@ -12,11 +12,11 @@ type AlertMessage = { message: string; type: string }
 type Faculty = { _id: string, name: string}
 
 @Component({
-  selector: 'app-ss-entries',
-  templateUrl: './ss-entries.component.html',
-  styleUrls: ['./ss-entries.component.css', './ss-entries.component.scss']
+  selector: 'app-as-entries',
+  templateUrl: './as-entries.component.html',
+  styleUrls: ['./as-entries.component.css', './as-entries.component.scss']
 })
-export class SsEntriesComponent {
+export class AsEntriesComponent {
   public studentId?: string;
   private requestInProgress: boolean = false;
   public registeredStudents: Array<RegisteredStudent> = [];
@@ -68,7 +68,7 @@ export class SsEntriesComponent {
     )
 
     // Almacenamos los alumnos que ya se han registrado al curso
-    this.getSSReports();
+    this.getASReports();
 
     // Tiempo de duración y mensaje de la alerta
 		this._message.subscribe((message) => (this.alertMessage.message = message));
@@ -80,7 +80,7 @@ export class SsEntriesComponent {
   }
 
   // Get data from database
-  getSSReports() {
+  getASReports() {
     // Set today and tomorrow dates
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -95,7 +95,7 @@ export class SsEntriesComponent {
     };
   
     // Get data from database
-    this.reportsService.getSSReport(parameters).subscribe(
+    this.reportsService.getAssistanshipReport(parameters).subscribe(
       (res) => {
         let aux: any = [];
         res.forEach((element: any) => {
@@ -176,7 +176,7 @@ export class SsEntriesComponent {
       faculty: this.selectedFaculty._id
     };
   
-    this.entriesService.registerSSEntry(entry).subscribe(
+    this.entriesService.registerASEntry(entry).subscribe(
       (res) => {
         if (res.status == 400) {
           this._message.next(`No se tiene alumno registrado con esta matrícula`);
@@ -213,7 +213,7 @@ export class SsEntriesComponent {
 
   deleteRegistry(registryId: string) {
     // Elimiamos el registro de la base de datos
-    this.entriesService.deleteSSEntry(registryId).subscribe(
+    this.entriesService.deleteASEntry(registryId).subscribe(
       (res) => {
         this._message.next(`Registro eliminado correctamente`);
         this.alertMessage.type = 'info';
@@ -254,7 +254,7 @@ export class SsEntriesComponent {
       this.registeredStudents[index].hours = diffHours;
     }
     
-    this.entriesService.updateSSEntry(student.registryId, student).subscribe(
+    this.entriesService.updateASEntry(student.registryId, student).subscribe(
       (res) => {
         this._message.next(`Hora checada correctamente`);
         this.alertMessage.type = 'info';

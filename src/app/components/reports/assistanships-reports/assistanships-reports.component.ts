@@ -17,11 +17,11 @@ type AlertMessage = { message: string; type: string }
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-social-service-reports',
-  templateUrl: './social-service-reports.component.html',
-  styleUrls: ['./social-service-reports.component.css', './social-service-reports.component.scss']
+  selector: 'app-assistanships-reports',
+  templateUrl: './assistanships-reports.component.html',
+  styleUrls: ['./assistanships-reports.component.css', './assistanships-reports.component.scss']
 })
-export class SocialServiceReportsComponent {
+export class AssistanshipsReportsComponent {
   public studentId?: string;
   public facultyId?: string;
   public selectedLab?: string;
@@ -141,7 +141,7 @@ export class SocialServiceReportsComponent {
   }
 
   // Obtiene los reportes de los estudiantes segun los filtros proporcionados
-  getSSReports() {
+  getASReports() {
     // Individual
     const year = this.selectedDate.getFullYear();
     const month = this.selectedDate.getMonth();
@@ -160,7 +160,7 @@ export class SocialServiceReportsComponent {
       endDate: this.selectedTabIndex == 0 ? new Date(year, month + 1, 1) : new Date(end_year, end_month + 1, 1),
     };
     
-    this.reportsService.getSSReport(parameters).subscribe(
+    this.reportsService.getAssistanshipReport(parameters).subscribe(
       (res) => {
         console.log(parameters);
         this.studentReports = res;
@@ -337,7 +337,7 @@ export class SocialServiceReportsComponent {
     // Creamos el PDF
     const pdf = pdfMake.createPdf(docDefinition);
     pdf.open();
-    this.getSSReports()
+    this.getASReports()
   }
 
   // Convertimos las imagenes que utilizaremos en blobs

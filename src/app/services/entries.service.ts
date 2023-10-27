@@ -44,4 +44,20 @@ export class EntriesService {
   updateSSEntry(id: string, student: any): Observable<any> {
     return this.http.patch<any>(`api/ss/${id}`, student);
   }
+
+  registerASEntry(obj: any): Observable<any> {
+    return this.http.post<any>('api/as', obj);
+  }
+
+  deleteASEntry(id: string): Observable<any> {
+    return this.http.delete<any>(`api/as/${id}`);
+  }
+
+  updateASEntry(id: string, student: any): Observable<any> {
+    return this.http.patch<any>(`api/as/${id}`, student);
+  }
+
+  getFaculties(): Observable<any> {
+    return this.http.get<any>('api/faculties');
+  }
 }
