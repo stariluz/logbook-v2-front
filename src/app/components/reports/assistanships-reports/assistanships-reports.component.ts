@@ -160,7 +160,7 @@ export class AssistanshipsReportsComponent {
       endDate: this.selectedTabIndex == 0 ? new Date(year, month + 1, 1) : new Date(end_year, end_month + 1, 1),
     };
     
-    this.reportsService.getSSReport(parameters).subscribe(
+    this.reportsService.getAssistanshipReport(parameters).subscribe(
       (res) => {
         console.log(parameters);
         this.studentReports = res;

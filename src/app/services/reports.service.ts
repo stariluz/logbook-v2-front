@@ -27,6 +27,6 @@ export class ReportsService {
   }
 
   getAssistanshipReport(reportParams: any): Observable<any> {
-    return this.http.get<any>('api/assistanship/reports', {params: reportParams});
+    return this.http.get<any>('api/as/reports', {params: reportParams});
   }
 }
