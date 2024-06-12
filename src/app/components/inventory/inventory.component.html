@@ -1,6 +1,142 @@
-<div class="h-100 w-100 p-5">
-    <div class="d-flex flex-column align-items-center justify-content-between mb-5">
-        <img class="mt-5" alt="Construction vector" src="assets/images/construction_vector.png" style="width: 35rem;">
-        <span class="fs-5 mt-3">Actualmente, nos encontramos trabajando para brindar esta función.</span>
+<div class="w-100 p-4 overflow-auto">
+  <div class="d-flex align-items-center justify-content-between">
+    <span class="fs-4">Inventario</span>
+    <div>
+      <input type="file" (change)="onFileChange($event)" accept=".xlsx, .csv" style="display: none;" #fileInput>
+      <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="fileInput.click()">Subir Archivo</button>
+      <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="uploadBulkProducts()">Cargar Productos</button>
     </div>
+    <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="showNewProduct()">
+      <i class="bi bi-plus-lg fs-6"></i>
+    </button>
+  </div>
+  <div class="w-100 mt-4">
+    <p-table *ngIf="products.length > 0" [value]="products" styleClass="user-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="pertenece">Pertenece <p-sortIcon field="pertenece"></p-sortIcon></th>
+          <th pSortableColumn="descripcion">Descripción <p-sortIcon field="descripcion"></p-sortIcon></th>
+          <th pSortableColumn="codigo">Código <p-sortIcon field="codigo"></p-sortIcon></th>
+          <th pSortableColumn="cant">Cantidad <p-sortIcon field="cant"></p-sortIcon></th>
+          <th pSortableColumn="ubicacion">Ubicación <p-sortIcon field="ubicacion"></p-sortIcon></th>
+          <th pSortableColumn="acciones">Acciones <p-sortIcon field="acciones"></p-sortIcon></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td>{{ product.pertenece }}</td>
+          <td>{{ product.descripcion }}</td>
+          <td>{{ product.codigo }}</td>
+          <td>{{ product.cant }}</td>
+          <td>{{ product.ubicacion }}</td>
+          <td>
+            <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="showEditProduct(product)">
+              <i class="bi bi-pencil fs-6"></i>
+            </button>
+            <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="deleteProduct(product._id)">
+              <i class="bi bi-trash fs-6"></i>
+            </button>
+            <button class="btn btn-outline-dark action-btn m-2" type="button" (click)="showProductDetails(product)">
+              <i class="bi bi-eye fs-6"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
+
+<p-dialog header="Agregar Producto" [(visible)]="displayNewProduct" [modal]="true" styleClass="users-dialog"
+  [draggable]="false" [resizable]="false">
+  <form class="d-flex flex-column align-content-center justify-content-start w-100">
+    <span>Pertenece</span>
+    <input class="custom-input w-100 text-black" type="text" name="pertenece" [(ngModel)]="selectedProduct.pertenece" />
+    <span class="mt-3">Fondo</span>
+    <input class="custom-input w-100 text-black" type="text" name="fondo" [(ngModel)]="selectedProduct.fondo" />
+    <span class="mt-3">Unidad Presupuestal</span>
+    <input class="custom-input w-100 text-black" type="text" name="unidad_presupuestal" [(ngModel)]="selectedProduct.unidad_presupuestal" />
+    <span class="mt-3">Cuenta</span>
+    <input class="custom-input w-100 text-black" type="text" name="cuenta" [(ngModel)]="selectedProduct.cuenta" />
+    <span class="mt-3">Subcuenta</span>
+    <input class="custom-input w-100 text-black" type="text" name="subcuenta" [(ngModel)]="selectedProduct.subcuenta" />
+    <span class="mt-3">Folio</span>
+    <input class="custom-input w-100 text-black" type="text" name="folio" [(ngModel)]="selectedProduct.folio" />
+    <span class="mt-3">Código</span>
+    <input class="custom-input w-100 text-black" type="text" name="codigo" [(ngModel)]="selectedProduct.codigo" />
+    <span class="mt-3">Cantidad</span>
+    <input class="custom-input w-100 text-black" type="number" name="cant" [(ngModel)]="selectedProduct.cant" />
+    <span class="mt-3">Descripción</span>
+    <input class="custom-input w-100 text-black" type="text" name="descripcion" [(ngModel)]="selectedProduct.descripcion" />
+    <span class="mt-3">Modelo</span>
+    <input class="custom-input w-100 text-black" type="text" name="modelo" [(ngModel)]="selectedProduct.modelo" />
+    <span class="mt-3">Serie de Fábrica</span>
+    <input class="custom-input w-100 text-black" type="text" name="serie_de_fabrica" [(ngModel)]="selectedProduct.serie_de_fabrica" />
+    <span class="mt-3">Ubicación</span>
+    <input class="custom-input w-100 text-black" type="text" name="ubicacion" [(ngModel)]="selectedProduct.ubicacion" />
+    <span class="mt-3">Responsable</span>
+    <input class="custom-input w-100 text-black" type="text" name="responsable" [(ngModel)]="selectedProduct.responsable" />
+    <span class="mt-3">Número de Empleado</span>
+    <input class="custom-input w-100 text-black" type="text" name="num_de_emp" [(ngModel)]="selectedProduct.num_de_emp" />
+    <span class="mt-3">Observaciones</span>
+    <input class="custom-input w-100 text-black" type="text" name="observaciones" [(ngModel)]="selectedProduct.observaciones" />
+    <button class="btn btn-outline-dark action-btn mt-4" type="button" (click)="addProduct()">Crear</button>
+  </form>
+</p-dialog>
+
+<p-dialog header="Editar Producto" [(visible)]="displayEditProduct" [modal]="true" styleClass="users-dialog"
+  [draggable]="false" [resizable]="false">
+  <form class="d-flex flex-column align-content-center justify-content-start w-100">
+    <span>Pertenece</span>
+    <input class="custom-input w-100 text-black" type="text" name="pertenece" [(ngModel)]="selectedProduct.pertenece" />
+    <span class="mt-3">Fondo</span>
+    <input class="custom-input w-100 text-black" type="text" name="fondo" [(ngModel)]="selectedProduct.fondo" />
+    <span class="mt-3">Unidad Presupuestal</span>
+    <input class="custom-input w-100 text-black" type="text" name="unidad_presupuestal" [(ngModel)]="selectedProduct.unidad_presupuestal" />
+    <span class="mt-3">Cuenta</span>
+    <input class="custom-input w-100 text-black" type="text" name="cuenta" [(ngModel)]="selectedProduct.cuenta" />
+    <span class="mt-3">Subcuenta</span>
+    <input class="custom-input w-100 text-black" type="text" name="subcuenta" [(ngModel)]="selectedProduct.subcuenta" />
+    <span class="mt-3">Folio</span>
+    <input class="custom-input w-100 text-black" type="text" name="folio" [(ngModel)]="selectedProduct.folio" />
+    <span class="mt-3">Código</span>
+    <input class="custom-input w-100 text-black" type="text" name="codigo" [(ngModel)]="selectedProduct.codigo" />
+    <span class="mt-3">Cantidad</span>
+    <input class="custom-input w-100 text-black" type="number" name="cant" [(ngModel)]="selectedProduct.cant" />
+    <span class="mt-3">Descripción</span>
+    <input class="custom-input w-100 text-black" type="text" name="descripcion" [(ngModel)]="selectedProduct.descripcion" />
+    <span class="mt-3">Modelo</span>
+    <input class="custom-input w-100 text-black" type="text" name="modelo" [(ngModel)]="selectedProduct.modelo" />
+    <span class="mt-3">Serie de Fábrica</span>
+    <input class="custom-input w-100 text-black" type="text" name="serie_de_fabrica" [(ngModel)]="selectedProduct.serie_de_fabrica" />
+    <span class="mt-3">Ubicación</span>
+    <input class="custom-input w-100 text-black" type="text" name="ubicacion" [(ngModel)]="selectedProduct.ubicacion" />
+    <span class="mt-3">Responsable</span>
+    <input class="custom-input w-100 text-black" type="text" name="responsable" [(ngModel)]="selectedProduct.responsable" />
+    <span class="mt-3">Número de Empleado</span>
+    <input class="custom-input w-100 text-black" type="text" name="num_de_emp" [(ngModel)]="selectedProduct.num_de_emp" />
+    <span class="mt-3">Observaciones</span>
+    <input class="custom-input w-100 text-black" type="text" name="observaciones" [(ngModel)]="selectedProduct.observaciones" />
+    <button class="btn btn-outline-dark action-btn mt-4" type="button" (click)="updateProduct()">Guardar</button>
+  </form>
+</p-dialog>
+
+<p-dialog header="Detalles del Producto" [(visible)]="displayProductDetails" [modal]="true" styleClass="users-dialog"
+  [draggable]="false" [resizable]="false">
+  <div class="d-flex flex-column align-content-center justify-content-start w-100">
+    <p><strong>Pertenece:</strong> {{ selectedProduct.pertenece }}</p>
+    <p><strong>Fondo:</strong> {{ selectedProduct.fondo }}</p>
+    <p><strong>Unidad Presupuestal:</strong> {{ selectedProduct.unidad_presupuestal }}</p>
+    <p><strong>Cuenta:</strong> {{ selectedProduct.cuenta }}</p>
+    <p><strong>Subcuenta:</strong> {{ selectedProduct.subcuenta }}</p>
+    <p><strong>Folio:</strong> {{ selectedProduct.folio }}</p>
+    <p><strong>Código:</strong> {{ selectedProduct.codigo }}</p>
+    <p><strong>Cantidad:</strong> {{ selectedProduct.cant }}</p>
+    <p><strong>Descripción:</strong> {{ selectedProduct.descripcion }}</p>
+    <p><strong>Modelo:</strong> {{ selectedProduct.modelo }}</p>
+    <p><strong>Serie de Fábrica:</strong> {{ selectedProduct.serie_de_fabrica }}</p>
+    <p><strong>Ubicación:</strong> {{ selectedProduct.ubicacion }}</p>
+    <p><strong>Responsable:</strong> {{ selectedProduct.responsable }}</p>
+    <p><strong>Número de Empleado:</strong> {{ selectedProduct.num_de_emp }}</p>
+    <p><strong>Observaciones:</strong> {{ selectedProduct.observaciones }}</p>
+  </div>
+</p-dialog>

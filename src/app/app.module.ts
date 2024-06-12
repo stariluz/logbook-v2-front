@@ -35,6 +35,7 @@ import { RoleGuard } from './services/role.guard';
 import { MessageService } from 'primeng/api';
 import { CustomCourseEntriesComponent } from './components/entries/custom-course-entries/custom-course-entries.component';
 import { InventoryComponent } from './components/inventory/inventory.component';
+import { InventoryService } from './services/inventory.service';
 import { SocialServiceModule } from './components/social-service/social-service.module';
 import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
 import { TabViewModule } from 'primeng/tabview';
@@ -87,6 +88,7 @@ import { AssistanshipsReportsComponent } from './components/reports/assistanship
     AuthGuard,
     RoleGuard,
     MessageService,
+    InventoryService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
