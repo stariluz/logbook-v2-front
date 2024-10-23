@@ -55,7 +55,7 @@
 
         </div>
         <!-- Registros -->
-        <div class="mb-5">
+        <div *ngIf="userRole != 'admin'" class="mb-5">
             <div class="d-flex align-items-top justify-content-between">
                 <span class="text-white fs-5 mb-4">Registros</span>
                 <i class="bi bi-box-arrow-in-right fs-5 text-white"></i>
@@ -63,10 +63,10 @@
             <a href="{{entriesRouter}}">
                 <p class="text-white fs-6 text-border">Entradas</p>
             </a>
-            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/social-service">
+            <a  href="/social-service">
                 <p class="text-white fs-6 text-border">Servicio Social</p>
             </a>
-            <a *ngIf="userRole == 'admin' || userRole == 'superuser'" href="/assistanships">
+            <a  href="/assistanships">
                 <p class="text-white fs-6 text-border">Ayudantias</p>
             </a>
 

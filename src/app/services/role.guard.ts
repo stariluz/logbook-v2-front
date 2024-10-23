@@ -15,10 +15,11 @@ export class RoleGuard implements CanActivate {
         if(this.authService.isAuthenticated()) {
             let user: any = localStorage.getItem('user');
             if (user) user = JSON.parse(user);
+            /*
             if(String(user.user.role).toLowerCase() != 'admin' && String(user.user.role).toLowerCase() != 'superuser') {
                 this.router.navigateByUrl('/entries/course-entries');
                 return false;
-            }
+            }*/
             return true;
         }
         this.router.navigateByUrl('/entries/course-entries');

@@ -175,7 +175,7 @@ export class SsEntriesComponent {
       hours: 0,
       faculty: this.selectedFaculty._id
     };
-  
+
     this.entriesService.registerSSEntry(entry).subscribe(
       (res) => {
         if (res.status == 400) {

@@ -15,26 +15,6 @@
                 <button id="register-class-btn" class="btn btn-outline-dark" type="button" (click)="registerStudentEntry()">Registrar</button>
             </form>
         </div>
-        <div class="col-lg-2 d-none d-lg-block d-xl-block position-relative">
-            <div class="vertical-line position-absolute top-50 start-50 translate-middle h-75"></div>
-        </div>
-        <div class="col-lg-5 col-md-12 d-flex align-items-center justify-content-center">
-            <div id="qr-scanner" class="border rounded w-75" style="overflow: hidden;">
-                <zxing-scanner
-                    [enable]="scannerEnabled"
-                    [device]="myDevice"
-                    [timeBetweenScans]="2000"
-                    (camerasFound)="camerasFoundHandler($event)"
-                    (scanSuccess)="scanSuccessHandler($event)"
-                ></zxing-scanner>
-                <div class="d-flex align-items-start justify-content-center m-2">
-                    <p class="fs-6 pe-1">Camara:</p>
-                    <select class="fs-6" #selectList (change)="selectCamera(selectList.value)">
-                        <option *ngFor="let camera of cameras" value={{camera.label}}>{{ camera.label }}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
     </div>
     <!-- Tabla que muestra el resultado al generar una consulta con los campos ingresados -->
     <p-table *ngIf="registeredStudents.length > 0" [value]="registeredStudents" [scrollable]="true" scrollHeight="350px" [virtualScroll]="true" [virtualScrollItemSize]="46" sortField="date" [sortOrder]="-1" styleClass="entries-table">
