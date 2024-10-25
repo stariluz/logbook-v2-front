@@ -38,7 +38,15 @@ export class LoginComponent {
     this.authService.login(user).subscribe(
       (res) => {
         localStorage.setItem('user', JSON.stringify(res));
-        this.router.navigateByUrl(`/entries/course-entries`).then(() => {
+        const role = res.user.role;
+        var route = '';
+        // redirecciona a el usuario a una ruta despues del login
+        if (role === 'admin') {
+          route = `/reports/student-reports`;
+        } else {
+          route = `/entries/course-entries`;
+        }
+        this.router.navigateByUrl(route).then(() => {
           //
         });
       },
