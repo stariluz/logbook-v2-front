@@ -41,10 +41,12 @@ import { SocialServiceReportsComponent } from './components/reports/social-servi
 import { TabViewModule } from 'primeng/tabview';
 import { AssistanshipsModule} from './components/assistanships/assistanships-service.module'
 import { AssistanshipsReportsComponent } from './components/reports/assistanships-reports/assistanships-reports.component';
+import { Navbar2025Component } from './layout/style-2025/navbar/navbar-2025.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    Navbar2025Component,
     EntriesComponent,
     MainComponent,
     HeaderComponent,
