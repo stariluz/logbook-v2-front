@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import INavbarSection from './navbar-section.model';
 
 @Component({
   selector: 'app-navbar-section',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-section.component.css']
 })
 export class NavbarSectionComponent {
-  title?:string="Reportes";
+  @Input() section!: INavbarSection;
 }

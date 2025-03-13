@@ -43,6 +43,7 @@ import { AssistanshipsModule} from './components/assistanships/assistanships-ser
 import { AssistanshipsReportsComponent } from './components/reports/assistanships-reports/assistanships-reports.component';
 import { Navbar2025Component } from './layout/style-2025/navbar-2025/navbar-2025.component';
 import { Navbar2025Module } from './layout/style-2025/navbar-2025/navbar-2025.module';
+import { TrackByPropertyDirective } from './directives/track-by-property.directive';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { Navbar2025Module } from './layout/style-2025/navbar-2025/navbar-2025.mo
     InventoryComponent,
     SocialServiceReportsComponent,
     AssistanshipsReportsComponent,
+    TrackByPropertyDirective,
   ],
   imports: [
     BrowserAnimationsModule,

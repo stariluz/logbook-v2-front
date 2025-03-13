@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import INavbarItem from './navbar-item.model';
 
 @Component({
   selector: 'app-navbar-item',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-item.component.css']
 })
 export class NavbarItemComponent {
-    title?:string="Alumnos";
+  @Input() item!: INavbarItem;
 }

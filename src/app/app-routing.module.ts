@@ -23,26 +23,39 @@ import { AssistanshipsMainPageComponent } from './components/assistanships/as-ma
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: '', component: MainComponent, children: [
-    { path: 'entries', component: EntriesComponent, canActivate: [AuthGuard, RoleGuard], children: [
-      { path: 'course-entries', component: CourseEntriesComponent },
-      { path: 'custom-course-entries', component: CustomCourseEntriesComponent },
-      { path: 'student-entries', component: StudentEntriesComponent }
-    ], data: { roles: ['auxiliar','superuser'] } },
-    { path: 'reports', component: ReportsComponent, canActivate: [AuthGuard, RoleGuard], children: [
-      { path: 'student-reports', component: StudentReportsComponent },
-      { path: 'professor-reports', component: ProfessorReportsComponent },
-      { path: 'social-service-reports', component: SocialServiceReportsComponent },
-      { path: 'assistanships-reports', component: AssistanshipsReportsComponent}
-    ], data: { roles: ['admin','superuser'] } },
-    { path: 'database', component: DatabaseComponent, canActivate: [AuthGuard, RoleGuard], children: [
-      { path: 'file-upload', component: FileUploadComponent },
-      { path: 'users', component: UsersComponent }
-    ], data: { roles: ['superuser'] } },
-    { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard, RoleGuard], data: {roles: ['admin','superuser']} },
-    { path: 'social-service', component: MainPageComponent, canActivate: [AuthGuard, RoleGuard], data: {roles: ['auxiliar','superuser']} },
-    { path: 'assistanships', component: AssistanshipsMainPageComponent, canActivate: [AuthGuard, RoleGuard], data: {roles: ['auxiliar','superuser']} },
-  ]},
+  {
+    path: '', component: MainComponent, children: [
+      {
+        path: 'entries', component: CourseEntriesComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['auxiliar', 'superuser'] }
+      },
+      // {
+      //   path: '/entries', component: EntriesComponent, canActivate: [AuthGuard, RoleGuard], children: [
+      //     { path: 'course-entries', component: CourseEntriesComponent },
+      //     { path: 'custom-course-entries', component: CustomCourseEntriesComponent },
+      //     { path: 'student-entries', component: StudentEntriesComponent }
+      //   ], data: {
+      //     roles: ['auxiliar', 'superuser']
+      //   }
+      // },
+      {
+        path: 'reports', component: ReportsComponent, canActivate: [AuthGuard, RoleGuard], children: [
+          { path: 'student-reports', component: StudentReportsComponent },
+          { path: 'professor-reports', component: ProfessorReportsComponent },
+          { path: 'social-service-reports', component: SocialServiceReportsComponent },
+          { path: 'assistanships-reports', component: AssistanshipsReportsComponent }
+        ], data: { roles: ['admin', 'superuser'] }
+      },
+      {
+        path: 'database', component: DatabaseComponent, canActivate: [AuthGuard, RoleGuard], children: [
+          { path: 'file-upload', component: FileUploadComponent },
+          { path: 'users', component: UsersComponent }
+        ], data: { roles: ['superuser'] }
+      },
+      { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['admin', 'superuser'] } },
+      { path: 'social-service', component: MainPageComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['auxiliar', 'superuser'] } },
+      { path: 'assistanships', component: AssistanshipsMainPageComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['auxiliar', 'superuser'] } },
+    ]
+  },
 ];
 
 @NgModule({

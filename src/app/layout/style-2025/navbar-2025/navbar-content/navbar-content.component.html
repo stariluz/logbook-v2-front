@@ -1,3 +1,5 @@
 <nav class="navbar-content">
-    <app-navbar-section></app-navbar-section>
+    <ng-template ngFor let-section [ngForOf]="sections" let-i="index" [ngForTrackByProperty]="'title'">
+        <app-navbar-section [section]="section"></app-navbar-section>
+    </ng-template>
 </nav>

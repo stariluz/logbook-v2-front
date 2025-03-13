@@ -1,4 +1,4 @@
-<a [routerLink]="['.']" class="navbar-item">
-    <i class="ti ti-school"></i>
-    <span>{{title}}</span>
+<a [routerLink]="item.route" class="navbar-item" routerLinkActive="active">
+    <i [className]="item.icon"></i>
+    <span>{{item.title}}</span>
 </a>

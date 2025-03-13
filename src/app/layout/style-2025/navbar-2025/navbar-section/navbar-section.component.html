@@ -1,8 +1,10 @@
 <div class="navbar-section">
-    <h3 class="navbar-section-title">{{title}}</h3>
+    <h3 class="navbar-section-title">{{section.title}}</h3>
     <ul>
-        <li>
-            <app-navbar-item></app-navbar-item>
-        </li>
+        <ng-template ngFor let-item [ngForOf]="section.items" let-i="index" [ngForTrackByProperty]="'title'">
+            <li>
+                <app-navbar-item [item]="item"></app-navbar-item>
+            </li>
+        </ng-template>
     </ul>
 </div>
