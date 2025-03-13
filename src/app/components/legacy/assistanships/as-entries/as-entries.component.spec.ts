@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SsEntriesComponent } from './as-entries.component';
+import { SsEntriesComponent } from './as-entries-legacy.component';
 
 describe('SsEntriesComponent', () => {
   let component: SsEntriesComponent;

@@ -1,8 +1,8 @@
 import { Component, ViewChild, Inject, LOCALE_ID } from '@angular/core';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
-import { EntriesService } from 'src/app/services/entries.service';
-import { ReportsService } from 'src/app/services/reports.service';
+import { EntriesService } from '../../../../services/entries.service';
+import { ReportsService } from '../../../../services/reports.service';
 import { formatDate } from '@angular/common';
 
 // Tipado de objeto para la busqueda de alumnos registrados
@@ -14,7 +14,7 @@ type Faculty = { _id: string, name: string}
 @Component({
   selector: 'app-as-entries',
   templateUrl: './as-entries.component.html',
-  styleUrls: ['./as-entries.component.css', './as-entries.component.scss']
+  styleUrls: ['./as-entries.component.css','./as-entries.component.scss']
 })
 export class AsEntriesComponent {
   public studentId?: string;

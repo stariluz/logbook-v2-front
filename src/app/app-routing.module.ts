@@ -1,24 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DatabaseComponent } from './components/database/database.component';
-import { FileUploadComponent } from './components/database/file-upload/file-upload.component';
-import { UsersComponent } from './components/database/users/users.component';
-import { CourseEntriesComponent } from './components/entries/course-entries/course-entries.component';
-import { CustomCourseEntriesComponent } from './components/entries/custom-course-entries/custom-course-entries.component';
-import { EntriesComponent } from './components/entries/entries.component';
-import { StudentEntriesComponent } from './components/entries/student-entries/student-entries.component';
-import { InventoryComponent } from './components/inventory/inventory.component';
-import { LoginComponent } from './components/login/login.component';
-import { ProfessorReportsComponent } from './components/reports/professor-reports/professor-reports.component';
-import { ReportsComponent } from './components/reports/reports.component';
-import { StudentReportsComponent } from './components/reports/student-reports/student-reports.component';
+import { DatabaseComponent } from './components/legacy/database/database.component';
+import { FileUploadComponent } from './components/legacy/database/file-upload/file-upload.component';
+import { UsersComponent } from './components/legacy/database/users/users.component';
+import { CourseEntriesComponent } from './components/legacy/entries/course-entries/course-entries.component';
+import { CustomCourseEntriesComponent } from './components/legacy/entries/custom-course-entries/custom-course-entries.component';
+import { EntriesComponent } from './components/legacy/entries/entries.component';
+import { StudentEntriesComponent } from './components/legacy/entries/student-entries/student-entries.component';
+import { InventoryComponent } from './components/legacy/inventory/inventory.component';
+import { LoginComponent } from './components/legacy/login/login.component';
+import { ProfessorReportsComponent } from './components/legacy/reports/professor-reports/professor-reports.component';
+import { ReportsComponent } from './components/legacy/reports/reports.component';
+import { StudentReportsComponent } from './components/legacy/reports/student-reports/student-reports.component';
 import { MainComponent } from './layout/main/main.component';
 import { AuthGuard } from './services/auth.guard';
 import { RoleGuard } from './services/role.guard';
-import { MainPageComponent } from './components/social-service/main-page/main-page.component';
-import { SocialServiceReportsComponent } from './components/reports/social-service-reports/social-service-reports.component';
-import { AssistanshipsReportsComponent } from './components/reports/assistanships-reports/assistanships-reports.component';
-import { AssistanshipsMainPageComponent } from './components/assistanships/as-main-page/as-main-page.component';
+import { MainPageComponent } from './components/legacy/social-service/main-page/main-page.component';
+import { SocialServiceReportsComponent } from './components/legacy/reports/social-service-reports/social-service-reports.component';
+import { AssistanshipsReportsComponent } from './components/legacy/reports/assistanships-reports/assistanships-reports.component';
+import { AssistanshipsMainPageComponent } from './components/legacy/assistanships/as-main-page/as-main-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },

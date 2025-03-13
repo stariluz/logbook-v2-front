@@ -8,10 +8,10 @@ import { CommonModule } from "@angular/common";
 
 @NgModule({
   declarations: [
-    NavbarItemComponent,
-    NavbarSectionComponent,
-    NavbarContentComponent,
     Navbar2025Component,
+    NavbarContentComponent,
+    NavbarSectionComponent,
+    NavbarItemComponent,
   ],
   exports: [
     Navbar2025Component,

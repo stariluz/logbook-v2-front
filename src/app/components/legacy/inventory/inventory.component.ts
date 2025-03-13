@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { InventoryService } from '../../services/inventory.service';
+import { InventoryService } from '../../../services/inventory.service';
 import { MessageService } from 'primeng/api';
 import * as XLSX from 'xlsx';
 
