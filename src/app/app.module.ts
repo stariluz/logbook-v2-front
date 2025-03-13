@@ -54,6 +54,7 @@ import { ReportsSocialServiceComponent } from './components/reports/reports-soci
 import { ReportsAssistantshipsComponent } from './components/reports/reports-assistantships/reports-assistantships.component';
 import { ReportsStudentsComponent } from './components/reports/reports-students/reports-students.component';
 import { ReportsTeachersComponent } from './components/reports/reports-teachers/reports-teachers.component';
+import { Header2025Component } from './layout/style-2025/header-2025/header-2025.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { ReportsTeachersComponent } from './components/reports/reports-teachers/
     DataInventoryComponent,
     ReportsStudentsComponent,
     ReportsTeachersComponent,
+    Header2025Component,
   ],
   imports: [
     BrowserAnimationsModule,
