@@ -44,6 +44,16 @@ import { AssistanshipsReportsComponent } from './components/legacy/reports/assis
 import { Navbar2025Component } from './layout/style-2025/navbar-2025/navbar-2025.component';
 import { Navbar2025Module } from './layout/style-2025/navbar-2025/navbar-2025.module';
 import { TrackByPropertyDirective } from './directives/track-by-property.directive';
+import { RecordsSocialServiceComponent } from './components/records/records-social-service/records-social-service.component';
+import { RecordsAssistantshipsComponent } from './components/records/records-assistantships/records-assistantships.component';
+import { RecordsStudentsEntriesComponent } from './components/records/records-students-entries/records-students-entries.component';
+import { DataUsersComponent } from './components/data/data-users/data-users.component';
+import { DataFilesComponent } from './components/data/data-files/data-files.component';
+import { DataInventoryComponent } from './components/data/data-inventory/data-inventory.component';
+import { ReportsSocialServiceComponent } from './components/reports/reports-social-service/reports-social-service.component';
+import { ReportsAssistantshipsComponent } from './components/reports/reports-assistantships/reports-assistantships.component';
+import { ReportsStudentsComponent } from './components/reports/reports-students/reports-students.component';
+import { ReportsTeachersComponent } from './components/reports/reports-teachers/reports-teachers.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +75,16 @@ import { TrackByPropertyDirective } from './directives/track-by-property.directi
     SocialServiceReportsComponent,
     AssistanshipsReportsComponent,
     TrackByPropertyDirective,
+    RecordsSocialServiceComponent,
+    RecordsAssistantshipsComponent,
+    RecordsStudentsEntriesComponent,
+    ReportsSocialServiceComponent,
+    ReportsAssistantshipsComponent,
+    DataUsersComponent,
+    DataFilesComponent,
+    DataInventoryComponent,
+    ReportsStudentsComponent,
+    ReportsTeachersComponent,
   ],
   imports: [
     BrowserAnimationsModule,
