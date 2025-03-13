@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "https://nestjs:3000",
+        "target": "https://localhost:3000",
         "secure": false,
         "changeOrigin": true
     }

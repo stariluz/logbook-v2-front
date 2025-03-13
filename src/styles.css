@@ -9,7 +9,7 @@ html, body {
 }
 
 body, body .p-component {
-    font-family: 'Barlow', sans-serif !important;
+    font-family: 'Barlow', sans-serif;
     color: #0F4C75 !important;
 }
 

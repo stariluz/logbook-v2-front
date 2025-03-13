@@ -41,12 +41,12 @@ import { SocialServiceReportsComponent } from './components/reports/social-servi
 import { TabViewModule } from 'primeng/tabview';
 import { AssistanshipsModule} from './components/assistanships/assistanships-service.module'
 import { AssistanshipsReportsComponent } from './components/reports/assistanships-reports/assistanships-reports.component';
-import { Navbar2025Component } from './layout/style-2025/navbar/navbar-2025.component';
+import { Navbar2025Component } from './layout/style-2025/navbar-2025/navbar-2025.component';
+import { Navbar2025Module } from './layout/style-2025/navbar-2025/navbar-2025.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Navbar2025Component,
     EntriesComponent,
     MainComponent,
     HeaderComponent,
@@ -84,7 +84,8 @@ import { Navbar2025Component } from './layout/style-2025/navbar/navbar-2025.comp
     MessageModule,
     SocialServiceModule,
     TabViewModule,
-    AssistanshipsModule
+    AssistanshipsModule,
+    Navbar2025Module,
   ],
   providers: [
     AuthGuard,

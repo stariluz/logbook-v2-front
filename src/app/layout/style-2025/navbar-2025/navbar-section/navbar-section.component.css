@@ -1,0 +1,32 @@
+.navbar-section {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    gap: 8px;
+    position: relative;
+}
+
+.navbar-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-section li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-section-title {
+    align-self: stretch;
+
+    color: var(--Text-Color-1, #585858);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    text-transform: uppercase;
+}

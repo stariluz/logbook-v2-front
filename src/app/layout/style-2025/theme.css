@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("OpenSans"), url("../../../assets/fonts/OpenSans.ttf") format("truetype");
+}
+
+html,
+body {
+    font-family: 'Open Sans';
+}
+
+:root {
+    --BG-Color-1: #EFFBFF;
+    --BG-Color-2: #FFF;
+    --Text-Color-1: #585858;
+    --Text-Color-2: #1567BF;
+    --BG-Extra-Color-1: #DAECFF;
+    --BG-Extra-Color-4: #B2D7FF;
+    --Stroke-Color-Input-2: #D4DCE6;
+    --BG-Color-3-Gradient: radial-gradient(178.9% 116.43% at 63.06% 21.09%, var(--Text-Color-2, #1567BF) 26.12%, #074F9C 100%);
+    --BG-Color-1-Gradient: radial-gradient(109.93% 117.34% at 94.01% 8.33%, var(--BG-Color-1, #EFFBFF) 25%, var(--BG-Extra-Color-1, #DAECFF) 100%);
+}
+
+.ti {
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    font-size: 1.5rem;
+}

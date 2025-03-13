@@ -26,6 +26,7 @@
             ],
             "styles": [
               "./sass/main.scss",
+              "node_modules/@tabler/icons-webfont/dist/tabler-icons.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",

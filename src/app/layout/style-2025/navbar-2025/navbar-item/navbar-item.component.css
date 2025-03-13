@@ -1,0 +1,27 @@
+.navbar-item{
+    display: flex;
+    width: 100%;
+    height: 4rem;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+
+    border-radius: 6px;
+    text-decoration: none;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    color: var(--Text-Color-1, #585858);
+    border: 1px solid var(--Stroke-Color-Input-2, #D4DCE6);
+    background: var(--BG-Color-2, #FFF);
+}
+
+.navbar-item:active{
+    border: 2px solid var(--BG-Extra-Color-4, #B2D7FF);
+    background: var(--BG-Color-3-Gradient, radial-gradient(178.9% 116.43% at 63.06% 21.09%, var(--Text-Color-2, #1567BF) 26.12%, #074F9C 100%));
+    color: var(--BG-Extra-Color-4, #B2D7FF);
+}
