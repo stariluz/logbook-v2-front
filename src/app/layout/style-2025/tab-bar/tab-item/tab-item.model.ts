@@ -1,5 +1,5 @@
 export interface ITab {
-    name: string;
+    label: string;
     routerLink?: string | any[] | null | undefined;
     secondary?: string; 
 }

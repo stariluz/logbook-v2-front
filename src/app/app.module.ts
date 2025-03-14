@@ -57,6 +57,8 @@ import { ReportsTeachersComponent } from './components/reports/reports-teachers/
 import { Header2025Component } from './layout/style-2025/header-2025/header-2025.component';
 import { TabBarComponent } from './layout/style-2025/tab-bar/tab-bar.component';
 import { TabItemComponent } from './layout/style-2025/tab-bar/tab-item/tab-item.component';
+import { TabActionComponent } from './layout/style-2025/tab-bar/tab-action/tab-action.component';
+import { OpenStudentsGroupComponent } from './components/records/records-students-entries/open-students-group/open-students-group.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { TabItemComponent } from './layout/style-2025/tab-bar/tab-item/tab-item.
     Header2025Component,
     TabBarComponent,
     TabItemComponent,
+    TabActionComponent,
+    OpenStudentsGroupComponent,
   ],
   imports: [
     BrowserAnimationsModule,

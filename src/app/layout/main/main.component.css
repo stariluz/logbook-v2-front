@@ -4,4 +4,6 @@
     display: grid;
     grid-template-columns: 20rem 10fr;
     position: relative;
+    margin: 0;
+    padding: 0;
 }

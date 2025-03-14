@@ -1,0 +1,17 @@
+
+<ng-container *ngIf="action.routerLink==undefined; else linkBlock">
+    <button class="tab-action {{action.isActive||'active'}}" (click)="action.action?.()">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+</ng-container>
+
+<ng-template #linkBlock>
+    <a class="tab-action" [routerLink]="action.routerLink" routerLinkActive="active">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </a>
+</ng-template>
+
+<ng-template #content>
+    <i [ngClass]="action.icon"></i>
+    <ng-container *ngIf="action.isActive ? action.activeLabel : action.label as text">{{ text }}</ng-container>
+</ng-template>

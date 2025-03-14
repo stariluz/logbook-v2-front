@@ -1,4 +1,4 @@
-<a [routerLink]="tabItem.routerLink" routerLinkActive="active" class="tab-item">
-    <span class="tab-name">{{ tabItem.name }}</span>
+<a [routerLink]="tabItem.routerLink" routerLinkActive="active" class="tab-item" [routerLinkActiveOptions]="{ exact: true }">
+    <span class="tab-label">{{ tabItem.label }}</span>
     <span class="tab-secondary" *ngIf="tabItem.secondary">{{ tabItem.secondary }}</span>
 </a>

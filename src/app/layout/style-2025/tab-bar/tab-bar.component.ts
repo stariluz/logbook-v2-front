@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ITabBar } from './tab-bar.model';
 
 @Component({
@@ -7,16 +7,23 @@ import { ITabBar } from './tab-bar.model';
   styleUrls: ['./tab-bar.component.css']
 })
 export class TabBarComponent {
-
-  tabBar: ITabBar = {
+  @Input() tabBar: ITabBar = {
     tabs: [
-      { name: 'Electromagnetismo', secondary: '4CC2' },  // Icono como clase CSS
-      { name: 'Electromagnetismo', secondary: '4CC2' },     // Emoji como secundario
-      { name: 'Electromagnetismo', secondary: '4CC2' } // Texto/emoji
+      {
+        label: 'Electromagnetismo',
+        secondary: '4CC2',
+        routerLink: ['.','course','electromagnetismo'],
+      },
+    ],
+    actions: [
+      {
+        icon: "ti ti-plus",
+        routerLink: ['.', 'open-group'],
+      }
     ],
     activeTabIndex: 0
   };
-  
+
   setActiveTab(index: number) {
     this.tabBar.activeTabIndex = index;
   }

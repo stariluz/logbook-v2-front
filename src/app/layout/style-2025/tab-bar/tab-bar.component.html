@@ -1,5 +1,9 @@
 <div class="tab-bar">
-    <ng-template ngFor let-tabItem   [ngForOf]="tabBar.tabs" let-i="index" [ngForTrackByProperty]="'title'">
-        <app-tab-item [tabItem]="tabItem" [class.active]="i === tabBar.activeTabIndex" (click)="setActiveTab(i)"></app-tab-item>
+    <ng-template ngFor let-tabItem [ngForOf]="tabBar.tabs" let-i="index" [ngForTrackByProperty]="'title'">
+        <app-tab-item [tabItem]="tabItem" [class.active]="i === tabBar.activeTabIndex"
+            (click)="setActiveTab(i)"></app-tab-item>
+    </ng-template>
+    <ng-template ngFor let-action [ngForOf]="tabBar.actions" let-i="index" [ngForTrackByProperty]="'title'">
+        <app-tab-action [action]="action"></app-tab-action>
     </ng-template>
 </div>

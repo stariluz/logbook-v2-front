@@ -1,5 +1,6 @@
 .tab-bar {
     position: absolute;
+    left: 0;
     bottom: 100%;
     display: flex;
     width: fit-content;

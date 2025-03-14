@@ -7,7 +7,8 @@
 
 html,
 body {
-    font-size: calc(0.8em + 0.1vw); /* 14px */
+    font-size: calc(12px + 0.1vw);
+    /* 14px */
     font-family: 'Open Sans';
 }
 
@@ -24,8 +25,15 @@ body {
 }
 
 .ti {
-    width: 24px;
-    height: 24px;
+    aspect-ratio: 1;
+    font-size: 1.366rem;
     line-height: 1;
-    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans' !important;
+}
+
+.ti::before {
+    font-family: "tabler-icons" !important;
 }

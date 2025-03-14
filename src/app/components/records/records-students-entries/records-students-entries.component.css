@@ -1,3 +1,7 @@
-.container{
+.page-container{
     position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: start;
 }
