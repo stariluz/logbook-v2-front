@@ -44,7 +44,7 @@ export class LoginComponent {
         if (role === 'admin') {
           route = `/reports/student-reports`;
         } else {
-          route = `/entries/course-entries`;
+          route = `/entries`;
         }
         this.router.navigateByUrl(route).then(() => {
           //

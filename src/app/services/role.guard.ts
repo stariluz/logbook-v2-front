@@ -23,13 +23,13 @@ export class RoleGuard implements CanActivate {
                 if (user.user.role.toLowerCase() === 'admin') {
                     this.router.navigateByUrl('/reports/student-reports');
                 } else {
-                    this.router.navigateByUrl('/entries/course-entries');
+                    this.router.navigateByUrl('/entries');
                 }
                 return false;
             }
             return true;
         }
-        this.router.navigateByUrl('/entries/course-entries');
+        this.router.navigateByUrl('/entries');
         return false;
     }
 }

@@ -33,9 +33,9 @@ export class HeaderComponent {
   	open(content: any) {
 		let currentCourse = localStorage.getItem('currentCourse');
 		if(currentCourse) {
-			this.entriesRouter = 'entries/student-entries';
+			this.entriesRouter = 'entries';
 		} else {
-			this.entriesRouter = 'entries/course-entries';
+			this.entriesRouter = 'entries';
 		}
 		this.offcanvasService.open(content);
 	}
