@@ -17,11 +17,18 @@ body {
     --BG-Color-2: #FFF;
     --Text-Color-1: #585858;
     --Text-Color-2: #1567BF;
+    --Text-Color-3: #FFFFFF;
     --BG-Extra-Color-1: #DAECFF;
     --BG-Extra-Color-4: #B2D7FF;
     --Stroke-Color-Input-2: #D4DCE6;
     --BG-Color-3-Gradient: radial-gradient(178.9% 116.43% at 63.06% 21.09%, var(--Text-Color-2, #1567BF) 26.12%, #074F9C 100%);
     --BG-Color-1-Gradient: radial-gradient(109.93% 117.34% at 94.01% 8.33%, var(--BG-Color-1, #EFFBFF) 25%, var(--BG-Extra-Color-1, #DAECFF) 100%);
+
+    --Button-Text-Color: var(--Text-Color-3);
+    --Button-BG-Color-Primary: #12E08A;
+    --Button-BG-Color-Secondary: var(--Text-Color-2);
+    --Button-BG-Color-Danger: #F74040;
+
 }
 
 .ti {

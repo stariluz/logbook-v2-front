@@ -1,1 +1,6 @@
-<p>button works!</p>
+<button [id]="id" [name]="name" [type]="type" (click)="onClick.emit($event)"
+    [ngClass]="{'btn': true, 'btn-icon': !hasContent}" class="{{classList}}">
+    <i *ngIf="icon && iconPos === 'left'" [ngClass]="icon"></i>
+    <ng-content #content></ng-content>
+    <i *ngIf="icon && iconPos === 'right'" [ngClass]="icon"></i>
+</button>

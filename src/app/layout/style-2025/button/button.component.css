@@ -1,0 +1,75 @@
+.btn {
+    outline: none;
+    border: none;
+
+    --btn-bg-color: var(--Button-BG-Color-Primary);
+    --btn-text-color: var(--Button-Text-Color);
+
+    display: inline-flex;
+    padding: 0.25rem 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
+    font-weight: 400;
+}
+
+.btn.btn-icon {
+    padding: 0.25rem 0.5rem;
+}
+
+.btn.btn-big {
+    display: flex;
+    padding: 0.5rem 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    display: flex;
+    padding: 0.5rem 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+
+    font-size: 26px;
+    font-style: normal;
+    line-height: 36px;
+}
+
+.btn:active {}
+
+.btn:focus {}
+
+.btn:active {}
+
+.btn.primary {
+    --btn-bg-color: var(--Button-BG-Color-Primary);
+    --btn-text-color: var(--Button-Text-Color);
+}
+
+.btn.primary:active {}
+
+.btn.primary:focus {}
+
+.btn.primary:active {}
+
+.btn.secondary {
+    --btn-bg-color: var(--Button-BG-Color-Secondary);
+    --btn-text-color: var(--Button-Text-Color);
+}
+
+.btn.secondary:active {}
+
+.btn.secondary:focus {}
+
+.btn.secondary:active {}
+
+.btn.danger {
+    --btn-bg-color: var(--Button-BG-Color-Danger);
+    --btn-text-color: var(--Button-Text-Color);
+}
+
+.btn.danger:active {}
+
+.btn.danger:focus {}
+
+.btn.danger:active {}

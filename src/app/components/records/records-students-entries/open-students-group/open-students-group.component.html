@@ -4,7 +4,9 @@
     </div>
     <h3 class="form-title">Abrir registro de clase</h3>
     
-    <button class="btn btn-outline-dark register-class-btn me-5" type="button" (click)="registerClassEntry()">Siguiente</button>
+    <app-button type="button" [classList]="'btn btn-primary btn-big'" icon="ti ti-library-plus" (click)="registerClassEntry()">
+        Abrir registro
+    </app-button>
 
     <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse" [suggestions]="filteredCourses" (completeMethod)="filterCourse($event)" field="name" [dropdown]="true" placeholder="Nombre de la clase" [forceSelection]="true">
         <ng-template let-course pTemplate="item">

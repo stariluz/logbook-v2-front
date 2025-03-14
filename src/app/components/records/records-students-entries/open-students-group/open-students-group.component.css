@@ -10,5 +10,10 @@
     align-items: flex-start;    
 }
 .form-title {
+    color: var(--Text-Color-1, #585858);
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
     text-transform: uppercase;
 }
