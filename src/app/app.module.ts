@@ -55,6 +55,8 @@ import { ReportsAssistantshipsComponent } from './components/reports/reports-ass
 import { ReportsStudentsComponent } from './components/reports/reports-students/reports-students.component';
 import { ReportsTeachersComponent } from './components/reports/reports-teachers/reports-teachers.component';
 import { Header2025Component } from './layout/style-2025/header-2025/header-2025.component';
+import { TabBarComponent } from './layout/style-2025/tab-bar/tab-bar.component';
+import { TabItemComponent } from './layout/style-2025/tab-bar/tab-item/tab-item.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import { Header2025Component } from './layout/style-2025/header-2025/header-2025
     ReportsStudentsComponent,
     ReportsTeachersComponent,
     Header2025Component,
+    TabBarComponent,
+    TabItemComponent,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,0 +1,9 @@
+.tab-bar {
+    position: absolute;
+    bottom: 100%;
+    display: flex;
+    width: fit-content;
+    align-items: flex-end;
+    gap: 0.4rem;
+    padding: 0 0.5rem;
+}

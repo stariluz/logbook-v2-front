@@ -1,0 +1,44 @@
+.tab-item {
+    display: flex;
+    min-width: fit-content;
+    width: 8rem;
+    /* height: 2.5rem; */
+    padding: 0.5rem 1rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: unset;
+
+    border-radius: 0.75rem 0.75rem 0 0;
+    background: var(--BG-Extra-Color-1, #DAECFF);
+}
+
+.tab-item.active {
+    height: 4.25rem;
+    padding: 0.4rem 1rem;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.tab-name {
+    color: var(--Text-Color-1, #585858);
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    min-width: 8rem;
+    flex: 1 0 0;
+}
+
+.tab-secondary {
+    color: var(--Text-Color-1, #585858);
+    text-align: right;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    min-width: 4rem;
+    flex: 1 0 0;
+}

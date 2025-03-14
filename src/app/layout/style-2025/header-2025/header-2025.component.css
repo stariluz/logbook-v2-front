@@ -1,17 +1,18 @@
 .page-header {
     background: var(--BG-Color-3-Gradient, radial-gradient(178.9% 116.43% at 63.06% 21.09%, var(--Text-Color-2, #1567BF) 26.12%, #074F9C 100%));
     width: 100%;
-    height: 200px;
+    height: 10rem;
+    padding: 0rem 3rem;
+    display: flex;
+    align-items: center;
     flex-shrink: 0;
-    padding: 64px;
 }
 
 .page-header-title {
     color: var(--Text-Color-3, #FFF);
-    font-family: "Open Sans";
-    font-size: 36px;
+    font-size: 2.25rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    margin: 0;
+    margin-bottom: 1rem;
 }

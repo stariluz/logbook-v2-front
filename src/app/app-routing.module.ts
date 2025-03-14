@@ -19,6 +19,7 @@ import { MainPageComponent } from './components/legacy/social-service/main-page/
 import { SocialServiceReportsComponent } from './components/legacy/reports/social-service-reports/social-service-reports.component';
 import { AssistanshipsReportsComponent } from './components/legacy/reports/assistanships-reports/assistanships-reports.component';
 import { AssistanshipsMainPageComponent } from './components/legacy/assistanships/as-main-page/as-main-page.component';
+import { RecordsStudentsEntriesComponent } from './components/records/records-students-entries/records-students-entries.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,7 +27,7 @@ const routes: Routes = [
   {
     path: '', component: MainComponent, children: [
       {
-        path: 'entries', component: CourseEntriesComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['auxiliar', 'superuser'] }
+        path: 'entries', component: RecordsStudentsEntriesComponent, canActivate: [AuthGuard, RoleGuard], data: { roles: ['auxiliar', 'superuser'] }
       },
       // {
       //   path: '/entries', component: EntriesComponent, canActivate: [AuthGuard, RoleGuard], children: [
