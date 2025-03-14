@@ -59,6 +59,9 @@ import { TabBarComponent } from './layout/style-2025/tab-bar/tab-bar.component';
 import { TabItemComponent } from './layout/style-2025/tab-bar/tab-item/tab-item.component';
 import { TabActionComponent } from './layout/style-2025/tab-bar/tab-action/tab-action.component';
 import { OpenStudentsGroupComponent } from './components/records/records-students-entries/open-students-group/open-students-group.component';
+import { ButtonComponent } from './layout/style-2025/button/button.component';
+import { InputAutocompleteComponent } from './layout/style-2025/input-autocomplete/input-autocomplete.component';
+import { InputComponent } from './layout/style-2025/input/input.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +98,9 @@ import { OpenStudentsGroupComponent } from './components/records/records-student
     TabItemComponent,
     TabActionComponent,
     OpenStudentsGroupComponent,
+    ButtonComponent,
+    InputAutocompleteComponent,
+    InputComponent,
   ],
   imports: [
     BrowserAnimationsModule,
