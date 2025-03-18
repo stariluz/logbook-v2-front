@@ -26,15 +26,21 @@ body {
 
     --Button-Text-Color: var(--Text-Color-3);
     --Button-BG-Color-Primary: #12E08A;
+    --Button-BG-Color-Primary-Hover: #06b86e;
     --Button-BG-Color-Secondary: var(--Text-Color-2);
     --Button-BG-Color-Danger: #F74040;
 
+    --Input-BG-Color-1: #F9F9F9;
+    --Input-Stroke-Color-1: #F3F3F3;
+    --Input-Color-1: var(--Text-Color-1, #585858);
+    --Input-Color-1-Focus: var(--Text-Color-2, #1567BF);
 }
 
 .ti {
-    aspect-ratio: 1;
-    font-size: 1.366rem;
-    line-height: 1;
+    /* aspect-ratio: 1; */
+    font-size: 1rem;
+    width: fit-content;
+    line-height: normal;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,5 +48,14 @@ body {
 }
 
 .ti::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: "tabler-icons" !important;
+    align-self: stretch;
+    aspect-ratio: 1/1;
+    
+    height: 1rem;
+    width: fit-content;
+    font-size: 1.5rem;
 }

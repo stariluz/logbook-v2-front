@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IInput } from './input.model';
 
 @Component({
   selector: 'app-input',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class InputComponent {
 
+  @Input() input!: IInput; // Usamos InputModel
+  @Output() change: EventEmitter<Event> = new EventEmitter<Event>();
+  isFocused: boolean = false;
+  ngOnInit() {
+    console.log(this.input);
+  }
+  onInputChange(event: Event): void {
+    console.log(event.target)
+    if (this.input.change) {
+      this.input.change(event); // Llamamos a la función si está definida
+    }
+    this.change.emit(event); // Emitimos el evento también
+  }
 }

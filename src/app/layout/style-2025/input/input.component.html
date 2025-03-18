@@ -1,1 +1,16 @@
-<p>input works!</p>
+<!-- <input [id]="input.id" [name]="input.name" [type]="input.type" [value]="input.value" [class]="input.classList||''"
+[ngClass]="{'input': true}" (change)="onInputChange($event)"> -->
+<div class="input-container" [ngClass]="{
+    'input-floating':input.placeholderIsFloating
+}">
+    <input [id]="input.id" [name]="input.name||''" [type]="input.type" [(ngModel)]="input.value"
+        [ngClass]="['input',input.classList||'']"
+        (input)="onInputChange($event)" (focus)="isFocused = true" (blur)="isFocused = input.value ? true : false">
+    <label class="input-placeholder"
+        [ngClass]="{
+            'focus': isFocused,
+            'content': input.value!=null&&input.value!=''
+        }">
+        {{ input.placeholder }}
+    </label>
+</div>

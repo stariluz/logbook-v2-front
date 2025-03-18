@@ -1,6 +1,6 @@
-<button [id]="id" [name]="name" [type]="type" (click)="onClick.emit($event)"
-    [ngClass]="{'btn': true, 'btn-icon': !hasContent}" class="{{classList}}">
-    <i *ngIf="icon && iconPos === 'left'" [ngClass]="icon"></i>
+<button [id]="button.id" [name]="button.name" [type]="button.type" [class]="button.classList||''"
+    [ngClass]="{'btn': true, 'btn-icon': !hasContent}" (click)="handleClick($event)">
+    <i *ngIf="button.icon && button.iconPos === 'left'" [ngClass]="['icon', button.icon]"></i>
     <ng-content #content></ng-content>
-    <i *ngIf="icon && iconPos === 'right'" [ngClass]="icon"></i>
+    <i *ngIf="button.icon && button.iconPos === 'right'" [ngClass]="['icon', button.icon]"></i>
 </button>

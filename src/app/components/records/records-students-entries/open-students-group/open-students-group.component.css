@@ -1,14 +1,16 @@
 .form {
     display: flex;
+    flex-direction: column;
     width: 750px;
     max-width: 1260px;
 }
 
-.form-header{
+.form-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;    
+    align-items: flex-start;
 }
+
 .form-title {
     color: var(--Text-Color-1, #585858);
     font-size: 1.5rem;
@@ -16,4 +18,12 @@
     font-weight: 700;
     line-height: normal;
     text-transform: uppercase;
+}
+
+.form-body {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    gap: 1rem;
 }

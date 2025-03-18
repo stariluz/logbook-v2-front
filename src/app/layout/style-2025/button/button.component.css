@@ -12,6 +12,7 @@
     background-color: var(--btn-bg-color);
     color: var(--btn-text-color);
     font-weight: 400;
+    transition: 0.1s ease all;
 }
 
 .btn.btn-icon {
@@ -30,27 +31,37 @@
     align-items: center;
     gap: 0.5rem;
 
-    font-size: 26px;
+    font-size: 1.5rem;
     font-style: normal;
-    line-height: 36px;
 }
 
-.btn:active {}
+.btn.btn-big .icon::before {
+    font-size: 2rem;
+    height: 1.5rem;
+}
 
-.btn:focus {}
+.btn:active {
+    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);
+    background-color: var(--btn-bg-color);
+    transform: scale(0.98);
+}
 
-.btn:active {}
+.btn:hover {
+    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);
+    background-color: var(--btn-bg-color);
+}
 
 .btn.primary {
     --btn-bg-color: var(--Button-BG-Color-Primary);
     --btn-text-color: var(--Button-Text-Color);
 }
 
-.btn.primary:active {}
+.btn.primary:active {
+    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);
+    transform: scale(0.98);}
 
-.btn.primary:focus {}
-
-.btn.primary:active {}
+.btn.primary:hover {
+    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);}
 
 .btn.secondary {
     --btn-bg-color: var(--Button-BG-Color-Secondary);
@@ -59,9 +70,7 @@
 
 .btn.secondary:active {}
 
-.btn.secondary:focus {}
-
-.btn.secondary:active {}
+.btn.secondary:hover {}
 
 .btn.danger {
     --btn-bg-color: var(--Button-BG-Color-Danger);
@@ -70,6 +79,4 @@
 
 .btn.danger:active {}
 
-.btn.danger:focus {}
-
-.btn.danger:active {}
+.btn.danger:hover {}

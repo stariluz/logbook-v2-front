@@ -1,7 +1,12 @@
-.page-container{
+.page{
     position: relative;
     top: 0;
     left: 0;
     display: flex;
     justify-content: start;
+}
+.page-content{
+    margin: 4rem;
+    display: flex;
+    flex-direction: column;
 }
