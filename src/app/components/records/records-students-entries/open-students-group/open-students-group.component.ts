@@ -16,7 +16,7 @@ type Course = { id: string; name: string; group: string; professor: Professor };
 })
 export class OpenStudentsGroupComponent {
   public selectedCourse?: Course;
-  private courses: Course[] = [];
+  public courses: Course[] = [];
   public filteredCourses: Course[] = [];
   private user: any;
   private labs: any[] = []; // @todo Type model

@@ -12,7 +12,7 @@
         </app-button>
     </div>
     <div class="form-body">
-        <app-input [input]="{
+        <app-input-autocomplete searchBy="name" [options]="courses" [selectedOption]="selectedCourse" [input]="{
         type: 'text',
         name: 'lab',
         placeholder: 'Laboratorio',

@@ -23,6 +23,7 @@
 
 .input-floating .input {
     padding-top: 1.25rem;
+    flex: 1;
 }
 
 .input:focus {

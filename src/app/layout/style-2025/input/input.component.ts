@@ -1,19 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { IInput } from './input.model';
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css']
+  styleUrls: ['./input.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class InputComponent {
 
   @Input() input!: IInput; // Usamos InputModel
   @Output() change: EventEmitter<Event> = new EventEmitter<Event>();
   isFocused: boolean = false;
-  ngOnInit() {
-    console.log(this.input);
-  }
+
   onInputChange(event: Event): void {
     console.log(event.target)
     if (this.input.change) {

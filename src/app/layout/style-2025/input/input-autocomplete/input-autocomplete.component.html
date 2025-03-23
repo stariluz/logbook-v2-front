@@ -1,1 +1,34 @@
-<p>input-autocomplete works!</p>
+<div class="input-container input-container-autocomplete" [ngClass]="{
+    'input-floating':input.placeholderIsFloating
+}">
+    <p-autoComplete [(ngModel)]="selectedOption" [suggestions]="filteredOptions"
+        (completeMethod)="filterOptions($event)" [field]="searchBy" [dropdown]="true" [forceSelection]="true"
+        inputStyleClass="input input-autocomplete {{input.classList}}">
+        <!-- Custom Dropdown Icon -->
+        <ng-template pTemplate="dropdownicon">
+            <i class="ti ti-plus"></i>
+        </ng-template>
+
+        <ng-template let-course pTemplate="item">
+            <div class="d-flex flex-column">
+                <span>{{ selectedOption[searchBy] }}</span>
+            </div>
+        </ng-template>
+
+    </p-autoComplete>
+
+
+    <label class="input-placeholder" [ngClass]="{
+        'focus': isFocused,
+        'content': selectedOption!=null&&selectedOption!=''
+    }">
+        {{ input.placeholder }}
+    </label>
+
+</div>
+<!-- <app-input [input]="{
+    type: 'text',
+    name: 'lab',
+    placeholder: 'Laboratorio',
+    placeholderIsFloating: true
+}" /> -->

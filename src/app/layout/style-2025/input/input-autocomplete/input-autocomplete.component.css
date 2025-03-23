@@ -1,0 +1,109 @@
+.input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    width: min-content;
+    min-width: 4rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.1s;
+
+    border-radius: 0.25rem;
+    border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
+    background: var(--Input-BG-Color-1, #F9F9F9);
+}
+
+.input-lg {
+    min-width: 32rem;
+    width: 100%;
+}
+
+.input-floating .input {
+    padding-top: 1.25rem;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--Input-Color-1-Focus);
+}
+
+.input-placeholder {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--Input-Color-1);
+    opacity: 100%;
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+    transition: opacity 0.1s ease;
+}
+
+.input-floating .input-placeholder {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    top: 0.75rem;
+    font-size: 0.75rem;
+}
+
+.input-placeholder.focus {
+    color: var(--Input-Color-1-Focus);
+}
+
+:not(.input-floating) .input-placeholder.content {
+    opacity: 0%;
+}
+
+.p-element.p-ripple.p-autocomplete-dropdown.p-button.p-component.p-button-icon-only {
+    height: auto;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    padding: 0.25rem 0.5rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+
+    font-size: 1.5rem;
+    font-style: normal;
+
+    --btn-bg-color: var(--Input-BG-Color-1);
+    --btn-text-color: var(--Text-Color-1);
+
+    background-color: var(--btn-bg-color);
+    color: var(--btn-text-color);
+    border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
+    border-left: 0px;
+}
+
+.input-container-autocomplete.input-floating{
+    .p-element.p-ripple.p-autocomplete-dropdown.p-button.p-component.p-button-icon-only {
+        padding: 0.5rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    
+        font-size: 1.5rem;
+        font-style: normal;
+    
+        --btn-bg-color: var(--Input-BG-Color-1);
+        --btn-text-color: var(--Text-Color-1);
+    
+        background-color: var(--btn-bg-color);
+        color: var(--btn-text-color);
+        border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
+        border-left: 0px;
+
+
+        .icon::before {
+            font-size: 2rem;
+            height: 1.5rem;
+        }
+    }
+}

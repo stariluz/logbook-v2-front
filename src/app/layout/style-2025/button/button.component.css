@@ -1,7 +1,6 @@
 .btn {
     outline: none;
     border: none;
-
     --btn-bg-color: var(--Button-BG-Color-Primary);
     --btn-text-color: var(--Button-Text-Color);
 
@@ -9,22 +8,19 @@
     padding: 0.25rem 0.5rem;
     align-items: center;
     gap: 0.5rem;
+
     background-color: var(--btn-bg-color);
     color: var(--btn-text-color);
     font-weight: 400;
     transition: 0.1s ease all;
 }
 
+
 .btn.btn-icon {
     padding: 0.25rem 0.5rem;
 }
 
 .btn.btn-big {
-    display: flex;
-    padding: 0.5rem 1rem;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.5rem;
     display: flex;
     padding: 0.5rem 1rem;
     justify-content: flex-end;
@@ -51,6 +47,13 @@
     background-color: var(--btn-bg-color);
 }
 
+.btn.btn-input {
+    --btn-bg-color: var(--Input-BG-Color-1);
+    --btn-text-color: var(--Text-Color-1);
+    
+    border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
+}
+
 .btn.primary {
     --btn-bg-color: var(--Button-BG-Color-Primary);
     --btn-text-color: var(--Button-Text-Color);
@@ -58,10 +61,12 @@
 
 .btn.primary:active {
     --btn-bg-color: var(--Button-BG-Color-Primary-Hover);
-    transform: scale(0.98);}
+    transform: scale(0.98);
+}
 
 .btn.primary:hover {
-    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);}
+    --btn-bg-color: var(--Button-BG-Color-Primary-Hover);
+}
 
 .btn.secondary {
     --btn-bg-color: var(--Button-BG-Color-Secondary);
