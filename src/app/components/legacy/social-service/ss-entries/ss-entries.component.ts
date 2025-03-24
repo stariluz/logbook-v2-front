@@ -12,6 +12,7 @@ type AlertMessage = { message: string; type: string }
 type Faculty = { _id: string, name: string}
 
 @Component({
+  standalone: false,
   selector: 'app-ss-entries',
   templateUrl: './ss-entries.component.html',
   styleUrls: ['./ss-entries.component.css', './ss-entries.component.scss']

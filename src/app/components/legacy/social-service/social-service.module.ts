@@ -1,6 +1,6 @@
 // Modulos
 import { NgModule } from '@angular/core';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
@@ -25,7 +25,7 @@ import { SsEntriesComponent } from './ss-entries/ss-entries.component';
     CommonModule,
     FormsModule,
     NgbAlertModule,
-    ZXingScannerModule,
+    // ZXingScannerModule,
     TableModule
   ],
   providers: [

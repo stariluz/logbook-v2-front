@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import INavbarSection from './navbar-section/navbar-section.model';
 
 @Component({
+  standalone: false,
   selector: 'app-navbar-2025',
   templateUrl: './navbar-2025.component.html',
   styleUrls: ['./navbar-2025.component.css']

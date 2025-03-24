@@ -21,11 +21,6 @@
     width: 100%;
 }
 
-.input-floating .input {
-    padding-top: 1.25rem;
-    flex: 1;
-}
-
 .input:focus {
     outline: none;
     border-color: var(--Input-Color-1-Focus);
@@ -43,6 +38,15 @@
     transition: opacity 0.1s ease;
 }
 
+.input-placeholder.focus {
+    color: var(--Input-Color-1-Focus);
+}
+
+.input-floating .input {
+    padding-top: 1.25rem;
+    flex: 1;
+}
+
 .input-floating .input-placeholder {
     position: absolute;
     left: 0.75rem;
@@ -50,10 +54,6 @@
     transform: translateY(-50%);
     top: 0.75rem;
     font-size: 0.75rem;
-}
-
-.input-placeholder.focus {
-    color: var(--Input-Color-1-Focus);
 }
 
 :not(.input-floating) .input-placeholder.content {

@@ -9,6 +9,7 @@ type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
 
 @Component({
+  standalone: false,
   selector: 'app-custom-course-entries',
   templateUrl: './custom-course-entries.component.html',
   styleUrls: ['./custom-course-entries.component.css', './custom-course-entries.component.scss']

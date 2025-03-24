@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { IInput } from './input.model';
 
 @Component({
+  standalone: false,
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { provideHttpClient, HTTP_INTERCEPTORS, withInterceptorsFromDi } from '@angular/common/http';
 import { EntriesComponent } from './components/legacy/entries/entries.component';
 import { MainComponent } from './layout/main/main.component';
 import { HeaderComponent } from './layout/main/header/header.component';
@@ -13,7 +13,7 @@ import { NgbAlertModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { StudentEntriesComponent } from './components/legacy/entries/student-entries/student-entries.component';
 import { CourseEntriesComponent } from './components/legacy/entries/course-entries/course-entries.component';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ReportsComponent } from './components/legacy/reports/reports.component';
 import { StudentReportsComponent } from './components/legacy/reports/student-reports/student-reports.component';
 import { ProfessorReportsComponent } from './components/legacy/reports/professor-reports/professor-reports.component';
@@ -63,6 +63,12 @@ import { ButtonComponent } from './layout/style-2025/button/button.component';
 import { InputAutocompleteComponent } from './layout/style-2025/input/input-autocomplete/input-autocomplete.component';
 import { InputComponent } from './layout/style-2025/input/input.component';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Lara from '@primeng/themes/lara';
+import Aura from '@primeng/themes/aura';
+import BlueLaraPreset from 'src/assets/BlueLaraPreset';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -106,12 +112,11 @@ import { InputComponent } from './layout/style-2025/input/input.component';
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     AutoCompleteModule,
     NgbTypeaheadModule,
     NgbAlertModule,
     FormsModule,
-    ZXingScannerModule,
+    // ZXingScannerModule,
     CalendarModule,
     TableModule,
     FileUploadModule,
@@ -123,7 +128,7 @@ import { InputComponent } from './layout/style-2025/input/input.component';
     SocialServiceModule,
     TabViewModule,
     AssistanshipsModule,
-    Navbar2025Module,
+    Navbar2025Module
   ],
   providers: [
     AuthGuard,
@@ -135,6 +140,16 @@ import { InputComponent } from './layout/style-2025/input/input.component';
       useClass: TokenInterceptor,
       multi: true,
     },
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: BlueLaraPreset,
+        options: {
+          darkModeSelector: false,
+        },
+      }
+    }),
+    provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-entries',
   templateUrl: './entries.component.html',
   styleUrls: ['./entries.component.css']

@@ -3,8 +3,8 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 import { ReportsService } from 'src/app/services/reports.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 import { AssetsService } from 'src/app/services/assets.service';
 import { SelectItem } from 'primeng/api';
 
@@ -14,9 +14,10 @@ type Course = { code: string; name: string; group: string; professor: Professor}
 type StudentRegistry = { _id: string; studentId: string; facultyId:string; name: string; start_time: Date; end_time: string; lab: string; hours: number; }
 type AlertMessage = { message: string; type: string }
 
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts.vfs;
 
 @Component({
+  standalone: false,
   selector: 'app-social-service-reports',
   templateUrl: './social-service-reports.component.html',
   styleUrls: ['./social-service-reports.component.css', './social-service-reports.component.scss']
@@ -62,7 +63,7 @@ export class SocialServiceReportsComponent {
     private assetsService: AssetsService, 
     private reportsService: ReportsService, 
     private entriesService: EntriesService) {
-    (pdfMake as any).fonts = {
+    pdfMake.fonts = {
       Roboto: {
         normal: 'Roboto-Regular.ttf',
         bold: 'Roboto-Medium.ttf',

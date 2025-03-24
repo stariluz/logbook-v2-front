@@ -3,8 +3,8 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map, Observable, OperatorFunction, Subject } from 'rxjs';
 import { EntriesService } from 'src/app/services/entries.service';
 import { ReportsService } from 'src/app/services/reports.service';
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 import { AssetsService } from 'src/app/services/assets.service';
 import { formatDate } from '@angular/common';
 
@@ -13,9 +13,10 @@ type Professor = { id: string; name: string }
 type Course = { code: string; name: string; group: string; professor: Professor};
 type ProfessorRegistry = { id: string; name: string; date: Date; course: string; lab: string }
 
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+pdfMake.vfs = pdfFonts.vfs;
 
 @Component({
+  standalone: false,
   selector: 'app-professor-reports',
   templateUrl: './professor-reports.component.html',
   styleUrls: ['./professor-reports.component.css', './professor-reports.component.scss']
@@ -45,7 +46,7 @@ export class ProfessorReportsComponent {
   errorMessage: string = '';
 
   constructor(@Inject(LOCALE_ID) private locale: string, private assetsService: AssetsService, private reportsService: ReportsService, private entriesService: EntriesService) {
-    (pdfMake as any).fonts = {
+    pdfMake.fonts = {
       Roboto: {
         normal: 'Roboto-Regular.ttf',
         bold: 'Roboto-Medium.ttf',

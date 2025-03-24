@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import * as XLSX from 'xlsx';
 
 @Component({
+  standalone: false,
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']

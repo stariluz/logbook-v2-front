@@ -5,6 +5,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import * as XLSX from 'xlsx';
 
 @Component({
+  standalone: false,
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css', './file-upload.component.scss']

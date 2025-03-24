@@ -2,6 +2,7 @@ import { Host, Directive, Input } from "@angular/core";
 import { NgForOf } from "@angular/common";
 
 @Directive({
+    standalone: false,
     selector: "[ngForTrackByProperty]"
 })
 export class TrackByPropertyDirective {

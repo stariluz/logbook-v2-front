@@ -10,6 +10,7 @@ type Professor = { id: string; name: string }
 type Course = { id: string; name: string; group: string; professor: Professor };
 
 @Component({
+  standalone: false,
   selector: 'app-open-students-group',
   templateUrl: './open-students-group.component.html',
   styleUrls: ['./open-students-group.component.css']

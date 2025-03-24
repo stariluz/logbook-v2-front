@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { InputComponent } from '../input.component';
 
 @Component({
+  standalone: false,
   selector: 'app-input-autocomplete',
   templateUrl: './input-autocomplete.component.html',
   styleUrls: ['../input.component.css','./input-autocomplete.component.css'],

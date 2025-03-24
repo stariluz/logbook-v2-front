@@ -8,6 +8,7 @@ type RegisteredStudent = { registryId: string; studentId: string; name: string; 
 type AlertMessage = { message: string; type: string }
 
 @Component({
+  standalone: false,
   selector: 'app-student-entries',
   templateUrl: './student-entries.component.html',
   styleUrls: ['./student-entries.component.css', './student-entries.component.scss']

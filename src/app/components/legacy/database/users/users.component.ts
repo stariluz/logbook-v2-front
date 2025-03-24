@@ -8,6 +8,7 @@ import { EntriesService } from 'src/app/services/entries.service';
 type User = { name: string; email: string; role: string; lab: string};
 
 @Component({
+  standalone: false,
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css', './users.component.scss']

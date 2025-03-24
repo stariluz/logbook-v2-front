@@ -2,6 +2,7 @@ import { Component, ContentChild, ElementRef, EventEmitter, Input, Output } from
 import { IButton } from './button.model';
 
 @Component({
+  standalone: false,
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css']

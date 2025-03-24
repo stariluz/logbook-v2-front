@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ITabAction } from './tab-action.model';
 
 @Component({
+  standalone: false,
   selector: 'app-tab-action',
   templateUrl: './tab-action.component.html',
   styleUrls: ['./tab-action.component.css']
