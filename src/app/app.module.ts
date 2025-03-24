@@ -67,7 +67,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 import Aura from '@primeng/themes/aura';
-import BlueLaraPreset from 'src/assets/BlueLaraPreset';
+import BlueLaraPreset from 'src/app/layout/BlueLaraPreset';
 
 @NgModule({
   declarations: [
@@ -130,6 +130,7 @@ import BlueLaraPreset from 'src/assets/BlueLaraPreset';
     AssistanshipsModule,
     Navbar2025Module
   ],
+  exports: [TrackByPropertyDirective], // Ensure it's exported
   providers: [
     AuthGuard,
     RoleGuard,

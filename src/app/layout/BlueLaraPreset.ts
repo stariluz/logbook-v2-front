@@ -336,7 +336,7 @@ const BlueLaraPreset = definePreset(Lara, {
                 paddingX: "0.875rem",
                 paddingY: "0.625rem"
             },
-            borderRadius: "{border.radius.md}",
+            borderRadius: "{border.radius.sm}",
             focusRing: {
                 width: "0",
                 style: "none",
@@ -408,10 +408,10 @@ const BlueLaraPreset = definePreset(Lara, {
             light: {
                 surface: {
                     0: "#ffffff",
-                    50: "#f8fafc",
+                    50: "#F9F9F9",
                     100: "#f1f5f9",
                     200: "#e2e8f0",
-                    300: "#cbd5e1",
+                    300: "#F3F3F3",
                     400: "#94a3b8",
                     500: "#64748b",
                     600: "#475569",
@@ -437,7 +437,7 @@ const BlueLaraPreset = definePreset(Lara, {
                     color: "{surface.200}"
                 },
                 formField: {
-                    background: "{surface.0}",
+                    background: "{surface.50}",
                     disabledBackground: "{surface.200}",
                     filledBackground: "{surface.50}",
                     filledHoverBackground: "{surface.50}",

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { InputComponent } from '../input.component';
 
 @Component({
@@ -8,22 +8,23 @@ import { InputComponent } from '../input.component';
   styleUrls: ['../input.component.css','./input-autocomplete.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class InputAutocompleteComponent extends InputComponent implements OnInit {
+export class InputAutocompleteComponent extends InputComponent {
   @Input() options!: any[];
   @Input() selectedOption!: any;
+  @Output() selectedOptionChange: EventEmitter<any>=new EventEmitter();
   @Input() searchBy!: string;
   filteredOptions!: any[];
-
-  ngOnInit() {
-    this.filteredOptions = this.options;
-  }
 
   // Filtra las opciones según lo ingresado por el usuario
   filterOptions(event: any) {
     let query = event.query;
-
+    
     this.filteredOptions = this.options.filter((option) => {
-      return option["searchBy"].toLowerCase().includes(query.toLowerCase());
+      return option[this.searchBy].toLowerCase().includes(query.toLowerCase());
     });
+  }
+
+  onSelectedOptionChange($event:any){
+    this.selectedOptionChange.emit($event)
   }
 }

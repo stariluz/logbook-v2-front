@@ -53,6 +53,7 @@ export class OpenStudentsGroupComponent {
       this.entriesService.getCoursesByLab(this.selectedLab).subscribe(
         (res) => {
           this.courses = res;
+          console.log(this.courses)
         },
         (err) => {
           console.log(err);
@@ -72,14 +73,14 @@ export class OpenStudentsGroupComponent {
     });
   }
 
-  // Filtra los cursos según lo ingresado por el usuario
-  filterCourse(event: any) {
-    let query = event.query;
+  // // Filtra los cursos según lo ingresado por el usuario
+  // filterCourse(event: any) {
+  //   let query = event.query;
 
-    this.filteredCourses= this.courses.filter((course)=>{
-      return course.name.toLowerCase().includes(query.toLowerCase())
-    })
-  }
+  //   this.filteredCourses= this.courses.filter((course)=>{
+  //     return course.name.toLowerCase().includes(query.toLowerCase())
+  //   })
+  // }
 
   // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {
