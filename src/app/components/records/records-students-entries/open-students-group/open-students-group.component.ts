@@ -21,14 +21,14 @@ export class OpenStudentsGroupComponent {
   public courses: Course[] = [];
   public filteredCourses: Course[] = [];
   private user: any;
-  private labs: any[] = []; // @todo Type model
+  public labs: any[] = []; // @todo Type model
   public selectedLab?: string;
   // Referencia a la alerta
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
 
-  constructor(private router: Router, private entriesService: EntriesService, private databaseService:DatabaseService) { }
+  constructor(private router: Router, private entriesService: EntriesService, private databaseService: DatabaseService) { }
 
   ngOnInit(): void {
     this.user = localStorage.getItem('user');
@@ -38,18 +38,19 @@ export class OpenStudentsGroupComponent {
     if (this.user.user.lab) {
       this.selectedLab = this.user.user.lab;
     }
-    if(!this.selectedLab){
-      this.databaseService.getLabs().subscribe({
-        next: (labs:any)=>{
-          this.labs=labs;
-        },
-        error: (error:any)=>{
-          /* @dev remove showing error directly*/
-          console.error("DEV - ",error)
-        }
-  
-      })
-    }else{
+    this.entriesService.getLabs().subscribe({
+      next: (labs: any) => {
+        this.labs = labs;
+        console.log(this.courses)
+      },
+      error: (error: any) => {
+        /* @dev remove showing error directly*/
+        console.error("DEV - ", error)
+      }
+
+    })
+    if (!this.selectedLab) {
+    } else {
       // Obtiene los cursos/clases por medio de una petición
       this.entriesService.getCoursesByLab(this.selectedLab).subscribe(
         (res) => {
@@ -61,7 +62,7 @@ export class OpenStudentsGroupComponent {
         }
       );
     }
-    
+
     /**
      * @todo
      * The alerts should be a service and not be using local vaiables all the time
@@ -73,15 +74,6 @@ export class OpenStudentsGroupComponent {
       }
     });
   }
-
-  // // Filtra los cursos según lo ingresado por el usuario
-  // filterCourse(event: any) {
-  //   let query = event.query;
-
-  //   this.filteredCourses= this.courses.filter((course)=>{
-  //     return course.name.toLowerCase().includes(query.toLowerCase())
-  //   })
-  // }
 
   // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {

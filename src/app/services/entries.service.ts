@@ -17,6 +17,10 @@ export class EntriesService {
     return this.http.get<any>('api/courses');
   }
 
+  getLabs(): Observable<any> {
+    return this.http.get<any>('api/courses/current-labs/list');
+  }
+  
   getCoursesByLab(lab: string): Observable<any> {
     return this.http.get<any>(`api/courses/labs/${lab}`);
   }

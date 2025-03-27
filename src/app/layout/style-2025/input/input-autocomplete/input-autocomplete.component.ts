@@ -18,8 +18,9 @@ export class InputAutocompleteComponent extends InputComponent {
   // Filtra las opciones según lo ingresado por el usuario
   filterOptions(event: any) {
     let query = event.query;
-
+    console.log(this.options);
     this.filteredOptions = this.options.filter((option) => {
+      console.log(option);
       return option[this.searchBy].toLowerCase().includes(query?.toLowerCase());
     });
   }
