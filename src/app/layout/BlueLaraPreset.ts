@@ -451,7 +451,7 @@ const BlueLaraPreset = definePreset(Lara, {
                     placeholderColor: "{surface.500}",
                     invalidPlaceholderColor: "{red.600}",
                     floatLabelColor: "{surface.500}",
-                    floatLabelFocusColor: "{primary.600}",
+                    floatLabelFocusColor: "{primary.color}",
                     floatLabelActiveColor: "{surface.500}",
                     floatLabelInvalidColor: "{form.field.invalid.placeholder.color}",
                     iconColor: "{surface.400}",

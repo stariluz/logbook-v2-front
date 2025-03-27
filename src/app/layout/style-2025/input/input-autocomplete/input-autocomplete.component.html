@@ -1,12 +1,16 @@
 <div class="input-container input-container-autocomplete" [ngClass]="{
-    'input-floating':input.placeholderIsFloating
+    'input-floating':input.placeholderIsFloating,
+    'focus': isFocused,
 }">
-    <p-autoComplete [(ngModel)]="selectedOption" [suggestions]="filteredOptions" [name]="input.name" (ngModelChange)="onSelectedOptionChange($event)"
-        (completeMethod)="filterOptions($event)" [field]="searchBy" [dropdown]="true" [forceSelection]="true"
-        inputStyleClass="input input-autocomplete {{input.classList}}" (blur)="isFocused = selectedOption ? true : false">
+    <p-autoComplete [(ngModel)]="selectedOption" [suggestions]="filteredOptions" [name]="input.name"
+        (ngModelChange)="onSelectedOptionChange($event)" (completeMethod)="filterOptions($event)" [field]="searchBy" [dropdown]="true"
+        [forceSelection]="true" inputStyleClass="input input-autocomplete {{input.classList}}"
+        (onFocus)="isFocused = true"
+        (onBlur)="isFocused = false"
+        [placeholder]="input.placeholderIsFloating?'':input.placeholder">
         <!-- Custom Dropdown Icon -->
         <ng-template pTemplate="dropdownicon">
-            <i class="ti ti-caret-down-filled"></i>
+            <i class="icon ti ti-caret-down-filled"></i>
         </ng-template>
 
         <ng-template let-course pTemplate="item">
@@ -18,17 +22,10 @@
     </p-autoComplete>
 
 
-    <label class="input-placeholder" [ngClass]="{
+    <label *ngIf="input.placeholderIsFloating" class="input-placeholder" [ngClass]="{
         'focus': isFocused,
-        'content': selectedOption!=null&&selectedOption!=''
     }">
         {{ input.placeholder }}
     </label>
 
 </div>
-<!-- <app-input [input]="{
-    type: 'text',
-    name: 'lab',
-    placeholder: 'Laboratorio',
-    placeholderIsFloating: true
-}" /> -->

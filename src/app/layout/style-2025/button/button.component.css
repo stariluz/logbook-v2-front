@@ -51,7 +51,12 @@
     --btn-bg-color: var(--Input-BG-Color-1);
     --btn-text-color: var(--Text-Color-1);
     
-    border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
+    /* border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3); */
+    border: 0px;
+    border-start-start-radius: 0px!important;
+    border-start-end-radius: 0px!important;
+    border-end-start-radius: 0px!important;
+    border-end-end-radius: 0px!important;
 }
 
 .btn.primary {

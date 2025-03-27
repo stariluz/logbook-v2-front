@@ -4,13 +4,15 @@
     'input-floating':input.placeholderIsFloating
 }">
     <input [id]="input.id" [name]="input.name||''" [type]="input.type" [(ngModel)]="input.value"
-        [ngClass]="['input',input.classList||'']"
-        (input)="onInputChange($event)" (focus)="isFocused = true" (blur)="isFocused = input.value ? true : false">
-    <label class="input-placeholder"
-        [ngClass]="{
+        [ngClass]="['input',input.classList||'']" (input)="onInputChange($event)" (focus)="isFocused = true"
+        (blur)="isFocused = false"
+        [placeholder]="input.placeholderIsFloating?'':input.placeholder">
+
+    <label *ngIf="input.placeholderIsFloating" class="input-placeholder" [ngClass]="{
             'focus': isFocused,
             'content': input.value!=null&&input.value!=''
         }">
         {{ input.placeholder }}
     </label>
+
 </div>

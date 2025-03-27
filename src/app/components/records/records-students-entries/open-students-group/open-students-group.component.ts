@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, Subject } from 'rxjs';
@@ -13,7 +13,8 @@ type Course = { id: string; name: string; group: string; professor: Professor };
   standalone: false,
   selector: 'app-open-students-group',
   templateUrl: './open-students-group.component.html',
-  styleUrls: ['./open-students-group.component.css']
+  styleUrls: ['./open-students-group.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class OpenStudentsGroupComponent {
   public selectedCourse?: Course;

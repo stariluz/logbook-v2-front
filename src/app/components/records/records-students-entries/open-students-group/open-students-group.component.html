@@ -26,13 +26,18 @@
             placeholderIsFloating: true
         }" /> -->
 
-        <app-input-autocomplete searchBy="name" [options]="courses"  [(selectedOption)]="selectedCourse" [input]="{
+        <app-input-autocomplete searchBy="name" [options]="courses" [(selectedOption)]="selectedCourse" [input]="{
             type: 'text',
             name: 'course',
             placeholder: 'Curso',
             placeholderIsFloating: true
         }" />
-
+        <app-input [input]="{
+            type: 'text',
+            name: 'course',
+            placeholder: 'Curso',
+            placeholderIsFloating: true
+        }"></app-input>
         <!-- <app-input-autocomplete searchBy="name" [options]="courses" [selectedOption]="selectedCourse" [input]="{
             type: 'text',
             name: 'teacher',

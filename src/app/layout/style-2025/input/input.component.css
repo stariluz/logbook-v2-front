@@ -7,7 +7,7 @@
 .input {
     width: min-content;
     min-width: 4rem;
-    padding: 0.75rem 0.5rem;
+    padding: 0.75rem 0.75rem;
     font-size: 1rem;
     transition: border-color 0.1s;
 
@@ -16,14 +16,15 @@
     background: var(--Input-BG-Color-1, #F9F9F9);
 }
 
-.input-lg{
+.input-lg {
     min-width: 32rem;
     width: 100%;
 }
 
+.input-container-autocomplete.focus,
 .input:focus {
     outline: none;
-    border-color: var(--Input-Color-1-Focus);
+    border-color: var(--Input-Color-1-Focus)!important;
 }
 
 .input-placeholder {
@@ -38,24 +39,21 @@
     transition: opacity 0.1s ease;
 }
 
+.input:focus::placeholder,
 .input-placeholder.focus {
     color: var(--Input-Color-1-Focus);
 }
 
 .input-floating .input {
-    padding-top: 1.25rem;
+    padding-top: 1.25rem!important;
     flex: 1;
 }
 
 .input-floating .input-placeholder {
     position: absolute;
     left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
     top: 0.75rem;
-    font-size: 0.75rem;
-}
-
-:not(.input-floating) .input-placeholder.content {
-    opacity: 0%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    font-weight: 700;
 }
