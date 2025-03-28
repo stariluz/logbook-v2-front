@@ -4,9 +4,10 @@
     flex-direction: column;
 }
 
-.input {
+.input,
+.input.input-autocomplete {
     width: min-content;
-    min-width: 4rem;
+    min-width: 3rem;
     padding: 0.75rem 0.75rem;
     font-size: 1rem;
     transition: border-color 0.1s;
@@ -14,6 +15,11 @@
     border-radius: 0.25rem;
     border: 2px solid var(--Input-Stroke-Color-1, #F3F3F3);
     background: var(--Input-BG-Color-1, #F9F9F9);
+}
+
+.input-fit-content {
+    min-width: fit-content;
+    width: fit-content;
 }
 
 .input-lg {
@@ -24,7 +30,7 @@
 .input-container-autocomplete.focus,
 .input:focus {
     outline: none;
-    border-color: var(--Input-Color-1-Focus)!important;
+    border-color: var(--Input-Color-1-Focus) !important;
 }
 
 .input-placeholder {
@@ -45,7 +51,7 @@
 }
 
 .input-floating .input {
-    padding-top: 1.25rem!important;
+    padding-top: 1.25rem !important;
     flex: 1;
 }
 

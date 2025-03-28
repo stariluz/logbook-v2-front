@@ -1,31 +1,49 @@
-import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, forwardRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { InputComponent } from '../input.component';
-
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   standalone: false,
   selector: 'app-input-autocomplete',
   templateUrl: './input-autocomplete.component.html',
   styleUrls: ['../input.component.css', './input-autocomplete.component.css'],
   encapsulation: ViewEncapsulation.None,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => InputAutocompleteComponent),
+    multi: true
+  }]
 })
-export class InputAutocompleteComponent extends InputComponent {
-  @Input() options!: any[];
-  @Input() selectedOption!: any;
-  @Output() selectedOptionChange: EventEmitter<any> = new EventEmitter();
+export class InputAutocompleteComponent extends InputComponent implements AfterContentInit {
+  @Input() autocompleteOptions!: any[];
   @Input() searchBy!: string;
-  filteredOptions!: any[];
+  @Input() labelBy!: string;
+  protected filteredOptions!: any[];
+  private filterMethod: (query: any) => void = this.filterWithoutSearchBy;
 
-  // Filtra las opciones según lo ingresado por el usuario
+  ngAfterContentInit() {
+    if (this.searchBy) {
+      this.filterMethod = this.filterWithSearchBy;
+      if (!this.labelBy) {
+        this.labelBy = this.searchBy;
+      }
+    }
+  }
+
   filterOptions(event: any) {
     let query = event.query;
-    console.log(this.options);
-    this.filteredOptions = this.options.filter((option) => {
-      console.log(option);
+    this.filterMethod?.(query);
+  }
+
+  filterWithSearchBy(query: string) {
+    this.filteredOptions = this.autocompleteOptions.filter((option) => {
       return option[this.searchBy].toLowerCase().includes(query?.toLowerCase());
     });
   }
 
-  onSelectedOptionChange($event: any) {
-    this.selectedOptionChange.emit($event)
+  filterWithoutSearchBy(query: string) {
+    console.log("AAAAAAAAAA")
+    this.filteredOptions = this.autocompleteOptions.filter((option) => {
+      return option.toLowerCase().includes(query?.toLowerCase());
+    });
   }
 }

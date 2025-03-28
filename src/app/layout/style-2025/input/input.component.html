@@ -1,16 +1,14 @@
-<!-- <input [id]="input.id" [name]="input.name" [type]="input.type" [value]="input.value" [class]="input.classList||''"
-[ngClass]="{'input': true}" (change)="onInputChange($event)"> -->
 <div class="input-container" [ngClass]="{
     'input-floating':input.placeholderIsFloating
 }">
-    <input [id]="input.id" [name]="input.name||''" [type]="input.type" [(ngModel)]="input.value"
-        [ngClass]="['input',input.classList||'']" (input)="onInputChange($event)" (focus)="isFocused = true"
+    <input [id]="input.id" [name]="name" [type]="input.type" [(ngModel)]="ngModel"
+        [ngClass]="['input',input.classList||'']" (focus)="isFocused = true"
         (blur)="isFocused = false"
         [placeholder]="input.placeholderIsFloating?'':input.placeholder">
 
     <label *ngIf="input.placeholderIsFloating" class="input-placeholder" [ngClass]="{
             'focus': isFocused,
-            'content': input.value!=null&&input.value!=''
+            'content': ngModel!=null&&ngModel!=''
         }">
         {{ input.placeholder }}
     </label>

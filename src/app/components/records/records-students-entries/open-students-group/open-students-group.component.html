@@ -12,38 +12,29 @@
         </app-button>
     </div>
     <div class="form-body">
-        <app-input-autocomplete searchBy="name" [options]="labs" [(ngModel)]="selectedLab" [input]="{
+        <app-input-autocomplete
+            [autocompleteOptions]="labs"
+            [(ngModel)]="selectedLab" name="lab"
+            [disabled]="disableLabs"
+            (ngModelChange)="debugSelectedLab()"
+            [input]="{
+                type: 'text',
+                placeholder: 'Laboratorio',
+                placeholderIsFloating: true,
+                classList: 'input-fit-content'
+            }" />
+        <app-input-autocomplete searchBy="name" [autocompleteOptions]="groups" [(ngModel)]="selectedGroup" name="group"
+            [input]="{
             type: 'text',
-            name: 'lab',
-            placeholder: 'Laboratorio',
-            placeholderIsFloating: true
-        }" />
-<!-- 
-        <app-input-autocomplete searchBy="name" [options]="courses" [selectedOption]="selectedCourse" [input]="{
-            type: 'text',
-            name: 'group',
             placeholder: 'Grupo',
             placeholderIsFloating: true
-        }" /> -->
-
-        <app-input-autocomplete searchBy="name" [options]="courses" [(selectedOption)]="selectedCourse" [input]="{
+        }" />
+        <app-input-autocomplete searchBy="name" [autocompleteOptions]="courses" [(ngModel)]="selectedCourse" name="course"
+            [input]="{
             type: 'text',
-            name: 'course',
             placeholder: 'Curso',
             placeholderIsFloating: true
         }" />
-        <app-input [input]="{
-            type: 'text',
-            name: 'course',
-            placeholder: 'Curso',
-            placeholderIsFloating: true
-        }"></app-input>
-        <!-- <app-input-autocomplete searchBy="name" [options]="courses" [selectedOption]="selectedCourse" [input]="{
-            type: 'text',
-            name: 'teacher',
-            placeholder: 'Maestro',
-            placeholderIsFloating: true
-        }" /> -->
     </div>
 
     <!-- <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse"

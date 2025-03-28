@@ -1,5 +1,4 @@
 export interface IInput {
-    name: string;
     id?: string;
     value?: string;
     type?: 'text'

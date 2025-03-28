@@ -1,3 +1,4 @@
+import { group } from '@angular/animations';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
@@ -17,13 +18,20 @@ type Course = { id: string; name: string; group: string; professor: Professor };
   encapsulation: ViewEncapsulation.None,
 })
 export class OpenStudentsGroupComponent {
+
+  private user: any;
+
   public selectedCourse?: Course;
   public courses: Course[] = [];
-  public filteredCourses: Course[] = [];
-  private user: any;
-  public labs: any[] = []; // @todo Type model
+
   public selectedLab?: string;
-  // Referencia a la alerta
+  public labs: any[] = []; // @todo Type model
+
+  public selectedGroup?: string;
+  public groups: any[] = []; // @todo Type model
+
+  protected disableLabs: boolean = false;
+
   @ViewChild('selfClosingAlert', { static: false }) selfClosingAlert?: NgbAlert;
   private _message = new Subject<string>();
   errorMessage: string = '';
@@ -37,30 +45,60 @@ export class OpenStudentsGroupComponent {
     }
     if (this.user.user.lab) {
       this.selectedLab = this.user.user.lab;
+      this.disableLabs = true;
     }
-    this.entriesService.getLabs().subscribe({
-      next: (labs: any) => {
-        this.labs = labs;
-        console.log(this.courses)
-      },
-      error: (error: any) => {
-        /* @dev remove showing error directly*/
-        console.error("DEV - ", error)
-      }
+    if (this.selectedLab) {
+      this.entriesService.getCoursesByLab(this.selectedLab).subscribe({
+        next: (courses: any) => {
+          console.log(courses)
+          /**
+           * @todo Move group courses to backend
+           */
 
-    })
-    if (!this.selectedLab) {
-    } else {
-      // Obtiene los cursos/clases por medio de una petición
-      this.entriesService.getCoursesByLab(this.selectedLab).subscribe(
-        (res) => {
-          this.courses = res;
-          console.log(this.courses)
+          let coursesGroupedByName = courses.reduce(
+            (accum: any,
+              course: { name: string, group: any, professor: any }) => {
+              return this.groupCourse(accum, course);
+            });
+          coursesGroupedByName=this.groupCourse(coursesGroupedByName, coursesGroupedByName);
+          delete coursesGroupedByName._id;
+          delete coursesGroupedByName.group;
+          delete coursesGroupedByName.name;
+          delete coursesGroupedByName.professor;
+
+          console.log("DEV @stariluz - CoursesGrouped", coursesGroupedByName);
+
+          this.courses = Object.values(coursesGroupedByName);
+          console.log("DEV @stariluz - Courses", this.courses);
         },
-        (err) => {
-          console.log(err);
+        error: (error: any) => {
+          /**
+           * @todo remove showing error directly
+           */
+          console.error("DEV - ", error);
         }
-      );
+      });
+    } else {
+      this.entriesService.getLabs().subscribe({
+        next: (labs: any) => {
+          /**
+           * @todo Move filter labs to backend, or, clean labs registries removing classrooms numbers
+           */
+
+          this.labs = labs.filter((lab: { name: string | number }) => {
+            return typeof lab.name == "string";
+          }).map((lab: { name: string | number }) => {
+            return lab.name;
+          });
+          // console.log("DEV @stariluz - Labs", this.labs);
+        },
+        error: (error: any) => {
+          /**
+           * @todo remove showing error directly
+           */
+          console.error("DEV - ", error);
+        }
+      });
     }
 
     /**
@@ -75,6 +113,20 @@ export class OpenStudentsGroupComponent {
     });
   }
 
+  groupCourse(accum: any, course: any) {
+    if (!accum[course.name]) {
+      accum[course.name] = {
+        name: course.name,
+        groups: []
+      };
+    }
+    accum[course.name].groups.push({
+      group: course.group,
+      professor: course.professor
+    });
+    return accum;
+  }
+
   // Revisión que los datos se hayan ingresado correctamente, para posteriormente guardar el objeto en el almacenamiento local
   registerClassEntry() {
     if (!this.selectedCourse) {
@@ -83,5 +135,9 @@ export class OpenStudentsGroupComponent {
       localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
       this.router.navigateByUrl('/entries/student-entries');
     }
+  }
+
+  debugSelectedLab() {
+    console.log("DEV @stariluz - SelectedLab", this.selectedLab);
   }
 }

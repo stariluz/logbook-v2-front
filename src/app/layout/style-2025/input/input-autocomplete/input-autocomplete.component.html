@@ -2,20 +2,22 @@
     'input-floating':input.placeholderIsFloating,
     'focus': isFocused,
 }">
-    <p-autoComplete [(ngModel)]="selectedOption" [suggestions]="filteredOptions" [name]="input.name"
-        (ngModelChange)="onSelectedOptionChange($event)" (completeMethod)="filterOptions($event)" [field]="searchBy" [dropdown]="true"
-        [forceSelection]="true" inputStyleClass="input input-autocomplete {{input.classList}}"
+    <p-autoComplete [(ngModel)]="ngModel" [suggestions]="filteredOptions" [name]="name"
+        (completeMethod)="filterOptions($event)"
         (onFocus)="isFocused = true"
         (onBlur)="isFocused = false"
-        [placeholder]="input.placeholderIsFloating?'':input.placeholder">
+        [placeholder]="input.placeholderIsFloating?'':input.placeholder"
+        [field]="searchBy"
+        [dropdown]="true"
+        [forceSelection]="true" inputStyleClass="input input-autocomplete {{input.classList}}">
         <!-- Custom Dropdown Icon -->
         <ng-template pTemplate="dropdownicon">
             <i class="icon ti ti-caret-down-filled"></i>
         </ng-template>
 
-        <ng-template let-course pTemplate="item">
+        <ng-template let-option pTemplate="item">
             <div class="d-flex flex-column">
-                <span>{{ course[searchBy] }}</span>
+                <span>{{ labelBy?option[labelBy]:option }}</span>
             </div>
         </ng-template>
 
