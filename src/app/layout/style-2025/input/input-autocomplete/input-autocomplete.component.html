@@ -1,6 +1,7 @@
 <div class="input-container input-container-autocomplete" [ngClass]="{
     'input-floating':input.placeholderIsFloating,
     'focus': isFocused,
+    'input-disabled': disabled,
 }">
     <p-autoComplete [(ngModel)]="ngModel" [suggestions]="filteredOptions" [name]="name"
         (completeMethod)="filterOptions($event)"
@@ -9,10 +10,12 @@
         [placeholder]="input.placeholderIsFloating?'':input.placeholder"
         [field]="searchBy"
         [dropdown]="true"
-        [forceSelection]="true" inputStyleClass="input input-autocomplete {{input.classList}}">
+        [forceSelection]="true"
+        inputStyleClass="input input-autocomplete {{input.classList}}"
+        [disabled]="disabled">
         <!-- Custom Dropdown Icon -->
         <ng-template pTemplate="dropdownicon">
-            <i class="icon ti ti-caret-down-filled"></i>
+            <i class="icon ti {{disabled?'ti-lock':'ti-caret-down-filled'}}"></i>
         </ng-template>
 
         <ng-template let-option pTemplate="item">

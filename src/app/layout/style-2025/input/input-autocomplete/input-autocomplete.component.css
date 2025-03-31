@@ -8,8 +8,7 @@
     box-shadow: none !important;
     border: 0px;
 }
-
-.p-ripple.p-autocomplete-dropdown {
+.input-container-autocomplete .p-ripple.p-autocomplete-dropdown {
     height: auto;
     aspect-ratio: 1 / 1;
 
@@ -33,6 +32,11 @@
     border-start-end-radius: 0px !important;
     border-end-start-radius: 0px !important;
     border-end-end-radius: 0px !important;
+}
+
+.input-container-autocomplete.input-disabled .p-ripple.p-autocomplete-dropdown {
+    --btn-bg-color: var(--Input-BG-Color-3);
+    color: var(--btn-text-color);
 }
 
 .input-container-autocomplete.input-floating {

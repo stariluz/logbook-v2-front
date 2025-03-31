@@ -17,6 +17,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms
 export class InputComponent implements ControlValueAccessor {
   @Input() input!: IInput; // Usamos InputModel
   @Input() name!: string;
+  @Input() disabled!: boolean;
   isFocused: boolean = false;
 
   private _ngModel: any;
