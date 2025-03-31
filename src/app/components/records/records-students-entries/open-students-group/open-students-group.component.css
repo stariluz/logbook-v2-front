@@ -3,12 +3,13 @@
     flex-direction: column;
     width: 750px;
     max-width: 1260px;
+    gap: 2rem;
 }
 
 .form-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .form-title {
@@ -26,4 +27,9 @@
     flex-wrap: wrap;
     justify-content: stretch;
     gap: 1rem;
+}
+
+.form-footer{
+    display: flex;
+    justify-content: flex-end;
 }

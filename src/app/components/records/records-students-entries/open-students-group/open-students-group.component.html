@@ -1,6 +1,39 @@
 <form name="form" class="form" novalidate>
     <div class="form-header">
         <h3 class="form-title">Abrir registro de clase</h3>
+    </div>
+    <div class="form-body">
+        <div class="container mx-0 px-0">
+            <div class="row">
+                <div class="col-3">
+                    <app-input-autocomplete [autocompleteOptions]="labs" [(ngModel)]="selectedLab" name="lab"
+                        [disabled]="disableLabs" (ngModelChange)="debugSelectedLab()" [input]="{
+                            type: 'text',
+                            placeholder: 'Laboratorio',
+                            placeholderIsFloating: true,
+                            classList: 'input-fit-content'
+                        }" />
+                </div>
+                <div class="col-7">
+                    <app-input-autocomplete searchBy="name" [autocompleteOptions]="courses" [(ngModel)]="selectedCourse"
+                        name="course" [input]="{
+                            type: 'text',
+                            placeholder: 'Curso',
+                            placeholderIsFloating: true,
+                        }" />
+                </div>
+                <div class="col-2">
+                    <app-input-autocomplete searchBy="name" [autocompleteOptions]="groups" [(ngModel)]="selectedGroup"
+                        name="group" [input]="{
+                        type: 'text',
+                        placeholder: 'Grupo',
+                        placeholderIsFloating: true
+                    }" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-footer">
         <app-button [button]="{
             type: 'button',
             classList: 'btn btn-primary btn-big',
@@ -10,40 +43,5 @@
         }">
             Abrir registro
         </app-button>
-    </div>
-    <div class="form-body">
-        <div class="container mx-0 px-0">
-            <div class="row">
-                <div class="col-3">
-                    <app-input-autocomplete
-                        [autocompleteOptions]="labs"
-                        [(ngModel)]="selectedLab" name="lab"
-                        [disabled]="disableLabs"
-                        (ngModelChange)="debugSelectedLab()"
-                        [input]="{
-                            type: 'text',
-                            placeholder: 'Laboratorio',
-                            placeholderIsFloating: true,
-                            classList: 'input-fit-content'
-                        }" />
-                </div>
-                <div class="col-7">
-                    <app-input-autocomplete searchBy="name" [autocompleteOptions]="courses" [(ngModel)]="selectedCourse" name="course"
-                        [input]="{
-                            type: 'text',
-                            placeholder: 'Curso',
-                            placeholderIsFloating: true,
-                        }" />
-                </div>
-                <div class="col-2">
-                    <app-input-autocomplete searchBy="name" [autocompleteOptions]="groups" [(ngModel)]="selectedGroup" name="group"
-                        [input]="{
-                        type: 'text',
-                        placeholder: 'Grupo',
-                        placeholderIsFloating: true
-                    }" />
-                </div>
-            </div>
-        </div>
     </div>
 </form>
