@@ -21,13 +21,13 @@ export class OpenStudentsGroupComponent {
 
   private user: any;
 
-  public selectedCourse?: Course;
-  public courses: Course[] = [];
-
   public selectedLab?: string;
   public labs: any[] = []; // @todo Type model
 
-  public selectedGroup?: string;
+  public selectedCourse?: any;
+  public courses: any[] = [];
+
+  public selectedGroup?: any;
   public groups: any[] = []; // @todo Type model
 
   protected disableLabs: boolean = false;
@@ -48,57 +48,9 @@ export class OpenStudentsGroupComponent {
       this.disableLabs = true;
     }
     if (this.selectedLab) {
-      this.entriesService.getCoursesByLab(this.selectedLab).subscribe({
-        next: (courses: any) => {
-          console.log(courses)
-          /**
-           * @todo Move group courses to backend
-           */
-
-          let coursesGroupedByName = courses.reduce(
-            (accum: any,
-              course: { name: string, group: any, professor: any }) => {
-              return this.groupCourse(accum, course);
-            });
-          coursesGroupedByName=this.groupCourse(coursesGroupedByName, coursesGroupedByName);
-          delete coursesGroupedByName._id;
-          delete coursesGroupedByName.group;
-          delete coursesGroupedByName.name;
-          delete coursesGroupedByName.professor;
-
-          console.log("DEV @stariluz - CoursesGrouped", coursesGroupedByName);
-
-          this.courses = Object.values(coursesGroupedByName);
-          console.log("DEV @stariluz - Courses", this.courses);
-        },
-        error: (error: any) => {
-          /**
-           * @todo remove showing error directly
-           */
-          console.error("DEV - ", error);
-        }
-      });
+      this.getCourses();
     } else {
-      this.entriesService.getLabs().subscribe({
-        next: (labs: any) => {
-          /**
-           * @todo Move filter labs to backend, or, clean labs registries removing classrooms numbers
-           */
-
-          this.labs = labs.filter((lab: { name: string | number }) => {
-            return typeof lab.name == "string";
-          }).map((lab: { name: string | number }) => {
-            return lab.name;
-          });
-          // console.log("DEV @stariluz - Labs", this.labs);
-        },
-        error: (error: any) => {
-          /**
-           * @todo remove showing error directly
-           */
-          console.error("DEV - ", error);
-        }
-      });
+      this.getLabs();
     }
 
     /**
@@ -113,7 +65,86 @@ export class OpenStudentsGroupComponent {
     });
   }
 
-  groupCourse(accum: any, course: any) {
+  getLabs() {
+    this.entriesService.getLabs().subscribe({
+      next: (labs: any) => {
+        /**
+         * @todo Move filter labs to backend, or, clean labs registries removing classrooms numbers
+         */
+
+        this.labs = labs.filter((lab: { name: string | number }) => {
+          return typeof lab.name == "string";
+        }).map((lab: { name: string | number }) => {
+          return lab.name;
+        });
+        // console.log("DEV @stariluz - Labs", this.labs);
+      },
+      error: (error: any) => {
+        /**
+         * @todo remove showing error directly
+         */
+        console.error("DEV - ", error);
+      }
+    });
+  }
+
+  getCourses() {
+    if (!this.selectedLab) return;
+    this.entriesService.getCoursesByLab(this.selectedLab).subscribe({
+      next: (courses: any) => {
+        /**
+         * @todo Move group courses to backend
+         */
+
+        let coursesGroupedByName = courses.reduce(
+          (accum: any,
+            course: { name: string, group: any, professor: any }) => {
+            return this.acummulateCourse(accum, course);
+          });
+        coursesGroupedByName = this.acummulateCourse(coursesGroupedByName, coursesGroupedByName);
+
+        delete coursesGroupedByName._id;
+        delete coursesGroupedByName.group;
+        delete coursesGroupedByName.name;
+        delete coursesGroupedByName.professor;
+
+        // console.log("DEV @stariluz - CoursesGrouped", coursesGroupedByName);
+        this.courses = Object.values(coursesGroupedByName);
+        // console.log("DEV @stariluz - Courses", this.courses);
+      },
+      error: (error: any) => {
+        /**
+         * @todo remove showing error directly
+         */
+        console.error("DEV - ", error);
+      }
+    });
+  }
+  
+  getGroups() {
+    /**
+     * @todo Get groups from backend
+     */
+    console.log("DEV @stariluz - Courses", this.selectedCourse);
+    this.groups=this.selectedCourse.groups;
+  }
+
+  onSelectedLabChange(){
+    if(this.selectedLab){
+      this.getCourses();
+    }
+    this.selectedCourse=null;
+    this.selectedGroup=null;
+  }
+
+  onSelectedCourseChange(){
+    if(this.selectedCourse){
+      this.getGroups();
+    }
+    this.selectedGroup=null;
+  }
+
+  acummulateCourse(accum: any, course: any) {
     if (!accum[course.name]) {
       accum[course.name] = {
         name: course.name,
@@ -135,9 +166,5 @@ export class OpenStudentsGroupComponent {
       localStorage.setItem('currentCourse', JSON.stringify(this.selectedCourse));
       this.router.navigateByUrl('/entries/student-entries');
     }
-  }
-
-  debugSelectedLab() {
-    console.log("DEV @stariluz - SelectedLab", this.selectedLab);
   }
 }

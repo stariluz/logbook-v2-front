@@ -14,27 +14,39 @@
     <div class="form-body">
         <app-input-autocomplete
             [autocompleteOptions]="labs"
-            [(ngModel)]="selectedLab" name="lab"
+            [(ngModel)]="selectedLab"
+            (ngModelChange)="onSelectedLabChange()"
+            name="lab"
             [disabled]="disableLabs"
-            (ngModelChange)="debugSelectedLab()"
             [input]="{
                 type: 'text',
                 placeholder: 'Laboratorio',
                 placeholderIsFloating: true,
                 classList: 'input-fit-content'
             }" />
-        <app-input-autocomplete searchBy="name" [autocompleteOptions]="groups" [(ngModel)]="selectedGroup" name="group"
+
+        <app-input-autocomplete
+            searchBy="name"
+            [autocompleteOptions]="courses"
+            [(ngModel)]="selectedCourse"
+            (ngModelChange)="onSelectedCourseChange()"
+            name="course"
+                [input]="{
+                type: 'text',
+                placeholder: 'Curso',
+                placeholderIsFloating: true
+            }" />
+
+        <app-input-autocomplete
+            searchBy="group"
+            [autocompleteOptions]="groups"
+            [(ngModel)]="selectedGroup"
+            name="group"
             [input]="{
-            type: 'text',
-            placeholder: 'Grupo',
-            placeholderIsFloating: true
-        }" />
-        <app-input-autocomplete searchBy="name" [autocompleteOptions]="courses" [(ngModel)]="selectedCourse" name="course"
-            [input]="{
-            type: 'text',
-            placeholder: 'Curso',
-            placeholderIsFloating: true
-        }" />
+                type: 'text',
+                placeholder: 'Grupo',
+                placeholderIsFloating: true
+            }" />
     </div>
 
     <!-- <p-autoComplete styleClass="input-autocomplete" name="course" [(ngModel)]="selectedCourse"
