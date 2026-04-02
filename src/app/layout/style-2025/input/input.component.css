@@ -6,7 +6,7 @@
 
 .input,
 .input.input-autocomplete {
-    width: min-content;
+    width: min;
     min-width: 3rem;
     padding: 0.75rem 0.75rem;
     font-size: 1rem;
@@ -20,6 +20,12 @@
 .input-fit-content {
     min-width: fit-content;
     width: fit-content;
+}
+
+.input-fill {
+    width: 100%;
+    min-width: 100%;
+    flex: 1;
 }
 
 .input-lg {

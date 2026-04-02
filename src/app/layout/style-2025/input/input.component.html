@@ -4,7 +4,7 @@
     <input [id]="input.id" [name]="name" [type]="input.type" [(ngModel)]="ngModel"
         [ngClass]="['input',input.classList||'']" (focus)="isFocused = true"
         (blur)="isFocused = false"
-        [placeholder]="input.placeholderIsFloating?'':input.placeholder">
+        [placeholder]="input.placeholderIsFloating?'':input.placeholder" [disabled]="disabled">
 
     <label *ngIf="input.placeholderIsFloating" class="input-placeholder" [ngClass]="{
             'focus': isFocused,

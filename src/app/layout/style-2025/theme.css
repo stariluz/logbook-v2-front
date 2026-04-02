@@ -31,6 +31,7 @@ body {
     --Button-BG-Color-Danger: #F74040;
 
     --Input-BG-Color-1: #F9F9F9;
+    --Input-BG-Color-3: var(--BG-Color-2);
     --Input-Stroke-Color-1: #F3F3F3;
     --Input-Color-1: var(--Text-Color-1, #585858);
     --Input-Color-1-Focus: var(--Text-Color-2, #1567BF);

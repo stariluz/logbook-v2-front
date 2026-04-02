@@ -438,7 +438,7 @@ const BlueLaraPreset = definePreset(Lara, {
                 },
                 formField: {
                     background: "{surface.50}",
-                    disabledBackground: "{surface.200}",
+                    disabledBackground: "{surface.0}",
                     filledBackground: "{surface.50}",
                     filledHoverBackground: "{surface.50}",
                     filledFocusBackground: "{surface.50}",
